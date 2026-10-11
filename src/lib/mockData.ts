@@ -1660,8 +1660,8 @@ export const INITIAL_FEE_PURSE: AdminFeePurse = {
 
 export const INITIAL_SYSTEM_SETTINGS: SystemSettings = {
   stripeMode: 'live',
-  stripePublicKey: 'pk_live_51BirdGrowFintechEu88910XYZ',
-  stripeSecretKey: 'sk_live_51BirdGrowFintechSecretDemoKey',
+  stripePublicKey: 'pk_test_placeholder',
+  stripeSecretKey: 'sk_test_placeholder',
   sepaCreditorId: 'DE98ZZZ09999999999',
   sepaIban: 'DE33500105175408332400',
   sepaBic: 'HELABEDD100',

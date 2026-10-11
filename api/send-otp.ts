@@ -3,7 +3,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { Resend } from 'resend';
 
 // Hardcoded Resend API Key for quick setup
-const resend = new Resend('re_38VxENwh_4DRGPyCbLX1a4mZTKxe5Mh5U');
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Allow CORS / preflight requests if needed
