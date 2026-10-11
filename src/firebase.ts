@@ -5,6 +5,7 @@ import {
   sendPasswordResetEmail, 
   signOut 
 } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCHzLQKX4aECf1U3abYyNXCGSTQK8c-Gm4",
@@ -18,4 +19,5 @@ const firebaseConfig = {
     
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const db = getFirestore(app);
 export { signInWithEmailAndPassword, sendPasswordResetEmail, signOut };
