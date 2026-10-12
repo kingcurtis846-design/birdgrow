@@ -342,7 +342,7 @@ export const Hero: React.FC<HeroProps> = ({ onExplorePlans, onOpenCalculator, on
             <div className="text-xs font-semibold uppercase tracking-wider text-[#5C6572]">
               {t.heroMetricCapital}
             </div>
-            <div className="text-2xl sm:text-3xl font-extrabold tabular-nums text-[#1B3B2B]">{formatCurrentCurrencyCompact(1100000)}+</div>
+            <div className="text-2xl sm:text-3xl font-extrabold tabular-nums text-[#1B3B2B]">{formatCurrentCurrencyCompact(4100000)}+</div>
             <div className="text-xs text-[#5C6572]">{t.heroMetricCapitalSub}</div>
           </div>
 
