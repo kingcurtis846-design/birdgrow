@@ -90,7 +90,7 @@ export const INITIAL_CHAT_MEMBERS: InvestorMember[] = [
     countryCode: 'SE',
     role: 'investor',
     badge: 'Tier 3 Backer',
-    investedAmount: 11500,
+    investedAmount: 25000,
     activePlanTitle: 'Climate-Neutral Layers',
     onlineStatus: 'offline',
     lastSeen: '2h ago',

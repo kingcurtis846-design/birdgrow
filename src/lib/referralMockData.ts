@@ -166,7 +166,7 @@ export const INITIAL_MILESTONE_REWARDS: ReferralMilestoneReward[] = [
     userId: 'usr-investor-01',
     milestoneId: 'milestone-250k',
     volumeThreshold: 250000,
-    rewardAmount: 25000,
+    rewardAmount: 24999,
     referrerTypeAtAward: 'investor',
     status: 'paid',
     referenceId: 'REF-REW-250K-491028',

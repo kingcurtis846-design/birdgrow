@@ -429,7 +429,7 @@ export const PlatformProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length >= 4) {
           return parsed.map((p: InvestmentPlan) => {
-            if (p.id === 'plan-15d-50pct') return { ...p, max_amount: 4499 };
+            if (p.id === 'plan-15d-50pct') return { ...p, max_amount: 4999 };
             if (p.id === 'plan-30d-150pct') return { ...p, max_amount: 99999 };
             return p;
           });

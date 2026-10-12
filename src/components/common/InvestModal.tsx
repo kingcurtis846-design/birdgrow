@@ -60,7 +60,7 @@ export const InvestModal: React.FC<InvestModalProps> = ({
   }, [isOpen, selectedPlan, plans, initialAmount, currency]);
 
   const currentMinInActive = useMemo(() => convertGbpAmount(currentPlan?.min_amount || 500, currency), [currentPlan, currency]);
-  const currentMaxInActive = useMemo(() => convertGbpAmount(currentPlan?.max_amount || 4499, currency), [currentPlan, currency]);
+  const currentMaxInActive = useMemo(() => convertGbpAmount(currentPlan?.max_amount || 4999, currency), [currentPlan, currency]);
   const globalMinInActive = useMemo(() => convertGbpAmount(500, currency), [currency]);
   const globalMaxInActive = useMemo(() => convertGbpAmount(500000, currency), [currency]);
 

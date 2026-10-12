@@ -45,7 +45,7 @@ describe('Referral Engine - Milestone Structure & Rewards (Euros)', () => {
     expect(m250k.label).toBe('€250,000');
     expect(m250k.shortLabel).toBe('€250K');
     expect(m250k.basicReward).toBe(12500);
-    expect(m250k.investorReward).toBe(25000);
+    expect(m250k.investorReward).toBe(24999);
 
     // Milestone 4: €500,000 
     expect(m500k.name).toBe('Platinum Agri-Director');
@@ -54,14 +54,6 @@ describe('Referral Engine - Milestone Structure & Rewards (Euros)', () => {
     expect(m500k.shortLabel).toBe('€500K');
     expect(m500k.basicReward).toBe(30000);
     expect(m500k.investorReward).toBe(60000);
-
-    // Milestone 5: €1,000,000 
-    expect(m1m.name).toBe('Diamond Crown Principal');
-    expect(m1m.volumeThreshold).toBe(500000);
-    expect(m1m.label).toBe('€1,000,000');
-    expect(m1m.shortLabel).toBe('€1M');
-    expect(m1m.basicReward).toBe(75000);
-    expect(m1m.investorReward).toBe(150000);
   });
 
   it('determines Basic vs Investor referrer status accurately and handles auto-upgrade', () => {

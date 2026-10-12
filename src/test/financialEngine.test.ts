@@ -34,18 +34,18 @@ describe('Financial Engine & Localization Formatters', () => {
     // Plan 1: 50% in 14/15 days (£500 - £4,499)
     expect(INITIAL_PLANS[0].roi_percentage).toBe(50.0);
     expect(INITIAL_PLANS[0].min_amount).toBe(500);
-    expect(INITIAL_PLANS[0].max_amount).toBe(4499);
+    expect(INITIAL_PLANS[0].max_amount).toBe(4999);
 
     // Plan 2: 84% in 21 days (£4,500 - £11,499)
     expect(INITIAL_PLANS[1].roi_percentage).toBe(84.0);
     expect(INITIAL_PLANS[1].duration_days).toBe(21);
-    expect(INITIAL_PLANS[1].min_amount).toBe(4500);
-    expect(INITIAL_PLANS[1].max_amount).toBe(11499);
+    expect(INITIAL_PLANS[1].min_amount).toBe(5000);
+    expect(INITIAL_PLANS[1].max_amount).toBe(24999);
 
     // Plan 3: 150% in 30 days (£11,500 - £99,999)
     expect(INITIAL_PLANS[2].roi_percentage).toBe(150.0);
     expect(INITIAL_PLANS[2].duration_days).toBe(30);
-    expect(INITIAL_PLANS[2].min_amount).toBe(11500);
+    expect(INITIAL_PLANS[2].min_amount).toBe(25000);
     expect(INITIAL_PLANS[2].max_amount).toBe(99999);
 
     // Plan 4: 320% in 60 days (£100,000 - £1,000,000)
@@ -59,7 +59,7 @@ describe('Financial Engine & Localization Formatters', () => {
     const starter = INITIAL_PLANS.find((p) => p.id === 'plan-15d-50pct');
     const commercial = INITIAL_PLANS.find((p) => p.id === 'plan-30d-150pct');
 
-    expect(starter?.max_amount).toBe(4499);
+    expect(starter?.max_amount).toBe(4999);
     expect(commercial?.max_amount).toBe(99999);
   });
 

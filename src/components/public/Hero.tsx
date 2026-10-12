@@ -126,7 +126,7 @@ export const Hero: React.FC<HeroProps> = ({ onExplorePlans, onOpenCalculator, on
     if (!isAutoPlaying) return;
     const interval = setInterval(() => {
       setActiveFarmIndex((prev) => (prev + 1) % INVESTED_FARMS.length);
-    }, 4500);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [isAutoPlaying]);

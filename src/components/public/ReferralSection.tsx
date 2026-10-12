@@ -118,10 +118,6 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                <span><strong>Named Milestones From {formatCurrentCurrency(500, false)} to {formatCurrentCurrency(500000, false)}:</strong> Progress from Seedling Pioneer to Diamond Crown Principal, earning from <strong>{formatCurrentCurrency(25, false)}</strong> up to <strong>{formatCurrentCurrency(75000, false)}</strong> per milestone.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <span><strong>{t.refPotentialMax || 'Potential Max Payout in a Cycle'}:</strong> Earn up to <strong>{formatCurrentCurrency(122525, false)}</strong> total cumulative payout per {formatCurrentCurrency(500000, false)} cycle.</span>
               </li>
               <li className="flex items-start gap-2">

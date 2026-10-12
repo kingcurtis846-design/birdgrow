@@ -218,7 +218,7 @@ export const AdminDashboard: React.FC = () => {
   const [editingPlan, setEditingPlan] = useState<InvestmentPlan | null>(null);
   const [planTitle, setPlanTitle] = useState('');
   const [planMin, setPlanMin] = useState(500);
-  const [planMax, setPlanMax] = useState(4499);
+  const [planMax, setPlanMax] = useState(4999);
   const [planDuration, setPlanDuration] = useState(15);
   const [planRoi, setPlanRoi] = useState(50.0);
   const [planRating, setPlanRating] = useState<'A+' | 'A' | 'A-'>('A+');
@@ -244,7 +244,7 @@ export const AdminDashboard: React.FC = () => {
   const [newFarmCategory, setNewFarmCategory] = useState<'dual_layers_broilers' | 'layers_eggs' | 'broilers'>('dual_layers_broilers');
   const [newFarmBreeds, setNewFarmBreeds] = useState('Lohmann Brown (Layers) & Ross 308 (Broilers)');
   const [newFarmTotalBirds, setNewFarmTotalBirds] = useState<number | ''>(45000);
-  const [newFarmLayersCount, setNewFarmLayersCount] = useState<number | ''>(25000);
+  const [newFarmLayersCount, setNewFarmLayersCount] = useState<number | ''>(24999);
   const [newFarmBroilersCount, setNewFarmBroilersCount] = useState<number | ''>(20000);
   const [newFarmDailyEggs, setNewFarmDailyEggs] = useState<number | ''>(23000);
   const [newFarmStage, setNewFarmStage] = useState<CycleStage>('chick_placement');
@@ -283,7 +283,7 @@ export const AdminDashboard: React.FC = () => {
     setEditingPlan(null);
     setPlanTitle('');
     setPlanMin(500);
-    setPlanMax(4499);
+    setPlanMax(4999);
     setPlanDuration(15);
     setPlanRoi(50.0);
     setPlanRating('A+');

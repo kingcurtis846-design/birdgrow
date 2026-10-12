@@ -48,10 +48,10 @@ export const DepositModal: React.FC<DepositModalProps> = ({ isOpen, onClose, ini
   const activePresets = currency === 'GBP'
     ? [425, 850, 4250, 21250]
     : currency === 'USD'
-    ? [500, 1000, 5000, 25000]
+    ? [500, 1000, 5000, 24999]
     : currency === 'JPY'
     ? [80000, 160000, 800000, 4000000]
-    : [500, 1000, 5000, 25000];
+    : [500, 1000, 5000, 24999];
 
   const [amount, setAmount] = useState<number>(() => {
     if (initialAmount && initialAmount > 0) return initialAmount;

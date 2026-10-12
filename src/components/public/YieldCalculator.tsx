@@ -28,7 +28,7 @@ const DEFAULT_TIERS: TierOption[] = [
     durationDays: 15,
     roiPct: 50.0,
     minAmount: 500,
-    maxAmount: 4499,
+    maxAmount: 4999,
     riskRating: 'A+',
   },
   {
@@ -36,8 +36,8 @@ const DEFAULT_TIERS: TierOption[] = [
     name: 'Growth Plan',
     durationDays: 21,
     roiPct: 84.0,
-    minAmount: 4500,
-    maxAmount: 11499,
+    minAmount: 5000,
+    maxAmount: 24999,
     riskRating: 'A',
   },
   {
@@ -45,7 +45,7 @@ const DEFAULT_TIERS: TierOption[] = [
     name: 'Commercial Plan',
     durationDays: 30,
     roiPct: 150.0,
-    minAmount: 11500,
+    minAmount: 25000,
     maxAmount: 99999,
     riskRating: 'A+',
   },
@@ -212,7 +212,7 @@ export const YieldCalculator: React.FC<YieldCalculatorProps> = ({
   const presets = useMemo(() => [
     { label: t.calcStarterMinPreset || 'Starter Min', val: convertGbpAmount(500, currency) },
     { label: t.calcGrowthTierPreset || 'Growth Tier', val: convertGbpAmount(5000, currency) },
-    { label: t.calcCommercialTierPreset || 'Commercial Tier', val: convertGbpAmount(25000, currency) },
+    { label: t.calcCommercialTierPreset || 'Commercial Tier', val: convertGbpAmount(24999, currency) },
     { label: `${t.calcEnterprisePreset || 'Enterprise'} ${formatRawCurrency(convertGbpAmount(100000, currency), currency, false, language)}`, val: convertGbpAmount(100000, currency) },
     { label: `Macro ${formatRawCurrency(convertGbpAmount(165000, currency), currency, false, language)}`, val: convertGbpAmount(165000, currency) },
     { label: t.calcMaxSovereignPreset || 'Max Sovereign', val: convertGbpAmount(500000, currency) },
@@ -407,7 +407,7 @@ export const YieldCalculator: React.FC<YieldCalculatorProps> = ({
                   type="range"
                   min={minQualifyingInActive}
                   max={maxQualifyingInActive}
-                  step={amount >= convertGbpAmount(100000, currency) ? 10000 : amount >= convertGbpAmount(11500, currency) ? 2500 : 500}
+                  step={amount >= convertGbpAmount(100000, currency) ? 10000 : amount >= convertGbpAmount(25000, currency) ? 2500 : 500}
                   value={Math.min(maxQualifyingInActive, Math.max(minQualifyingInActive, amount))}
                   onChange={(e) => setAmount(Number(e.target.value))}
                   className="w-full h-2 bg-[#DCDAD0] rounded-lg appearance-none cursor-pointer accent-[#1B3B2B]"
