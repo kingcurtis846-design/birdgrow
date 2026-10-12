@@ -28,9 +28,9 @@ export interface Translations {
   navUpTo: string;
 
   // Regulatory banner
-  riskBanner: string;
-  riskNoticeLabel: string;
-  dismissNotice: string;
+  riskBanner?: string;
+  riskNoticeLabel?: string;
+  dismissNotice?: string;
 
   // Hero
   heroKicker: string;
@@ -42,11 +42,11 @@ export interface Translations {
   heroTotalBirdsLabel: string;
   heroMetricBatches: string;
   heroMetricBatchesSub: string;
-  heroMetricCapital: string;
+  heroMetricCapital?: string;
   heroMetricCapitalSub: string;
-  heroMetricVelocity: string;
+  heroMetricVelocity?: string;
   heroMetricVelocitySub: string;
-  heroMetricEsg: string;
+  heroMetricEsg?: string;
   heroMetricEsgSub: string;
   heroTotalFlock: string;
   heroForwardContracts: string;
@@ -257,11 +257,11 @@ export interface Translations {
 
   // Testimonials & Reviews
   revTitle: string;
-  revSubtitle: string;
+  revSubtitle?: string;
   revDesc: string;
   revDropReview: string;
   revVerifiedInvestor: string;
-  revRoiAchieved: string;
+  revRoiAchieved?: string;
   revNetworkBadge: string;
   revGliding: string;
   revPaused: string;
@@ -396,6 +396,49 @@ export interface Translations {
   reviewQuote: string;
   reviewSubmit: string;
 
+  // 2-Step Review Eligibility Flow Keys
+  reviewEligibilityTitle: string;
+  step1BannerTitle: string;
+  step1BannerDesc: string;
+  step1ActionBtn: string;
+  step2BannerTitle: string;
+  step2BannerDesc: string;
+  step2ActionBtn: string;
+  eligibleBannerTitle: string;
+  eligibleBannerDesc: string;
+  eligibleActionBtn: string;
+
+  // Dashboard Metrics & Actions
+  availableBalance: string;
+  availableBalanceSubtitle: string;
+  activeCapitalDeployed: string;
+  activeCapitalSubtitle: string;
+  totalNetProfitAccrued: string;
+  totalNetProfitSubtitle: string;
+  portfolioOverview: string;
+  portfolioOverviewDesc: string;
+  quickActions: string;
+  activeCycles: string;
+  recentActivity: string;
+  depositFunds: string;
+  requestWithdrawal: string;
+  allocateCapital: string;
+  leaveReviewBtn: string;
+  viewAll: string;
+  cancel: string;
+  submit: string;
+  hoverToPause: string;
+
+  // Language Tabs
+  langAll: string;
+  langZh: string;
+  langFr: string;
+  langEs: string;
+  langHi: string;
+  langEn: string;
+  platformName: string;
+  tagline: string;
+
   // UI Convenience Helpers
   nav: {
     dashboard: string;
@@ -427,7 +470,7 @@ export interface Translations {
 }
 
 export const translations: Record<Language, any> = {
-en: {
+  en: {
     // Navigation & Header
     navOverview: 'Home',
     navHowItWorks: 'How It Works',
@@ -464,8 +507,11 @@ en: {
     heroTotalBirdsLabel: 'Total Birds in Farm',
     heroMetricBatches: '15–60 Days Turnaround',
     heroMetricBatchesSub: 'Contractual biological harvest turnaround',
+    heroMetricCapital: '£4.2M+',
     heroMetricCapitalSub: 'In Total Capital Deployed Across Our Farms',
+    heroMetricVelocity: '15–60d',
     heroMetricVelocitySub: 'Fast biological capital liquidity',
+    heroMetricEsg: '96/100',
     heroMetricEsgSub: '96 / 100 ESG Score',
     heroTotalFlock: 'Live Birds Under Management',
     heroForwardContracts: 'Guaranteed Off-Take Contracts',
@@ -716,12 +762,12 @@ en: {
     dashActivity: 'Activity History',
     dashOfficialEmails: 'Official Dispatches',
     dashReviews: 'Investor Reviews',
-    dashAvailableBalance: 'Available Balance',
-    dashLockedCapital: 'Active Capital Deployed',
-    dashTotalEarnings: 'Total Net Profit Accrued',
+    dashAvailableBalance: 'AVAILABLE BALANCE',
+    dashLockedCapital: 'ACTIVE CAPITAL DEPLOYED',
+    dashTotalEarnings: 'TOTAL NET PROFIT ACCRUED',
     dashDepositFunds: 'Deposit Capital',
     dashWithdrawFunds: 'Request Withdrawal',
-    dashAllocateCapital: 'New Allocation',
+    dashAllocateCapital: 'Deploy Capital',
     dashActiveContracts: 'Active Production Cycles',
     dashCountdownLabel: 'Harvest Settlement In',
     dashDaysRemaining: 'Days Remaining',
@@ -815,6 +861,49 @@ en: {
     reviewQuote: 'Your Review & Experience',
     reviewSubmit: 'Submit Harvest Review',
 
+    // 2-Step Review Eligibility Flow Keys
+    reviewEligibilityTitle: 'Investor Review Qualification',
+    step1BannerTitle: 'Step 1 of 2: Deploy Capital',
+    step1BannerDesc: 'Make your first capital allocation to start your investment journey.',
+    step1ActionBtn: 'Deploy Capital Now',
+    step2BannerTitle: 'Step 2 of 2: Complete a Withdrawal',
+    step2BannerDesc: 'You just made your first capital allocation! Once you request and receive your first profit withdrawal, you will be eligible to leave a public review.',
+    step2ActionBtn: 'Request Withdrawal',
+    eligibleBannerTitle: 'You are eligible to leave a review!',
+    eligibleBannerDesc: 'You are eligible to leave a review! Your verified harvest experience helps guide global allocators.',
+    eligibleActionBtn: 'Write Your Review',
+
+    // Dashboard Metrics & Actions
+    availableBalance: 'AVAILABLE BALANCE',
+    availableBalanceSubtitle: 'Liquid capital ready for deployment or withdrawal',
+    activeCapitalDeployed: 'ACTIVE CAPITAL DEPLOYED',
+    activeCapitalSubtitle: 'Contractually secured across active cycles',
+    totalNetProfitAccrued: 'TOTAL NET PROFIT ACCRUED',
+    totalNetProfitSubtitle: 'Cumulative audited yield returned to portfolio',
+    portfolioOverview: 'Portfolio Overview',
+    portfolioOverviewDesc: 'Real-time ledger balance, poultry allocations, and contractual yield accrual.',
+    quickActions: 'Quick Actions',
+    activeCycles: 'Active Agricultural Cycles',
+    recentActivity: 'Recent Financial Operations',
+    depositFunds: 'Deposit Funds',
+    requestWithdrawal: 'Request Withdrawal',
+    allocateCapital: 'Deploy Capital',
+    leaveReviewBtn: 'Leave a Review',
+    viewAll: 'View All',
+    cancel: 'Cancel',
+    submit: 'Submit Review',
+    hoverToPause: 'Hover or touch any review card to pause glide',
+
+    // Language Tabs
+    langAll: 'All',
+    langZh: 'Chinese',
+    langFr: 'French',
+    langEs: 'Spanish',
+    langHi: 'Hindi',
+    langEn: 'English',
+    platformName: 'BirdGrow',
+    tagline: 'European Agri-Fintech Asset Management',
+
     nav: {
       dashboard: 'Dashboard',
       plans: 'Investment Plans',
@@ -879,8 +968,11 @@ en: {
     heroTotalBirdsLabel: 'Tierbestand gesamt',
     heroMetricBatches: '15–60 Tage Umschlag',
     heroMetricBatchesSub: 'Vertraglich abgesicherter Produktionsumschlag',
+    heroMetricCapital: '45,2 Mio. £',
     heroMetricCapitalSub: 'Gesamtkapital, das in unseren Farmen eingesetzt wird',
+    heroMetricVelocity: '15–60 T.',
     heroMetricVelocitySub: 'Schnelle biologische Liquidität',
+    heroMetricEsg: '96/100',
     heroMetricEsgSub: '96 / 100 ESG-Index',
     heroTotalFlock: 'Aktiver Tierbestand unter Management',
     heroForwardContracts: 'Feste Abnahmeverträge',
@@ -1131,12 +1223,12 @@ en: {
     dashActivity: 'Aktivitätsverlauf',
     dashOfficialEmails: 'Offizielle Mitteilungen',
     dashReviews: 'Investoren-Bewertungen',
-    dashAvailableBalance: 'Verfügbares Guthaben',
-    dashLockedCapital: 'Aktives Investitionskapital',
-    dashTotalEarnings: 'Gesamter erwirtschafteter Gewinn',
+    dashAvailableBalance: 'VERFÜGBARES GUTHABEN',
+    dashLockedCapital: 'AKTIVES INVESTIERTES KAPITAL',
+    dashTotalEarnings: 'ANGEHÄUFTER NETTOGEWINN',
     dashDepositFunds: 'Kapital einzahlen',
     dashWithdrawFunds: 'Auszahlung anfordern',
-    dashAllocateCapital: 'Neu anlegen',
+    dashAllocateCapital: 'Kapital investieren',
     dashActiveContracts: 'Laufende Produktionszyklen',
     dashCountdownLabel: 'Ernte-Ausschüttung in',
     dashDaysRemaining: 'Verbleibende Tage',
@@ -1230,6 +1322,48 @@ en: {
     reviewQuote: 'Ihr Erfahrungsbericht',
     reviewSubmit: 'Bewertung absenden',
 
+    // 2-Step Review Eligibility Flow
+    reviewEligibilityTitle: 'Qualifikation für Investorenbewertung',
+    step1BannerTitle: 'Schritt 1 von 2: Kapital Investieren',
+    step1BannerDesc: 'Tätigen Sie Ihre erste Kapitalallokation, um Ihre Investitionsreise zu beginnen.',
+    step1ActionBtn: 'Jetzt Investieren',
+    step2BannerTitle: 'Schritt 2 von 2: Auszahlung Abschließen',
+    step2BannerDesc: 'Sie haben Ihre erste Kapitalallokation vorgenommen! Sobald Sie Ihre erste Gewinnauszahlung beantragen und erhalten, können Sie eine öffentliche Bewertung abgeben.',
+    step2ActionBtn: 'Auszahlung Beantragen',
+    eligibleBannerTitle: 'Sie sind berechtigt, eine Bewertung abzugeben!',
+    eligibleBannerDesc: 'Sie sind berechtigt, eine Bewertung abzugeben! Ihre verifizierten Erfahrungen unterstützen globale Investoren.',
+    eligibleActionBtn: 'Bewertung Verfassen',
+
+    // Standard Dashboard Cards & Elements
+    availableBalance: 'VERFÜGBARES GUTHABEN',
+    availableBalanceSubtitle: 'Liquides Kapital bereit zur Anlage oder Auszahlung',
+    activeCapitalDeployed: 'AKTIVES INVESTIERTES KAPITAL',
+    activeCapitalSubtitle: 'Vertraglich gesichert in aktiven Geflügelzyklen',
+    totalNetProfitAccrued: 'ANGEHÄUFTER NETTOGEWINN',
+    totalNetProfitSubtitle: 'Kumulierte geprüfte Erträge für Ihr Portfolio',
+    portfolioOverview: 'Portfolio-Übersicht',
+    portfolioOverviewDesc: 'Echtzeit-Hauptbuch, Geflügelallokationen und vertragliche Ertragsbildung.',
+    quickActions: 'Schnellaktionen',
+    activeCycles: 'Aktive Agrarzyklen',
+    recentActivity: 'Letzte Finanzoperationen',
+    depositFunds: 'Guthaben Einzahlen',
+    requestWithdrawal: 'Auszahlung Beantragen',
+    allocateCapital: 'Kapital Investieren',
+    leaveReviewBtn: 'Bewertung Abgeben',
+    viewAll: 'Alle Anzeigen',
+    cancel: 'Abbrechen',
+    submit: 'Bewertung Einreichen',
+    hoverToPause: 'Über eine Karte fahren, um das Gleiten anzuhalten',
+
+    langAll: 'Alle',
+    langZh: 'Chinesisch',
+    langFr: 'Französisch',
+    langEs: 'Spanisch',
+    langHi: 'Hindi',
+    langEn: 'Englisch',
+    platformName: 'BirdGrow',
+    tagline: 'Europäische Agrarvermögensverwaltung',
+
     nav: {
       dashboard: 'Übersicht',
       plans: 'Anlagepläne',
@@ -1293,8 +1427,11 @@ en: {
     heroTotalBirdsLabel: 'Total Volailles du Réseau',
     heroMetricBatches: '15 à 60 Jours de Rotation',
     heroMetricBatchesSub: 'Rotation biologique contractuelle',
+    heroMetricCapital: '45,2 M £',
     heroMetricCapitalSub: 'En capital total déployé dans nos exploitations',
+    heroMetricVelocity: '15–60j',
     heroMetricVelocitySub: 'Liquidité biologique accélérée',
+    heroMetricEsg: '96/100',
     heroMetricEsgSub: '96 / 100 Score ESG',
     heroTotalFlock: 'Volailles Vivantes sous Gestion',
     heroForwardContracts: 'Contrats d’Enlèvement Garantis',
@@ -1545,12 +1682,12 @@ en: {
     dashActivity: 'Historique des Événements',
     dashOfficialEmails: 'Courriers Officiels',
     dashReviews: 'Avis Investisseurs',
-    dashAvailableBalance: 'Solde Disponible',
-    dashLockedCapital: 'Capital Actif Déployé',
-    dashTotalEarnings: 'Total des Gains Générés',
+    dashAvailableBalance: 'SOLDE DISPONIBLE',
+    dashLockedCapital: 'CAPITAL ACTIF DÉPLOYÉ',
+    dashTotalEarnings: 'BÉNÉFICE NET TOTAL ACCUMULÉ',
     dashDepositFunds: 'Déposer des Fonds',
     dashWithdrawFunds: 'Demander un Retrait',
-    dashAllocateCapital: 'Nouvelle Allocation',
+    dashAllocateCapital: 'Déployer le Capital',
     dashActiveContracts: 'Cycles de Production Actifs',
     dashCountdownLabel: 'Versement de la Récolte dans',
     dashDaysRemaining: 'Jours Restants',
@@ -1644,6 +1781,48 @@ en: {
     reviewQuote: 'Votre Témoignage',
     reviewSubmit: 'Soumettre l’Avis',
 
+    // 2-Step Review Eligibility Flow
+    reviewEligibilityTitle: 'Éligibilité à l’Avis Investisseur',
+    step1BannerTitle: 'Étape 1 sur 2 : Déployer le Capital',
+    step1BannerDesc: 'Faites votre première allocation de capital pour débuter votre parcours d’investissement.',
+    step1ActionBtn: 'Déployer Maintenant',
+    step2BannerTitle: 'Étape 2 sur 2 : Compléter un Retrait',
+    step2BannerDesc: 'Vous venez d’effectuer votre première allocation ! Dès que vous demanderez et recevrez votre premier retrait de bénéfices, vous serez éligible pour laisser un avis public.',
+    step2ActionBtn: 'Demander un Retrait',
+    eligibleBannerTitle: 'Vous êtes éligible pour laisser un avis !',
+    eligibleBannerDesc: 'Vous êtes éligible pour laisser un avis ! Votre expérience vérifiée guide notre réseau mondial.',
+    eligibleActionBtn: 'Rédiger un Avis',
+
+    // Standard Dashboard Cards & Elements
+    availableBalance: 'SOLDE DISPONIBLE',
+    availableBalanceSubtitle: 'Capital liquide prêt à être déployé ou retiré',
+    activeCapitalDeployed: 'CAPITAL ACTIF DÉPLOYÉ',
+    activeCapitalSubtitle: 'Contractuellement sécurisé dans les cycles actifs',
+    totalNetProfitAccrued: 'BÉNÉFICE NET TOTAL ACCUMULÉ',
+    totalNetProfitSubtitle: 'Rendement audité cumulé reversé au portefeuille',
+    portfolioOverview: 'Aperçu du Portefeuille',
+    portfolioOverviewDesc: 'Grand livre en temps réel, allocations avicoles et cumul des rendements.',
+    quickActions: 'Actions Rapides',
+    activeCycles: 'Cycles Agricoles Actifs',
+    recentActivity: 'Opérations Récentes',
+    depositFunds: 'Déposer des Fonds',
+    requestWithdrawal: 'Demander un Retrait',
+    allocateCapital: 'Déployer le Capital',
+    leaveReviewBtn: 'Laisser un Avis',
+    viewAll: 'Voir Tout',
+    cancel: 'Annuler',
+    submit: 'Envoyer l’Avis',
+    hoverToPause: 'Survolez une carte pour suspendre le défilement',
+
+    langAll: 'Tous',
+    langZh: 'Chinois',
+    langFr: 'Français',
+    langEs: 'Espagnol',
+    langHi: 'Hindi',
+    langEn: 'Anglais',
+    platformName: 'BirdGrow',
+    tagline: 'Gestion Institutionnelle d’Actifs Agricoles',
+
     nav: {
       dashboard: 'Tableau de bord',
       plans: "Plans d'investissement",
@@ -1708,8 +1887,11 @@ en: {
     heroTotalBirdsLabel: 'Total de Aves en la Red',
     heroMetricBatches: 'Rotación de 15 a 60 Días',
     heroMetricBatchesSub: 'Rotación de ciclo biológico contractual',
+    heroMetricCapital: '45,2 M £',
     heroMetricCapitalSub: 'En el capital total desplegado en nuestras granjas',
+    heroMetricVelocity: '15–60d',
     heroMetricVelocitySub: 'Rápida liquidez del capital biológico',
+    heroMetricEsg: '100% No transgénico',
     heroMetricEsgSub: '100% No transgénico & energía solar',
     heroTotalFlock: 'Aves Vivas Bajo Gestión',
     heroForwardContracts: 'Contratos Mayoristas Cerrados',
@@ -1960,9 +2142,9 @@ en: {
     dashActivity: 'Historial de Eventos',
     dashOfficialEmails: 'Comunicaciones Oficiales',
     dashReviews: 'Reseñas de Inversores',
-    dashAvailableBalance: 'Saldo Disponible',
-    dashLockedCapital: 'Capital Activo Invertido',
-    dashTotalEarnings: 'Total Beneficio Neto Acumulado',
+    dashAvailableBalance: 'SALDO DISPONIBLE',
+    dashLockedCapital: 'CAPITAL ACTIVO ASIGNADO',
+    dashTotalEarnings: 'BENEFICIO NETO TOTAL ACUMULADO',
     dashDepositFunds: 'Depositar Fondos',
     dashWithdrawFunds: 'Solicitar Retiro',
     dashAllocateCapital: 'Nueva Inversión',
@@ -2058,6 +2240,48 @@ en: {
     reviewSub: 'Comparta su experiencia rentabilizando capital en la avicultura europea',
     reviewQuote: 'Su Reseña y Experiencia',
     reviewSubmit: 'Publicar Reseña',
+
+    // 2-Step Review Eligibility Flow
+    reviewEligibilityTitle: 'Cualificación para Reseña de Inversor',
+    step1BannerTitle: 'Paso 1 de 2: Asignar Capital',
+    step1BannerDesc: 'Realice su primera asignación de capital para iniciar su trayectoria de inversión.',
+    step1ActionBtn: 'Asignar Capital Ahora',
+    step2BannerTitle: 'Paso 2 de 2: Completar un Retiro',
+    step2BannerDesc: '¡Acaba de realizar su primera asignación! Una vez que solicite y reciba su primer retiro de ganancias, podrá publicar una reseña.',
+    step2ActionBtn: 'Solicitar Retiro',
+    eligibleBannerTitle: '¡Es elegible para dejar una reseña!',
+    eligibleBannerDesc: '¡Es elegible para dejar una reseña! Su experiencia verificada guía a inversores globales.',
+    eligibleActionBtn: 'Escribir Reseña',
+
+    // Standard Dashboard Cards & Elements
+    availableBalance: 'SALDO DISPONIBLE',
+    availableBalanceSubtitle: 'Capital líquido listo para asignación o retiro',
+    activeCapitalDeployed: 'CAPITAL ACTIVO ASIGNADO',
+    activeCapitalSubtitle: 'Asegurado contractualmente en ciclos avícolas activos',
+    totalNetProfitAccrued: 'BENEFICIO NETO TOTAL ACUMULADO',
+    totalNetProfitSubtitle: 'Rendimiento auditado acumulado devuelto a la cartera',
+    portfolioOverview: 'Resumen de la Cartera',
+    portfolioOverviewDesc: 'Libro mayor en tiempo real, asignaciones avícolas y acumulación de rendimientos.',
+    quickActions: 'Acciones Rápidas',
+    activeCycles: 'Ciclos Agrícolas Activos',
+    recentActivity: 'Operaciones Financieras Recientes',
+    depositFunds: 'Depositar Fondos',
+    requestWithdrawal: 'Solicitar Retiro',
+    allocateCapital: 'Nueva Inversión',
+    leaveReviewBtn: 'Publicar una Reseña',
+    viewAll: 'Ver Todo',
+    cancel: 'Cancelar',
+    submit: 'Enviar Reseña',
+    hoverToPause: 'Pase el cursor sobre una tarjeta para pausar el deslizamiento',
+
+    langAll: 'Todos',
+    langZh: 'Chino',
+    langFr: 'Francés',
+    langEs: 'Español',
+    langHi: 'Hindi',
+    langEn: 'Inglés',
+    platformName: 'BirdGrow',
+    tagline: 'Gestión Institucional de Activos Agrícolas',
 
     nav: {
       dashboard: 'Panel de Control',
