@@ -107,7 +107,7 @@ export const DepositModal: React.FC<DepositModalProps> = ({ isOpen, onClose, ini
     selectedCoin === 'BTC' ? 6 : selectedCoin === 'ETH' ? 4 : 2
   );
 
-  const isExceedingMillion = amount > 1000000;
+  const isExceedingMillion = amount > 500000;
   const adminEmail = settings?.adminEmail || 'compliance@birdgrow.eu';
 
   const handleCoinChange = (coin: CryptoCoin) => {

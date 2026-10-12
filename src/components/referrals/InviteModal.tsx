@@ -90,7 +90,7 @@ export const InviteModal: React.FC<InviteModalProps> = ({
               </div>
               <p className="text-[11px] mt-0.5 opacity-90 leading-relaxed">
                 {isInvestor
-                  ? `All qualified investment volume unlocks higher Investor Referrer milestone rewards (e.g. ${formatCurrentCurrency(150000, false)} at ${formatCurrentCurrencyCompact(1000000)} volume).`
+                  ? `All qualified investment volume unlocks higher Investor Referrer milestone rewards (e.g. ${formatCurrentCurrency(150000, false)} at ${formatCurrentCurrencyCompact(500000)} volume).`
                   : 'You earn milestone rewards on all qualified volume. Make an investment anytime to automatically upgrade to Investor Referrer.'}
               </p>
             </div>

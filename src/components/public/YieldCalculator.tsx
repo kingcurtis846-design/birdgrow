@@ -55,7 +55,7 @@ const DEFAULT_TIERS: TierOption[] = [
     durationDays: 60,
     roiPct: 320.0,
     minAmount: 100000,
-    maxAmount: 1000000,
+    maxAmount: 500000,
     riskRating: 'AAA',
   },
 ];
@@ -111,7 +111,7 @@ export const YieldCalculator: React.FC<YieldCalculatorProps> = ({
   // In EUR: €500 minimum qualifying.
   // In GBP (0.85): 500 * 0.85 = £425 minimum qualifying.
   const minQualifyingInActive = useMemo(() => convertGbpAmount(500, currency), [currency]);
-  const maxQualifyingInActive = useMemo(() => convertGbpAmount(1000000, currency), [currency]);
+  const maxQualifyingInActive = useMemo(() => convertGbpAmount(500000, currency), [currency]);
 
   // Amount is entered in the active currency directly.
   // Compare against minQualifyingInActive ($545 in USD, €500 in EUR, £425 in GBP)
@@ -215,7 +215,7 @@ export const YieldCalculator: React.FC<YieldCalculatorProps> = ({
     { label: t.calcCommercialTierPreset || 'Commercial Tier', val: convertGbpAmount(25000, currency) },
     { label: `${t.calcEnterprisePreset || 'Enterprise'} ${formatRawCurrency(convertGbpAmount(100000, currency), currency, false, language)}`, val: convertGbpAmount(100000, currency) },
     { label: `Macro ${formatRawCurrency(convertGbpAmount(165000, currency), currency, false, language)}`, val: convertGbpAmount(165000, currency) },
-    { label: t.calcMaxSovereignPreset || 'Max Sovereign', val: convertGbpAmount(1000000, currency) },
+    { label: t.calcMaxSovereignPreset || 'Max Sovereign', val: convertGbpAmount(500000, currency) },
   ], [currency, language, t]);
 
   return (

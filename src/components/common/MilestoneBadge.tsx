@@ -76,7 +76,7 @@ export const MilestoneBadge: React.FC<MilestoneBadgeProps> = ({
   return (
     <div
       className={`${sizeMap.container} bg-gradient-to-br from-amber-200 via-[#C5A059] to-amber-500 border-2 border-amber-600 text-[#11271D] flex flex-col items-center justify-center shrink-0 shadow-sm select-none relative group ring-2 ring-[#C5A059]/40 ${className}`}
-      title={`Diamond Crown Principal Badge (Tier 5 · ${formatCurrencyCompact(1000000)})`}
+      title={`Diamond Crown Principal Badge (Tier 5 · ${formatCurrencyCompact(500000)})`}
     >
       <Crown className={`${sizeMap.icon} text-[#11271D] drop-shadow-2xs`} />
       <span className="sr-only">Diamond Crown Principal</span>

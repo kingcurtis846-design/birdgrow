@@ -14,7 +14,7 @@ import {
   Clock,
   TrendingUp,
 } from 'lucide-react';
-import { usePlatform } from '../../context/PlatformContext';
+import { usePlatform, normalizeReviewLanguage } from '../../context/PlatformContext';
 
 interface TestimonialsSectionProps {
   onOpenReview?: () => void;
@@ -25,14 +25,13 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ onOpen
   const [isPaused, setIsPaused] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Requirement: Only display reviews approved by admin on the home screen
-  const approvedReviews = reviews.filter(
-    (r) => {
+  // Requirement: Display reviews approved by admin and matching normalized language
+  const approvedReviews = reviews.filter((r) => {
     const isApproved = r.status === 'approved' || (!r.status && r.verified);
-    const matchesLanguage = selectedLanguage === 'all' || r.language === selectedLanguage;
+    const normalizedLang = normalizeReviewLanguage(r.language);
+    const matchesLanguage = selectedLanguage === 'all' || normalizedLang === selectedLanguage.toLowerCase();
     return isApproved && matchesLanguage;
-    }
-  );
+  });
 
   // Duplicate list to achieve continuous seamless loop
   const duplicatedReviews = [...approvedReviews, ...approvedReviews];
@@ -216,7 +215,6 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ onOpen
 
               {/* Bottom: Investment Option Label + Author details */}
               <div className="mt-4 sm:mt-6 pt-4 sm:pt-5 border-t border-[#F0EFEA] space-y-2.5 sm:space-y-3">
-                {/* Automatically labeled under the investor's investment option */}
                 <div className="bg-[#FAF9F5] p-2 sm:p-2.5 rounded-xl border border-[#E5E3D8] text-[11px] sm:text-xs font-mono font-medium text-[#1B3B2B] flex items-center gap-2 group-hover:border-[#1B3B2B]/40 transition-colors">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#16A34A] shrink-0" />
                   <span className="truncate">{item.yieldAchieved}</span>

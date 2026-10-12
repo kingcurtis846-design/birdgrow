@@ -303,7 +303,7 @@ export const INITIAL_PLANS: InvestmentPlan[] = [
     id: 'plan-60d-320pct',
     title: 'Enterprise Plan',
     min_amount: 100000,
-    max_amount: 1000000,
+    max_amount: 500000,
     duration_days: 60,
     roi_percentage: 320.0,
     risk_rating: 'A+',

@@ -7,7 +7,7 @@ export type ReferralInvestmentQualification = 'qualified' | 'pending_verificatio
 export interface ReferralMilestoneDefinition {
   id: string;
   name: string; // e.g. "Seedling Pioneer", "Silver Flock Ambassador", "Gold Estate Syndicator", "Platinum Agri-Director", "Diamond Crown Principal"
-  volumeThreshold: number; // e.g. 500, 100000, 250000, 500000, 1000000
+  volumeThreshold: number; // e.g. 500, 100000, 250000, 500000, 500000
   label: string; // "€500", "€100,000"
   shortLabel: string; // "€500", "€100K"
   basicReward: number; // 5% calculation (€25, €5,000, €12,500, €30,000, €75,000)

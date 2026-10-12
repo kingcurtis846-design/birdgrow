@@ -52,7 +52,7 @@ describe('Financial Engine & Localization Formatters', () => {
     expect(INITIAL_PLANS[3].roi_percentage).toBe(320.0);
     expect(INITIAL_PLANS[3].duration_days).toBe(60);
     expect(INITIAL_PLANS[3].min_amount).toBe(100000);
-    expect(INITIAL_PLANS[3].max_amount).toBe(1000000);
+    expect(INITIAL_PLANS[3].max_amount).toBe(500000);
   });
 
   it('strictly enforces Starter Plan ceiling at 4,499 and Commercial Plan ceiling at 99,999', () => {

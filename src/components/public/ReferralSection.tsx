@@ -118,15 +118,15 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                <span><strong>Named Milestones From {formatCurrentCurrency(500, false)} to {formatCurrentCurrency(1000000, false)}:</strong> Progress from Seedling Pioneer to Diamond Crown Principal, earning from <strong>{formatCurrentCurrency(25, false)}</strong> up to <strong>{formatCurrentCurrency(75000, false)}</strong> per milestone.</span>
+                <span><strong>Named Milestones From {formatCurrentCurrency(500, false)} to {formatCurrentCurrency(500000, false)}:</strong> Progress from Seedling Pioneer to Diamond Crown Principal, earning from <strong>{formatCurrentCurrency(25, false)}</strong> up to <strong>{formatCurrentCurrency(75000, false)}</strong> per milestone.</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                <span><strong>{t.refPotentialMax || 'Potential Max Payout in a Cycle'}:</strong> Earn up to <strong>{formatCurrentCurrency(122525, false)}</strong> total cumulative payout per {formatCurrentCurrency(1000000, false)} cycle.</span>
+                <span><strong>{t.refPotentialMax || 'Potential Max Payout in a Cycle'}:</strong> Earn up to <strong>{formatCurrentCurrency(122525, false)}</strong> total cumulative payout per {formatCurrentCurrency(500000, false)} cycle.</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                <span><strong>{t.refAutoRenewal || 'Automatic Renewal'}:</strong> Once {formatCurrentCurrencyCompact(1000000)} target is reached and payment reflected, a new referral bar appears starting from {formatCurrentCurrency(500, false)}!</span>
+                <span><strong>{t.refAutoRenewal || 'Automatic Renewal'}:</strong> Once {formatCurrentCurrencyCompact(500000)} target is reached and payment reflected, a new referral bar appears starting from {formatCurrentCurrency(500, false)}!</span>
               </li>
             </ul>
 
@@ -162,11 +162,11 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#C5A059] shrink-0 mt-0.5" />
-                <span><strong>{t.refPotentialMax || 'Potential Max Payout in a Cycle'}:</strong> Accumulate up to <strong>{formatCurrentCurrency(245050, false)}</strong> total across all 5 milestones in a single {formatCurrentCurrency(1000000, false)} cycle!</span>
+                <span><strong>{t.refPotentialMax || 'Potential Max Payout in a Cycle'}:</strong> Accumulate up to <strong>{formatCurrentCurrency(245050, false)}</strong> total across all 5 milestones in a single {formatCurrentCurrency(500000, false)} cycle!</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#C5A059] shrink-0 mt-0.5" />
-                <span><strong>Multi-Bar Continuity:</strong> Reaching {formatCurrentCurrencyCompact(1000000)} and payment reflection activates a fresh milestone bar starting from {formatCurrentCurrency(500, false)}.</span>
+                <span><strong>Multi-Bar Continuity:</strong> Reaching {formatCurrentCurrencyCompact(500000)} and payment reflection activates a fresh milestone bar starting from {formatCurrentCurrency(500, false)}.</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#C5A059] shrink-0 mt-0.5" />
@@ -227,7 +227,7 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
             {REFERRAL_MILESTONES.map((m) => {
-              const isTop = m.volumeThreshold === 1000000;
+              const isTop = m.volumeThreshold === 500000;
               return (
                 <div
                   key={`card-${m.id}`}
@@ -334,7 +334,7 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({
                 <tr className="bg-[#F7F6F2] font-bold text-[#1B3B2B]">
                   <td className="py-3.5 px-5">
                     <div className="text-sm font-black text-[#1B3B2B]">Current Max Potential Payout in a Cycle</div>
-                    <div className="text-[11px] text-[#5C6572] font-normal">Cumulative across all 5 milestones up to {formatCurrentCurrency(1000000, false)} target</div>
+                    <div className="text-[11px] text-[#5C6572] font-normal">Cumulative across all 5 milestones up to {formatCurrentCurrency(500000, false)} target</div>
                   </td>
                   <td className="py-3.5 px-5 font-mono font-bold text-[#5C6572] text-sm">
                     {formatCurrentCurrency(122525, false)}

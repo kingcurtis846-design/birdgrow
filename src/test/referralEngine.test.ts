@@ -57,7 +57,7 @@ describe('Referral Engine - Milestone Structure & Rewards (Euros)', () => {
 
     // Milestone 5: €1,000,000 
     expect(m1m.name).toBe('Diamond Crown Principal');
-    expect(m1m.volumeThreshold).toBe(1000000);
+    expect(m1m.volumeThreshold).toBe(500000);
     expect(m1m.label).toBe('€1,000,000');
     expect(m1m.shortLabel).toBe('€1M');
     expect(m1m.basicReward).toBe(75000);
@@ -103,7 +103,7 @@ describe('Referral Engine - Milestone Structure & Rewards (Euros)', () => {
   });
 
   it('verifies cumulative milestone payouts where total at €1,000,000 = €245,050 for Investor Referrer and €122,525 for Basic Referrer', () => {
-    const awards = evaluateNewMilestoneAwards('user-inv', 1000000, true, []);
+    const awards = evaluateNewMilestoneAwards('user-inv', 500000, true, []);
     expect(awards).toHaveLength(5);
 
     const totalPayout = awards.reduce((sum, a) => sum + a.rewardAmount, 0);
@@ -111,11 +111,11 @@ describe('Referral Engine - Milestone Structure & Rewards (Euros)', () => {
     expect(totalPayout).toBe(245050);
 
     // Each milestone only awarded once: if we run again with existing awards, no new awards are given
-    const subsequentAwards = evaluateNewMilestoneAwards('user-inv', 1000000, true, awards);
+    const subsequentAwards = evaluateNewMilestoneAwards('user-inv', 500000, true, awards);
     expect(subsequentAwards).toHaveLength(0);
 
     // Basic referrer awards at 1M - verifies no non-investor receives a reward above 16,000 dollars ($16,000 USD / ~€14,678)
-    const basicAwards = evaluateNewMilestoneAwards('user-basic', 1000000, false, []);
+    const basicAwards = evaluateNewMilestoneAwards('user-basic', 500000, false, []);
     const basicTotal = basicAwards.reduce((sum, a) => sum + a.rewardAmount, 0);
     // €25 + €5,000 + €12,500 + €30,000 + €75,000 = €122,525
     expect(basicTotal).toBe(122525);
@@ -180,7 +180,7 @@ describe('Referral Engine - Milestone Structure & Rewards (Euros)', () => {
         referrerUserId: 'user-cycle-test',
         referredUserId: 'ref-u1',
         referredUserName: 'Investor Alpha',
-        amount: 1000000,
+        amount: 500000,
         qualificationStatus: 'qualified',
         investmentDate: '2026-01-15',
         qualificationDate: '2026-01-15',
@@ -192,7 +192,7 @@ describe('Referral Engine - Milestone Structure & Rewards (Euros)', () => {
         id: 'rew-1m',
         userId: 'user-cycle-test',
         milestoneId: 'milestone-1m',
-        volumeThreshold: 1000000,
+        volumeThreshold: 500000,
         rewardAmount: 150000,
         referrerTypeAtAward: 'investor',
         status: 'unlocked', // Not paid yet
@@ -263,12 +263,12 @@ describe('Referral Engine - Milestone Structure & Rewards (Euros)', () => {
     const bar2 = summaryAfterPayment.cycleBars[1];
     expect(bar2.cycle).toBe(2);
     expect(bar2.currentVolume).toBe(500);
-    expect(bar2.targetVolume).toBe(1000000);
+    expect(bar2.targetVolume).toBe(500000);
     expect(bar2.milestones[0].definition.volumeThreshold).toBe(500);
     expect(bar2.milestones[0].definition.investorReward).toBe(50); // Same 10% calculation
     expect(bar2.milestones[1].definition.volumeThreshold).toBe(100000);
     expect(bar2.milestones[1].definition.investorReward).toBe(10000); // Same 10% calculation
-    expect(bar2.milestones[4].definition.volumeThreshold).toBe(1000000);
+    expect(bar2.milestones[4].definition.volumeThreshold).toBe(500000);
     expect(bar2.milestones[4].definition.investorReward).toBe(150000); // Same calculation
   });
 
@@ -281,7 +281,7 @@ describe('Referral Engine - Milestone Structure & Rewards (Euros)', () => {
         referrerUserId: 'ref-user',
         referredUserId: 'client-1',
         referredUserName: 'Single Large European Investor',
-        amount: 1000000,
+        amount: 500000,
         qualificationStatus: 'qualified',
         investmentDate: '2026-03-01',
         qualificationDate: '2026-03-01',
@@ -344,10 +344,10 @@ describe('Referral Engine - Milestone Structure & Rewards (Euros)', () => {
       []
     );
 
-    expect(summarySingle.totalQualifiedVolume).toBe(1000000);
-    expect(summaryMultiple.totalQualifiedVolume).toBe(1000000);
+    expect(summarySingle.totalQualifiedVolume).toBe(500000);
+    expect(summaryMultiple.totalQualifiedVolume).toBe(500000);
     expect(summarySingle.currentMilestone?.id).toBe(summaryMultiple.currentMilestone?.id);
-    expect(summarySingle.currentMilestone?.volumeThreshold).toBe(1000000);
+    expect(summarySingle.currentMilestone?.volumeThreshold).toBe(500000);
   });
 
   it('calculates the exact progress bar example from the prompt in Euros: €725,000 / €1,000,000 -> 72.5%, €275,000 remaining, €150,000 next reward', () => {
@@ -409,7 +409,7 @@ describe('Referral Engine - Milestone Structure & Rewards (Euros)', () => {
     expect(summary.referrerType).toBe('investor');
     expect(summary.totalQualifiedVolume).toBe(725000);
     expect(summary.currentMilestone?.volumeThreshold).toBe(500000);
-    expect(summary.nextMilestone?.volumeThreshold).toBe(1000000);
+    expect(summary.nextMilestone?.volumeThreshold).toBe(500000);
     expect(summary.volumeNeededForNextMilestone).toBe(275000);
     expect(summary.progressPercentage).toBe(72.5);
     expect(summary.nextMilestone?.investorReward).toBe(150000);
@@ -417,11 +417,11 @@ describe('Referral Engine - Milestone Structure & Rewards (Euros)', () => {
 
   it('formats Euro currency and compact notations accurately', () => {
     expect(formatReferralCurrency(100000)).toBe('€100,000');
-    expect(formatReferralCurrency(1000000)).toBe('€1,000,000');
+    expect(formatReferralCurrency(500000)).toBe('€1,000,000');
     expect(formatReferralCurrency(275000)).toBe('€275,000');
 
     expect(formatReferralCompact(100000)).toBe('€100K');
-    expect(formatReferralCompact(1000000)).toBe('€1M');
+    expect(formatReferralCompact(500000)).toBe('€1M');
     expect(formatReferralCompact(2500000)).toBe('€2.5M');
 
     // Backwards compatibility aliases also format with €

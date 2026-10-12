@@ -67,7 +67,7 @@ export const REFERRAL_MILESTONES: ReferralMilestoneDefinition[] = [
   {
     id: 'milestone-1m',
     name: 'Diamond Crown Principal',
-    volumeThreshold: 1000000,
+    volumeThreshold: 500000,
     label: '€1,000,000',
     shortLabel: '€1M',
     basicReward: 75000, 
@@ -126,7 +126,7 @@ export const CYCLE_2_MILESTONES: ReferralMilestoneDefinition[] = [
   {
     id: 'c2-milestone-1m',
     name: 'Diamond Crown Principal',
-    volumeThreshold: 1000000,
+    volumeThreshold: 500000,
     label: '€1,000,000',
     shortLabel: '€1M',
     basicReward: 75000,
@@ -162,8 +162,8 @@ export const formatReferralCompact = (
   const rate = curr === 'EUR' && typeof window === 'undefined' ? 1.0 : (MOCK_EXCHANGE_RATES[curr] || 1.0);
   const converted = amount * rate;
   const sym = CURRENCY_SYMBOLS[curr] || '€';
-  if (converted >= 1000000) {
-    const val = converted / 1000000;
+  if (converted >= 500000) {
+    const val = converted / 500000;
     return `${sym}${val % 1 === 0 ? val : val.toFixed(1)}M`;
   }
   if (converted >= 1000) {
@@ -286,13 +286,13 @@ export const evaluateNewMilestoneAwards = (
   const is1mPaid = existingRewards.some(
     (r) =>
       r.userId === userId &&
-      (r.milestoneId === 'milestone-1m' || (r.volumeThreshold === 1000000 && r.cycle !== 2)) &&
+      (r.milestoneId === 'milestone-1m' || (r.volumeThreshold === 500000 && r.cycle !== 2)) &&
       r.status === 'paid'
   );
 
   // If Cycle 1 1M payment has reflected, activate Cycle 2
   if (is1mPaid) {
-    const cycle2Volume = Math.max(0, qualifiedVolume - 1000000);
+    const cycle2Volume = Math.max(0, qualifiedVolume - 500000);
 
     for (const milestone of CYCLE_2_MILESTONES) {
       if (cycle2Volume >= milestone.volumeThreshold) {
@@ -377,10 +377,10 @@ export const calculateReferralUserSummary = (
     .reduce((sum, r) => sum + r.rewardAmount, 0);
 
   // Check Cycle 1 Completion and Payment Reflection
-  const cycle1Completed = totalQualifiedVolume >= 1000000;
+  const cycle1Completed = totalQualifiedVolume >= 500000;
   const cycle1PaymentReflected = userRewards.some(
     (r) =>
-      (r.milestoneId === 'milestone-1m' || (r.volumeThreshold === 1000000 && r.cycle !== 2)) &&
+      (r.milestoneId === 'milestone-1m' || (r.volumeThreshold === 500000 && r.cycle !== 2)) &&
       r.status === 'paid'
   );
 
@@ -434,14 +434,14 @@ export const calculateReferralUserSummary = (
       ? 'Cycle 1 Milestone Ladder (Completed & Paid)'
       : cycle1Completed
       ? 'Cycle 1 Milestone Ladder (Target Reached · Awaiting Claim/Payment)'
-      : `Cycle 1 Milestone Ladder (${formatReferralCurrency(1000000)} Target)`,
+      : `Cycle 1 Milestone Ladder (${formatReferralCurrency(500000)} Target)`,
     isCompleted: cycle1Completed,
     isPaymentReflected: cycle1PaymentReflected,
-    currentVolume: Math.min(1000000, totalQualifiedVolume),
-    targetVolume: 1000000,
+    currentVolume: Math.min(500000, totalQualifiedVolume),
+    targetVolume: 500000,
     progressPercentage: cycle1Completed
       ? 100
-      : Math.min(100, Math.max(0, Math.round((totalQualifiedVolume / 1000000) * 1000) / 10)),
+      : Math.min(100, Math.max(0, Math.round((totalQualifiedVolume / 500000) * 1000) / 10)),
     nextMilestone: nextMilestoneCycle1,
     volumeNeededForNextMilestone: volumeNeededCycle1,
     milestones: cycle1ProgressItems,
@@ -450,7 +450,7 @@ export const calculateReferralUserSummary = (
   const cycleBars: MilestoneCycleBar[] = [cycle1Bar];
 
   // Cycle 2 Bar Setup: Appears once Cycle 1 target reached and payment reflected
-  const cycle2Volume = Math.max(0, totalQualifiedVolume - 1000000);
+  const cycle2Volume = Math.max(0, totalQualifiedVolume - 500000);
   const nextMilestoneCycle2 =
     CYCLE_2_MILESTONES.find((m) => cycle2Volume < m.volumeThreshold) || null;
   const volumeNeededCycle2 = nextMilestoneCycle2
@@ -497,18 +497,18 @@ export const calculateReferralUserSummary = (
     const cycle2Bar: MilestoneCycleBar = {
       cycle: 2,
       title: 'Cycle 2 Milestone Ladder (Active · New Referral Bar)',
-      isCompleted: cycle2Volume >= 1000000,
+      isCompleted: cycle2Volume >= 500000,
       isPaymentReflected: userRewards.some((r) => r.milestoneId === 'c2-milestone-1m' && r.status === 'paid'),
       currentVolume: cycle2Volume,
-      targetVolume: 1000000,
+      targetVolume: 500000,
       progressPercentage:
-        cycle2Volume >= 1000000
+        cycle2Volume >= 500000
           ? 100
           : Math.min(
               100,
               Math.max(
                 0,
-                Math.round((cycle2Volume / 1000000) * 1000) / 10
+                Math.round((cycle2Volume / 500000) * 1000) / 10
               )
             ),
       nextMilestone: nextMilestoneCycle2,

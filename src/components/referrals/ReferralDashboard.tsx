@@ -156,7 +156,7 @@ export const ReferralDashboard: React.FC<ReferralDashboardProps> = ({
               {t.refTitle || 'Referral Rewards Program'}
             </h2>
             <p className="text-xs sm:text-sm text-[#A7B6AB] leading-relaxed">
-              {t.refDesc || `Earn cumulative milestone payouts determined by the total qualified investment volume generated through your referral link. One investor contributing ${formatCurrentCurrency(1000000, false)} unlocks the exact same milestone as ten investors contributing ${formatCurrentCurrency(100000, false)} each.`}
+              {t.refDesc || `Earn cumulative milestone payouts determined by the total qualified investment volume generated through your referral link. One investor contributing ${formatCurrentCurrency(500000, false)} unlocks the exact same milestone as ten investors contributing ${formatCurrentCurrency(100000, false)} each.`}
             </p>
           </div>
 
@@ -271,14 +271,14 @@ export const ReferralDashboard: React.FC<ReferralDashboardProps> = ({
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#C5A059]">
-                  Milestone Target {formatCurrentCurrency(1000000, false)} Reached!
+                  Milestone Target {formatCurrentCurrency(500000, false)} Reached!
                 </span>
               </div>
               <h4 className="text-base font-extrabold text-[#1B3B2B]">
                 Claim Your {formatCurrentCurrency(150000, false)} Milestone Payout to Reflect Payment
               </h4>
               <p className="text-xs text-[#5C6572] leading-relaxed">
-                Your cumulative qualified referral volume reached {formatCurrentCurrency(1000000, false)}. Once you claim this payout and payment reflects in your balance, Cycle 1 will mark as <strong>Completed</strong> and a new referral bar with the same milestone rewards starting from {formatCurrentCurrency(500, false)} will activate!
+                Your cumulative qualified referral volume reached {formatCurrentCurrency(500000, false)}. Once you claim this payout and payment reflects in your balance, Cycle 1 will mark as <strong>Completed</strong> and a new referral bar with the same milestone rewards starting from {formatCurrentCurrency(500, false)} will activate!
               </p>
             </div>
             {availableRewards > 0 && (
@@ -286,7 +286,7 @@ export const ReferralDashboard: React.FC<ReferralDashboardProps> = ({
                 type="button"
                 onClick={() => {
                   const rew1m = milestones.find(
-                    (m) => m.definition.volumeThreshold === 1000000 && m.awardedRecord?.status === 'unlocked'
+                    (m) => m.definition.volumeThreshold === 500000 && m.awardedRecord?.status === 'unlocked'
                   );
                   if (rew1m?.awardedRecord) {
                     handleClaim(rew1m.awardedRecord.id);
@@ -363,7 +363,7 @@ export const ReferralDashboard: React.FC<ReferralDashboardProps> = ({
                   {isBarCompleted ? (
                     <div className="text-xs text-emerald-700 font-bold mt-0.5 flex items-center justify-end gap-1">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                      <span>{formatCurrentCurrency(1000000, false)} Target Fully Paid</span>
+                      <span>{formatCurrentCurrency(500000, false)} Target Fully Paid</span>
                     </div>
                   ) : bar.nextMilestone ? (
                     <div className="text-xs text-[#16A34A] font-semibold mt-0.5">
@@ -414,7 +414,7 @@ export const ReferralDashboard: React.FC<ReferralDashboardProps> = ({
                     Milestone Reward Tiers ({isInvestor ? 'Investor Referrer Rates' : 'Basic Referrer Rates'})
                   </span>
                   <span className="text-[11px] text-[#5C6572]">
-                    Starts from {formatCurrentCurrency(500, false)} · Cumulative · Stops at {formatCurrentCurrency(1000000, false)}
+                    Starts from {formatCurrentCurrency(500, false)} · Cumulative · Stops at {formatCurrentCurrency(500000, false)}
                   </span>
                 </div>
 
