@@ -412,11 +412,11 @@ describe('Referral Engine - Milestone Structure & Rewards (Euros)', () => {
 
   it('formats Euro currency and compact notations accurately', () => {
     expect(formatReferralCurrency(100000)).toBe('€100,000');
-    expect(formatReferralCurrency(500000)).toBe('€1,000,000');
-    expect(formatReferralCurrency(275000)).toBe('€275,000');
+    expect(formatReferralCurrency(500000)).toBe('€500,000');
+    expect(formatReferralCurrency(63050)).toBe('€63,050');
 
     expect(formatReferralCompact(100000)).toBe('€100K');
-    expect(formatReferralCompact(500000)).toBe('€1M');
+    expect(formatReferralCompact(500000)).toBe('€500K');
     expect(formatReferralCompact(2500000)).toBe('€2.5M');
 
     // Backwards compatibility aliases also format with €
