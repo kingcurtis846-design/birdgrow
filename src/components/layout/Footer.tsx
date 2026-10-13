@@ -225,7 +225,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection, onOpenAuth, o
         {/* Regulatory Disclosure Bottom */}
         <div className="pt-8 text-xs text-[#7D8E81] space-y-3 leading-relaxed">
           <p>
-            <strong className="text-[#A7B6AB]">Regulatory & Risk Notice:</strong> {t.footerRiskDisclaimer || 'Investing in agricultural production contracts involves biological risks, weather volatility, feed price fluctuations, and operational variances. Past cycle yields do not guarantee identical future results. Expected returns are modeled based on verified long-term off-take agreements with European grocery retail chains and certified food processors.'}
+            <strong className="text-[#A7B6AB]"> College Square, Townsend street, Dublin 2, Ireland </strong>
           </p>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-[#1C3628]">
             <p>© {new Date().getFullYear()} BirdGrow European Agri-Fintech S.A. {t.footerAllRightsReserved || 'All rights reserved.'}</p>

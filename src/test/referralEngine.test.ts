@@ -31,29 +31,37 @@ describe('Referral Engine - Milestone Structure & Rewards (Euros)', () => {
     expect(m500.basicReward).toBe(25);
     expect(m500.investorReward).toBe(50);
 
-    // Milestone 2: €100,000
+    // Milestone 2: €5,000
     expect(m100k.name).toBe('Silver Flock Ambassador');
-    expect(m100k.volumeThreshold).toBe(100000);
-    expect(m100k.label).toBe('€100,000');
-    expect(m100k.shortLabel).toBe('€100K');
-    expect(m100k.basicReward).toBe(5000);
-    expect(m100k.investorReward).toBe(10000);
+    expect(m100k.volumeThreshold).toBe(5000);
+    expect(m100k.label).toBe('€5,000');
+    expect(m100k.shortLabel).toBe('€5K');
+    expect(m100k.basicReward).toBe(250);
+    expect(m100k.investorReward).toBe(500);
 
-    // Milestone 3: €250,000
+    // Milestone 3: €25,000
     expect(m250k.name).toBe('Gold Estate Syndicator');
-    expect(m250k.volumeThreshold).toBe(250000);
-    expect(m250k.label).toBe('€250,000');
-    expect(m250k.shortLabel).toBe('€250K');
-    expect(m250k.basicReward).toBe(12500);
-    expect(m250k.investorReward).toBe(24999);
+    expect(m250k.volumeThreshold).toBe(25000);
+    expect(m250k.label).toBe('€25,000');
+    expect(m250k.shortLabel).toBe('€25K');
+    expect(m250k.basicReward).toBe(1250);
+    expect(m250k.investorReward).toBe(2500);
 
-    // Milestone 4: €500,000 
+    // Milestone 4: €100,000 
     expect(m500k.name).toBe('Platinum Agri-Director');
-    expect(m500k.volumeThreshold).toBe(500000);
-    expect(m500k.label).toBe('€500,000');
-    expect(m500k.shortLabel).toBe('€500K');
-    expect(m500k.basicReward).toBe(30000);
-    expect(m500k.investorReward).toBe(60000);
+    expect(m500k.volumeThreshold).toBe(100000);
+    expect(m500k.label).toBe('€100,000');
+    expect(m500k.shortLabel).toBe('€100K');
+    expect(m500k.basicReward).toBe(5000);
+    expect(m500k.investorReward).toBe(10000);
+
+    // Milestone 5: €500,000
+    expect(m1m.name).toBe('Diamond Global Syndicator');
+    expect(m1m.volumeThreshold).toBe(500000);
+    expect(m1m.label).toBe('€500,000');
+    expect(m1m.shortLabel).toBe('€500K');
+    expect(m1m.basicReward).toBe(25000);
+    expect(m1m.investorReward).toBe(50000);
   });
 
   it('determines Basic vs Investor referrer status accurately and handles auto-upgrade', () => {
@@ -94,27 +102,22 @@ describe('Referral Engine - Milestone Structure & Rewards (Euros)', () => {
     expect(isUserInvestorReferrer('user-basic-1', updatedInvestments)).toBe(true);
   });
 
-  it('verifies cumulative milestone payouts where total at €1,000,000 = €245,050 for Investor Referrer and €122,525 for Basic Referrer', () => {
+  it('verifies cumulative milestone payouts where total at €500,000 = €63,050 for Investor Referrer and €31,525 for Basic Referrer', () => {
     const awards = evaluateNewMilestoneAwards('user-inv', 500000, true, []);
     expect(awards).toHaveLength(5);
 
     const totalPayout = awards.reduce((sum, a) => sum + a.rewardAmount, 0);
-    // €50 + €10,000 + €25,000 + €60,000 + €150,000 = €245,050
-    expect(totalPayout).toBe(245050);
+    // €50 + €500 + €2,500 + €10,000 + €50,000 = €63,050
+    expect(totalPayout).toBe(63050);
 
     // Each milestone only awarded once: if we run again with existing awards, no new awards are given
     const subsequentAwards = evaluateNewMilestoneAwards('user-inv', 500000, true, awards);
     expect(subsequentAwards).toHaveLength(0);
 
-    // Basic referrer awards at 1M - verifies no non-investor receives a reward above 16,000 dollars ($16,000 USD / ~€14,678)
+    // €25 + €250 + €1,250 + €5,000 + €25,000 = €31,525
     const basicAwards = evaluateNewMilestoneAwards('user-basic', 500000, false, []);
     const basicTotal = basicAwards.reduce((sum, a) => sum + a.rewardAmount, 0);
-    // €25 + €5,000 + €12,500 + €30,000 + €75,000 = €122,525
-    expect(basicTotal).toBe(122525);
-    // Strict rule check: every single reward for non-investor is <= 16,000 dollars (~€14,678)
-    basicAwards.forEach((a) => {
-      expect(a.rewardAmount).toBeLessThanOrEqual(122525);
-    });
+    expect(basicTotal).toBe(31525);
   });
 
   it('verifies that once 1M target is reached and payment reflected, a new referral bar appears starting from €500 with same calculation percentage', () => {

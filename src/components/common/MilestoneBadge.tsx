@@ -33,12 +33,12 @@ export const MilestoneBadge: React.FC<MilestoneBadgeProps> = ({
     );
   }
 
-  if (volumeThreshold <= 100000) {
+  if (volumeThreshold <= 5000) {
     // Milestone 2: Silver Flock Ambassador
     return (
       <div
         className={`${sizeMap.container} bg-gradient-to-br from-slate-100 via-slate-200 to-zinc-300 border-2 border-slate-400 text-slate-800 flex flex-col items-center justify-center shrink-0 shadow-2xs select-none relative group ${className}`}
-        title={`Silver Flock Ambassador Badge (Tier 2 · ${formatCurrencyCompact(100000)})`}
+        title={`Silver Flock Ambassador Badge (Tier 2 · ${formatCurrencyCompact(5000)})`}
       >
         <Medal className={`${sizeMap.icon} text-slate-700 drop-shadow-2xs`} />
         <span className="sr-only">Silver Flock Ambassador</span>
@@ -46,12 +46,12 @@ export const MilestoneBadge: React.FC<MilestoneBadgeProps> = ({
     );
   }
 
-  if (volumeThreshold <= 250000) {
+  if (volumeThreshold <= 25000) {
     // Milestone 3: Gold Estate Syndicator
     return (
       <div
         className={`${sizeMap.container} bg-gradient-to-br from-amber-100 via-amber-200 to-[#C5A059] border-2 border-amber-500 text-amber-950 flex flex-col items-center justify-center shrink-0 shadow-2xs select-none relative group ${className}`}
-        title={`Gold Estate Syndicator Badge (Tier 3 · ${formatCurrencyCompact(250000)})`}
+        title={`Gold Estate Syndicator Badge (Tier 3 · ${formatCurrencyCompact(25000)})`}
       >
         <Award className={`${sizeMap.icon} text-amber-900 drop-shadow-2xs`} />
         <span className="sr-only">Gold Estate Syndicator</span>
@@ -59,16 +59,27 @@ export const MilestoneBadge: React.FC<MilestoneBadgeProps> = ({
     );
   }
 
-  if (volumeThreshold <= 500000) {
+  if (volumeThreshold <= 100000) {
     // Milestone 4: Platinum Agri-Director
     return (
       <div
         className={`${sizeMap.container} bg-gradient-to-br from-cyan-100 via-sky-200 to-indigo-300 border-2 border-cyan-500 text-indigo-950 flex flex-col items-center justify-center shrink-0 shadow-2xs select-none relative group ${className}`}
-        title={`Platinum Agri-Director Badge (Tier 4 · ${formatCurrencyCompact(500000)})`}
+        title={`Platinum Agri-Director Badge (Tier 4 · ${formatCurrencyCompact(100000)})`}
       >
         <Gem className={`${sizeMap.icon} text-cyan-900 drop-shadow-2xs`} />
         <span className="sr-only">Platinum Agri-Director</span>
       </div>
     );
   }
-}
+
+  // Milestone 5: Diamond Crown Principal
+  return (
+    <div
+      className={`${sizeMap.container} bg-gradient-to-br from-amber-200 via-[#C5A059] to-amber-500 border-2 border-amber-600 text-[#11271D] flex flex-col items-center justify-center shrink-0 shadow-sm select-none relative group ring-2 ring-[#C5A059]/40 ${className}`}
+      title={`Diamond Crown Principal Badge (Tier 5 · ${formatCurrencyCompact(500000)})`}
+    >
+      <Crown className={`${sizeMap.icon} text-[#11271D] drop-shadow-2xs`} />
+      <span className="sr-only">Diamond Crown Principal</span>
+    </div>
+  );
+};
