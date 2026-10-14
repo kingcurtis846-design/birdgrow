@@ -397,7 +397,6 @@ export const YieldCalculator: React.FC<YieldCalculatorProps> = ({
                     <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
                     <div className="leading-relaxed">
                       <strong>Maximum single allocation exceeded ({formatRawCurrency(maxQualifyingInActive, currency, false, language)}):</strong> {t.calcContactDesk}{' '}
-                      <strong className="underline text-red-900">{adminEmail}</strong>
                     </div>
                   </div>
                 )}

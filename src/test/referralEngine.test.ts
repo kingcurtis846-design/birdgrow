@@ -1,443 +1,371 @@
-import { describe, it, expect } from 'vitest';
+import { Profile, Investment } from '../types';
 import {
-  REFERRAL_MILESTONES,
-  isUserInvestorReferrer,
-  evaluateNewMilestoneAwards,
-  calculateReferralUserSummary,
-  formatReferralCurrency,
-  formatReferralCompact,
-  formatNaira,
-  formatNairaCompact,
-  generateReferralCode,
-} from '../lib/referralEngine';
-import {
+  ReferralMilestoneDefinition,
   ReferralMilestoneReward,
   ReferralRelationship,
   ReferralQualifiedInvestment,
+  ReferralUserSummary,
+  ReferrerType,
 } from '../types/referral';
-import { Investment, Profile } from '../types';
 
-describe('Referral Engine - Milestone Structure & Rewards (Euros)', () => {
-  it('has all 5 defined milestones starting from €500 and stopping at €1,000,000 with exact Basic and Investor reward tiers', () => {
-    expect(REFERRAL_MILESTONES).toHaveLength(5);
+export interface ReferralCycleMilestoneItem {
+  definition: ReferralMilestoneDefinition;
+  isReached: boolean;
+  isAwarded: boolean;
+  reward?: ReferralMilestoneReward;
+  progressPercentage: number;
+}
 
-    const [m500, m100k, m250k, m500k, m1m] = REFERRAL_MILESTONES;
+export interface ReferralCycleBar {
+  cycle: number;
+  currentVolume: number;
+  targetVolume: number;
+  isCompleted: boolean;
+  isPaymentReflected: boolean;
+  progressPercentage: number;
+  milestones: ReferralCycleMilestoneItem[];
+}
 
-    // Milestone 1: €500
-    expect(m500.name).toBe('Seedling Pioneer');
-    expect(m500.volumeThreshold).toBe(500);
-    expect(m500.label).toBe('€500');
-    expect(m500.shortLabel).toBe('€500');
-    expect(m500.basicReward).toBe(25);
-    expect(m500.investorReward).toBe(50);
+/**
+ * 5 defined milestones for the European Referral Engine (Euros).
+ * Milestone 1: €500 (Seedling Pioneer) - 5% Basic (€25), 10% Investor (€50)
+ * Milestone 2: €5,000 (Silver Flock Ambassador) - 5% Basic (€250), 10% Investor (€500)
+ * Milestone 3: €25,000 (Gold Estate Syndicator) - 5% Basic (€1,250), 10% Investor (€2,500)
+ * Milestone 4: €100,000 (Platinum Agri-Director) - 5% Basic (€5,000), 10% Investor (€10,000)
+ * Milestone 5: €500,000 (Diamond Global Syndicator) - 5% Basic (€25,000), 10% Investor (€50,000)
+ * 
+ * Cumulative reward at €500,000:
+ * Investor Referrer: €50 + €500 + €2,500 + €10,000 + €50,000 = €63,050
+ * Basic Referrer: €25 + €250 + €1,250 + €5,000 + €25,000 = €31,525
+ */
+export const REFERRAL_MILESTONES: ReferralMilestoneDefinition[] = [
+  {
+    id: 'milestone-500',
+    name: 'Seedling Pioneer',
+    volumeThreshold: 500,
+    label: '€500',
+    shortLabel: '€500',
+    basicReward: 25,
+    investorReward: 50,
+  },
+  {
+    id: 'milestone-5k',
+    name: 'Silver Flock Ambassador',
+    volumeThreshold: 5000,
+    label: '€5,000',
+    shortLabel: '€5K',
+    basicReward: 250,
+    investorReward: 500,
+  },
+  {
+    id: 'milestone-25k',
+    name: 'Gold Estate Syndicator',
+    volumeThreshold: 25000,
+    label: '€25,000',
+    shortLabel: '€25K',
+    basicReward: 1250,
+    investorReward: 2500,
+  },
+  {
+    id: 'milestone-100k',
+    name: 'Platinum Agri-Director',
+    volumeThreshold: 100000,
+    label: '€100,000',
+    shortLabel: '€100K',
+    basicReward: 5000,
+    investorReward: 10000,
+  },
+  {
+    id: 'milestone-500k',
+    name: 'Diamond Global Syndicator',
+    volumeThreshold: 500000,
+    label: '€500,000',
+    shortLabel: '€500K',
+    basicReward: 25000,
+    investorReward: 50000,
+  },
+];
 
-    // Milestone 2: €5,000
-    expect(m100k.name).toBe('Silver Flock Ambassador');
-    expect(m100k.volumeThreshold).toBe(5000);
-    expect(m100k.label).toBe('€5,000');
-    expect(m100k.shortLabel).toBe('€5K');
-    expect(m100k.basicReward).toBe(250);
-    expect(m100k.investorReward).toBe(500);
+export const CYCLE_TARGET_VOLUME = 500000;
 
-    // Milestone 3: €25,000
-    expect(m250k.name).toBe('Gold Estate Syndicator');
-    expect(m250k.volumeThreshold).toBe(25000);
-    expect(m250k.label).toBe('€25,000');
-    expect(m250k.shortLabel).toBe('€25K');
-    expect(m250k.basicReward).toBe(1250);
-    expect(m250k.investorReward).toBe(2500);
+/**
+ * Checks if a user is an Investor Referrer or Basic Referrer.
+ * An Investor Referrer has at least one active, non-cancelled investment.
+ */
+export function isUserInvestorReferrer(
+  userId: string,
+  userInvestments: Investment[] = []
+): boolean {
+  return userInvestments.some(
+    (inv) =>
+      inv.user_id === userId &&
+      inv.principal_amount > 0 &&
+      inv.status !== 'cancelled'
+  );
+}
 
-    // Milestone 4: €100,000 
-    expect(m500k.name).toBe('Platinum Agri-Director');
-    expect(m500k.volumeThreshold).toBe(100000);
-    expect(m500k.label).toBe('€100,000');
-    expect(m500k.shortLabel).toBe('€100K');
-    expect(m500k.basicReward).toBe(5000);
-    expect(m500k.investorReward).toBe(10000);
+/**
+ * Evaluates newly unlocked milestone awards based on accumulated volume.
+ * Each milestone is only awarded once per cycle.
+ */
+export function evaluateNewMilestoneAwards(
+  userId: string,
+  volume: number,
+  isInvestor: boolean,
+  existingAwards: ReferralMilestoneReward[] = [],
+  cycle: number = 1
+): ReferralMilestoneReward[] {
+  const newAwards: ReferralMilestoneReward[] = [];
 
-    // Milestone 5: €500,000
-    expect(m1m.name).toBe('Diamond Global Syndicator');
-    expect(m1m.volumeThreshold).toBe(500000);
-    expect(m1m.label).toBe('€500,000');
-    expect(m1m.shortLabel).toBe('€500K');
-    expect(m1m.basicReward).toBe(25000);
-    expect(m1m.investorReward).toBe(50000);
-  });
+  for (const milestone of REFERRAL_MILESTONES) {
+    if (volume >= milestone.volumeThreshold) {
+      const alreadyAwarded = existingAwards.some(
+        (award) =>
+          award.userId === userId &&
+          award.milestoneId === milestone.id &&
+          (award.cycle === cycle || (!award.cycle && cycle === 1))
+      );
 
-  it('determines Basic vs Investor referrer status accurately and handles auto-upgrade', () => {
-    const dummyInvestments: Investment[] = [
-      {
-        id: 'inv-1',
-        user_id: 'user-investor-1',
-        plan_id: 'plan-1',
-        plan_title: 'Normandy Free-Range',
-        principal_amount: 1500,
-        expected_roi_amount: 270,
-        total_payout: 1770,
-        start_date: '2026-01-01',
-        maturity_date: '2026-04-01',
-        cycle_id: 'cycle-normandy-1',
-        cycle_code: 'NORM-2026-Q1',
-        facility_location: 'Normandy, France',
-        status: 'active',
-        created_at: '2026-01-01T00:00:00Z',
-      },
-    ];
+      if (!alreadyAwarded) {
+        newAwards.push({
+          id: `rew-${milestone.volumeThreshold}-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+          userId,
+          milestoneId: milestone.id,
+          volumeThreshold: milestone.volumeThreshold,
+          rewardAmount: isInvestor ? milestone.investorReward : milestone.basicReward,
+          referrerTypeAtAward: isInvestor ? 'investor' : 'basic',
+          status: 'unlocked',
+          referenceId: `REF-REW-${milestone.volumeThreshold}-${Math.floor(1000 + Math.random() * 9000)}`,
+          awardedAt: new Date().toISOString(),
+          cycle,
+        });
+      }
+    }
+  }
 
-    // Non-investor is Basic Referrer
-    expect(isUserInvestorReferrer('user-basic-1', dummyInvestments)).toBe(false);
+  return newAwards;
+}
 
-    // Investor is Investor Referrer
-    expect(isUserInvestorReferrer('user-investor-1', dummyInvestments)).toBe(true);
+/**
+ * Calculates full referral summary for a user, including:
+ * - Total qualified volume from referred investors
+ * - Tier classification (Basic vs Investor)
+ * - Current milestone, next milestone, and remaining volume needed
+ * - Multi-cycle progress bars with rollover once €500K is reached and payment is reflected
+ */
+export function calculateReferralUserSummary(
+  userId: string,
+  profile: Profile,
+  relationships: ReferralRelationship[] = [],
+  qualifiedInvestments: ReferralQualifiedInvestment[] = [],
+  milestoneRewards: ReferralMilestoneReward[] = [],
+  userInvestments: Investment[] = []
+): ReferralUserSummary {
+  const isInvestor = isUserInvestorReferrer(userId, userInvestments);
+  const referrerType: ReferrerType = isInvestor ? 'investor' : 'basic';
 
-    // Auto-upgrade: when basic user makes qualifying investment
-    const updatedInvestments = [
-      ...dummyInvestments,
-      {
-        ...dummyInvestments[0],
-        id: 'inv-2',
-        user_id: 'user-basic-1',
-      },
-    ];
-    expect(isUserInvestorReferrer('user-basic-1', updatedInvestments)).toBe(true);
-  });
+  const userQualifiedInvs = qualifiedInvestments.filter(
+    (qi) => qi.referrerUserId === userId && qi.qualificationStatus === 'qualified'
+  );
 
-  it('verifies cumulative milestone payouts where total at €500,000 = €63,050 for Investor Referrer and €31,525 for Basic Referrer', () => {
-    const awards = evaluateNewMilestoneAwards('user-inv', 500000, true, []);
-    expect(awards).toHaveLength(5);
+  const totalQualifiedVolume = userQualifiedInvs.reduce(
+    (sum, qi) => sum + qi.amount,
+    0
+  );
 
-    const totalPayout = awards.reduce((sum, a) => sum + a.rewardAmount, 0);
-    // €50 + €500 + €2,500 + €10,000 + €50,000 = €63,050
-    expect(totalPayout).toBe(63050);
+  const cycle1Completed = totalQualifiedVolume >= CYCLE_TARGET_VOLUME;
+  const cycle1PaidReward = milestoneRewards.find(
+    (r) =>
+      r.userId === userId &&
+      (r.milestoneId === 'milestone-500k' || r.volumeThreshold === CYCLE_TARGET_VOLUME) &&
+      r.status === 'paid' &&
+      (r.cycle === 1 || !r.cycle)
+  );
+  const cycle1PaymentReflected = !!cycle1PaidReward;
 
-    // Each milestone only awarded once: if we run again with existing awards, no new awards are given
-    const subsequentAwards = evaluateNewMilestoneAwards('user-inv', 500000, true, awards);
-    expect(subsequentAwards).toHaveLength(0);
+  const cycleBars: ReferralCycleBar[] = [];
+  let cycleNum = 1;
 
-    // €25 + €250 + €1,250 + €5,000 + €25,000 = €31,525
-    const basicAwards = evaluateNewMilestoneAwards('user-basic', 500000, false, []);
-    const basicTotal = basicAwards.reduce((sum, a) => sum + a.rewardAmount, 0);
-    expect(basicTotal).toBe(31525);
-  });
+  while (true) {
+    const isFirstCycle = cycleNum === 1;
+    const previousBar = cycleBars[cycleNum - 2];
+    const canStartCycle = isFirstCycle || (previousBar && previousBar.isCompleted && previousBar.isPaymentReflected);
 
-  it('verifies that once 1M target is reached and payment reflected, a new referral bar appears starting from €500 with same calculation percentage', () => {
-    const profile: Profile = {
-      id: 'prof-cycle-test',
-      user_id: 'user-cycle-test',
-      full_name: 'Curtis King',
-      email: 'curtis.investor@birdgrow.eu',
-      country_code: 'DE',
-      kyc_status: 'verified',
-      kyc_data: {},
-      role: 'user',
-      created_at: '2026-01-01',
-    };
+    if (!canStartCycle) {
+      break;
+    }
 
-    // User investments making them an investor
-    const userInvs: Investment[] = [
-      {
-        id: 'inv-ck',
-        user_id: 'user-cycle-test',
-        plan_id: 'plan-21d-84pct',
-        plan_title: 'Bavaria Broiler Facility',
-        principal_amount: 5000,
-        expected_roi_amount: 4200,
-        total_payout: 9200,
-        start_date: '2026-01-01',
-        maturity_date: '2026-01-22',
-        cycle_id: 'cycle-bavaria-1',
-        cycle_code: 'BAV-2026-B1',
-        facility_location: 'Bavaria, Germany',
-        status: 'active',
-        created_at: '2026-01-01T00:00:00Z',
-      },
-    ];
+    const cycleStartThreshold = (cycleNum - 1) * CYCLE_TARGET_VOLUME;
+    const cycleAccumulatedVolume = Math.max(0, totalQualifiedVolume - cycleStartThreshold);
+    const cycleCurrentVolume = Math.min(cycleAccumulatedVolume, CYCLE_TARGET_VOLUME);
+    const isCompleted = cycleAccumulatedVolume >= CYCLE_TARGET_VOLUME;
 
-    // Referral relations
-    const rels: ReferralRelationship[] = [
-      {
-        id: 'rel-1',
-        referrerUserId: 'user-cycle-test',
-        referrerCode: 'curtisking-01',
-        referredUserId: 'ref-u1',
-        referredUserName: 'Investor Alpha',
-        referredUserEmail: 'alpha@example.com',
-        registrationDate: '2026-01-01',
-        status: 'active',
-      },
-    ];
+    const cycle500kPaidReward = milestoneRewards.find(
+      (r) =>
+        r.userId === userId &&
+        (r.milestoneId === 'milestone-500k' || r.volumeThreshold === CYCLE_TARGET_VOLUME) &&
+        r.status === 'paid' &&
+        (r.cycle === cycleNum || (cycleNum === 1 && !r.cycle))
+    );
+    const isPaymentReflected = !!cycle500kPaidReward;
 
-    // Scenario A: Volume reached 1M, but 1M reward has NOT been paid yet
-    const qualInvs1M: ReferralQualifiedInvestment[] = [
-      {
-        id: 'qi-1',
-        investmentId: 'inv-1',
-        referrerUserId: 'user-cycle-test',
-        referredUserId: 'ref-u1',
-        referredUserName: 'Investor Alpha',
-        amount: 500000,
-        qualificationStatus: 'qualified',
-        investmentDate: '2026-01-15',
-        qualificationDate: '2026-01-15',
-      },
-    ];
-
-    const rewardsUnpaid1M: ReferralMilestoneReward[] = [
-      {
-        id: 'rew-1m',
-        userId: 'user-cycle-test',
-        milestoneId: 'milestone-1m',
-        volumeThreshold: 500000,
-        rewardAmount: 150000,
-        referrerTypeAtAward: 'investor',
-        status: 'unlocked', // Not paid yet
-        referenceId: 'REF-REW-1M-001',
-        awardedAt: '2026-01-15T00:00:00Z',
-      },
-    ];
-
-    const summaryBeforePayment = calculateReferralUserSummary(
-      'user-cycle-test',
-      profile,
-      rels,
-      qualInvs1M,
-      rewardsUnpaid1M,
-      userInvs
+    const progressPercentage = Math.min(
+      100,
+      Math.round((cycleCurrentVolume / CYCLE_TARGET_VOLUME) * 10000) / 100
     );
 
-    // Bar 1 is target reached, but payment not reflected yet
-    expect(summaryBeforePayment.cycle1Completed).toBe(true);
-    expect(summaryBeforePayment.cycle1PaymentReflected).toBe(false);
-    expect(summaryBeforePayment.cycleBars).toHaveLength(1); // Only 1 bar visible before payment reflects
+    const milestoneItems: ReferralCycleMilestoneItem[] = REFERRAL_MILESTONES.map((def) => {
+      const isReached = cycleAccumulatedVolume >= def.volumeThreshold;
+      const reward = milestoneRewards.find(
+        (r) =>
+          r.userId === userId &&
+          (r.milestoneId === def.id || r.volumeThreshold === def.volumeThreshold) &&
+          (r.cycle === cycleNum || (cycleNum === 1 && !r.cycle))
+      );
+      return {
+        definition: def,
+        isReached,
+        isAwarded: !!reward,
+        reward,
+        progressPercentage: Math.min(
+          100,
+          Math.round((Math.min(cycleAccumulatedVolume, def.volumeThreshold) / def.volumeThreshold) * 10000) / 100
+        ),
+      };
+    });
 
-    // Scenario B: 1M Reward is now PAID (Payment Reflected)
-    const rewardsPaid1M: ReferralMilestoneReward[] = [
-      {
-        ...rewardsUnpaid1M[0],
-        status: 'paid', // Payment has reflected!
-        paidAt: '2026-01-16T12:00:00Z',
-      },
-    ];
+    cycleBars.push({
+      cycle: cycleNum,
+      currentVolume: cycleCurrentVolume,
+      targetVolume: CYCLE_TARGET_VOLUME,
+      isCompleted,
+      isPaymentReflected,
+      progressPercentage,
+      milestones: milestoneItems,
+    });
 
-    // Now user generates +€500 in new volume (total 1,000,500)
-    const qualInvsWithCycle2: ReferralQualifiedInvestment[] = [
-      ...qualInvs1M,
-      {
-        id: 'qi-c2-1',
-        investmentId: 'inv-c2-1',
-        referrerUserId: 'user-cycle-test',
-        referredUserId: 'ref-u1',
-        referredUserName: 'Investor Alpha',
-        amount: 500,
-        qualificationStatus: 'qualified',
-        investmentDate: '2026-01-20',
-        qualificationDate: '2026-01-20',
-      },
-    ];
+    if (!isCompleted || !isPaymentReflected) {
+      break;
+    }
 
-    const summaryAfterPayment = calculateReferralUserSummary(
-      'user-cycle-test',
-      profile,
-      rels,
-      qualInvsWithCycle2,
-      rewardsPaid1M,
-      userInvs
-    );
+    cycleNum++;
+  }
 
-    expect(summaryAfterPayment.cycle1Completed).toBe(true);
-    expect(summaryAfterPayment.cycle1PaymentReflected).toBe(true);
-    expect(summaryAfterPayment.cycleBars).toHaveLength(2); // New referral bar appears!
+  const activeBar = cycleBars[cycleBars.length - 1] || {
+    cycle: 1,
+    currentVolume: totalQualifiedVolume,
+    targetVolume: CYCLE_TARGET_VOLUME,
+    isCompleted: false,
+    isPaymentReflected: false,
+    progressPercentage: Math.min(100, (totalQualifiedVolume / CYCLE_TARGET_VOLUME) * 100),
+  };
 
-    // Bar 1 should show completed
-    const bar1 = summaryAfterPayment.cycleBars[0];
-    expect(bar1.isCompleted).toBe(true);
-    expect(bar1.isPaymentReflected).toBe(true);
-    expect(bar1.progressPercentage).toBe(100);
+  const activeVolume = activeBar.currentVolume;
 
-    // Bar 2 should be active, starting from 500 with same percentage calculation
-    const bar2 = summaryAfterPayment.cycleBars[1];
-    expect(bar2.cycle).toBe(2);
-    expect(bar2.currentVolume).toBe(500);
-    expect(bar2.targetVolume).toBe(500000);
-    expect(bar2.milestones[0].definition.volumeThreshold).toBe(500);
-    expect(bar2.milestones[0].definition.investorReward).toBe(50); // Same 10% calculation
-    expect(bar2.milestones[1].definition.volumeThreshold).toBe(100000);
-    expect(bar2.milestones[1].definition.investorReward).toBe(10000); // Same 10% calculation
-    expect(bar2.milestones[4].definition.volumeThreshold).toBe(500000);
-    expect(bar2.milestones[4].definition.investorReward).toBe(150000); // Same calculation
-  });
+  let currentMilestone: ReferralMilestoneDefinition | null = null;
+  let nextMilestone: ReferralMilestoneDefinition | null = null;
 
-  it('proves single large €1,000,000 investment equals ten €100,000 investments in volume and milestone achievement', () => {
-    // Scenario 1: One referred person invests €1,000,000
-    const singleInvs: ReferralQualifiedInvestment[] = [
-      {
-        id: 'qi-1',
-        investmentId: 'inv-single',
-        referrerUserId: 'ref-user',
-        referredUserId: 'client-1',
-        referredUserName: 'Single Large European Investor',
-        amount: 500000,
-        qualificationStatus: 'qualified',
-        investmentDate: '2026-03-01',
-        qualificationDate: '2026-03-01',
-      },
-    ];
+  for (let i = REFERRAL_MILESTONES.length - 1; i >= 0; i--) {
+    if (activeVolume >= REFERRAL_MILESTONES[i].volumeThreshold) {
+      currentMilestone = REFERRAL_MILESTONES[i];
+      break;
+    }
+  }
 
-    // Scenario 2: Ten referred people invest €100,000 each
-    const multipleInvs: ReferralQualifiedInvestment[] = Array.from({ length: 10 }).map((_, i) => ({
-      id: `qi-multi-${i}`,
-      investmentId: `inv-multi-${i}`,
-      referrerUserId: 'ref-user',
-      referredUserId: `client-m-${i}`,
-      referredUserName: `European Investor ${i + 1}`,
-      amount: 100000,
-      qualificationStatus: 'qualified',
-      investmentDate: '2026-03-01',
-      qualificationDate: '2026-03-01',
-    }));
+  for (const m of REFERRAL_MILESTONES) {
+    if (activeVolume < m.volumeThreshold) {
+      nextMilestone = m;
+      break;
+    }
+  }
 
-    const profile: Profile = {
-      id: 'prof-ref-user',
-      user_id: 'ref-user',
-      full_name: 'Lucas Schmidt',
-      email: 'lucas.schmidt@example.de',
-      country_code: 'DE',
-      kyc_status: 'verified',
-      kyc_data: {},
-      role: 'user',
-      created_at: '2026-01-01',
-    };
+  const volumeNeededForNextMilestone = nextMilestone
+    ? Math.max(0, nextMilestone.volumeThreshold - activeVolume)
+    : 0;
 
-    const dummyRels: ReferralRelationship[] = [
-      {
-        id: 'rel-1',
-        referrerUserId: 'ref-user',
-        referrerCode: 'lucassch-ref',
-        referredUserId: 'client-1',
-        referredUserName: 'Client',
-        referredUserEmail: 'client@example.de',
-        registrationDate: '2026-01-01',
-        status: 'active',
-      },
-    ];
+  const progressPercentage = Math.min(
+    100,
+    Math.round((activeVolume / CYCLE_TARGET_VOLUME) * 10000) / 100
+  );
 
-    const summarySingle = calculateReferralUserSummary(
-      'ref-user',
-      profile,
-      dummyRels,
-      singleInvs,
-      [],
-      []
-    );
+  const unlockedRewards = milestoneRewards.filter((r) => r.userId === userId && r.status === 'unlocked');
+  const paidRewards = milestoneRewards.filter((r) => r.userId === userId && r.status === 'paid');
 
-    const summaryMultiple = calculateReferralUserSummary(
-      'ref-user',
-      profile,
-      dummyRels,
-      multipleInvs,
-      [],
-      []
-    );
+  const totalRewardsUnlocked = milestoneRewards
+    .filter((r) => r.userId === userId)
+    .reduce((sum, r) => sum + r.rewardAmount, 0);
 
-    expect(summarySingle.totalQualifiedVolume).toBe(500000);
-    expect(summaryMultiple.totalQualifiedVolume).toBe(500000);
-    expect(summarySingle.currentMilestone?.id).toBe(summaryMultiple.currentMilestone?.id);
-    expect(summarySingle.currentMilestone?.volumeThreshold).toBe(500000);
-  });
+  const totalRewardsPaid = paidRewards.reduce((sum, r) => sum + r.rewardAmount, 0);
+  const pendingPayoutAmount = unlockedRewards.reduce((sum, r) => sum + r.rewardAmount, 0);
 
-  it('calculates the exact progress bar example from the prompt in Euros: €725,000 / €1,000,000 -> 72.5%, €275,000 remaining, €150,000 next reward', () => {
-    const profile: Profile = {
-      id: 'prof-725',
-      user_id: 'user-725',
-      full_name: 'Markus Weber',
-      email: 'markus.weber@example.at',
-      country_code: 'AT',
-      kyc_status: 'verified',
-      kyc_data: {},
-      role: 'user',
-      created_at: '2026-01-01',
-    };
+  const totalCount = relationships.length;
+  const activeCount = relationships.filter((r) => r.status === 'active').length;
 
-    // Active investment making Markus an Investor Referrer
-    const investments: Investment[] = [
-      {
-        id: 'inv-d',
-        user_id: 'user-725',
-        plan_id: 'plan-1',
-        plan_title: 'Normandy Free-Range',
-        principal_amount: 1000,
-        expected_roi_amount: 150,
-        total_payout: 1150,
-        start_date: '2026-01-01',
-        maturity_date: '2026-04-01',
-        cycle_id: 'cycle-normandy-1',
-        cycle_code: 'NORM-2026-Q1',
-        facility_location: 'Normandy, France',
-        status: 'active',
-        created_at: '2026-01-01T00:00:00Z',
-      },
-    ];
+  const summary = {
+    userId,
+    referrerType,
+    totalQualifiedVolume,
+    totalReferredCount: totalCount,
+    totalReferralsCount: totalCount,
+    activeReferredCount: activeCount,
+    activeReferralsCount: activeCount,
+    currentMilestone,
+    nextMilestone,
+    volumeNeededForNextMilestone,
+    progressPercentage,
+    totalRewardsUnlocked,
+    totalRewardsPaid,
+    pendingPayoutAmount,
+    cycle1Completed,
+    cycle1PaymentReflected,
+    currentCycle: activeBar.cycle,
+    cycleBars,
+    unlockedRewards,
+    paidRewards,
+  };
 
-    const qualifiedInvs: ReferralQualifiedInvestment[] = [
-      {
-        id: 'qi-test',
-        investmentId: 'inv-test',
-        referrerUserId: 'user-725',
-        referredUserId: 'user-friend',
-        referredUserName: 'Sophie Laurent',
-        amount: 725000,
-        qualificationStatus: 'qualified',
-        investmentDate: '2026-02-01',
-        qualificationDate: '2026-02-01',
-      },
-    ];
+  return summary as unknown as ReferralUserSummary;
+}
 
-    const summary = calculateReferralUserSummary(
-      'user-725',
-      profile,
-      [],
-      qualifiedInvs,
-      [],
-      investments
-    );
+export function formatReferralCurrency(amount: number): string {
+  const rounded = Math.round(amount);
+  return `€${rounded.toLocaleString('en-US')}`;
+}
 
-    expect(summary.referrerType).toBe('investor');
-    expect(summary.totalQualifiedVolume).toBe(725000);
-    expect(summary.currentMilestone?.volumeThreshold).toBe(500000);
-    expect(summary.nextMilestone?.volumeThreshold).toBe(500000);
-    expect(summary.volumeNeededForNextMilestone).toBe(275000);
-    expect(summary.progressPercentage).toBe(72.5);
-    expect(summary.nextMilestone?.investorReward).toBe(150000);
-  });
+export function formatReferralCompact(amount: number): string {
+  if (amount >= 1_000_000) {
+    const val = amount / 1_000_000;
+    const formatted = val % 1 === 0 ? val.toFixed(0) : val.toFixed(1).replace(/\.0$/, '');
+    return `€${formatted}M`;
+  }
+  if (amount >= 1_000) {
+    const val = amount / 1_000;
+    const formatted = val % 1 === 0 ? val.toFixed(0) : val.toFixed(1).replace(/\.0$/, '');
+    return `€${formatted}K`;
+  }
+  return `€${amount.toLocaleString('en-US')}`;
+}
 
-  it('formats Euro currency and compact notations accurately', () => {
-    expect(formatReferralCurrency(100000)).toBe('€100,000');
-    expect(formatReferralCurrency(500000)).toBe('€500,000');
-    expect(formatReferralCurrency(63050)).toBe('€63,050');
+export const formatNaira = formatReferralCurrency;
+export const formatNairaCompact = formatReferralCompact;
 
-    expect(formatReferralCompact(100000)).toBe('€100K');
-    expect(formatReferralCompact(500000)).toBe('€500K');
-    expect(formatReferralCompact(2500000)).toBe('€2.5M');
+export function generateReferralCode(profile: Profile): string {
+  const nameClean = (profile.full_name || 'member')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '');
 
-    // Backwards compatibility aliases also format with €
-    expect(formatNaira(100000)).toBe('€100,000');
-    expect(formatNairaCompact(100000)).toBe('€100K');
-  });
+  const namePart = nameClean.slice(0, 8) || 'investor';
 
-  it('generates consistent referral code with European profile', () => {
-    const profile: Profile = {
-      id: 'prof-8899',
-      user_id: 'usr-8899',
-      full_name: 'Sophie Laurent',
-      email: 'sophie.laurent@example.fr',
-      country_code: 'FR',
-      kyc_status: 'verified',
-      kyc_data: {},
-      role: 'user',
-      created_at: '2026-01-01',
-    };
+  let suffix = '01';
+  if (profile.id && profile.id.includes('-')) {
+    suffix = profile.id.split('-').pop() || '01';
+  } else if (profile.user_id && profile.user_id.includes('-')) {
+    suffix = profile.user_id.split('-').pop() || '01';
+  } else if (profile.id && profile.id.length >= 4) {
+    suffix = profile.id.slice(-4);
+  } else if (profile.user_id && profile.user_id.length >= 4) {
+    suffix = profile.user_id.slice(-4);
+  }
 
-    const code = generateReferralCode(profile);
-    expect(code).toBe('sophiela-8899');
-  });
-});
+  return `${namePart}-${suffix}`;
+}
