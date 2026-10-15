@@ -32,7 +32,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       : 'Your BirdGrow Password Reset Code';
 
     const { data, error } = await resend.emails.send({
-      from: 'BirdGrow <onboarding@resend.dev>',
+      from: 'BirdGrow <no-reply@birdgrow.net>',
       to: email,
       subject: subject,
       html: `<p>Your verification code is: <strong>${otp}</strong></p>`,
