@@ -36,6 +36,26 @@ export const sendOtpEmail = async (toEmail: string, otpCode: string, purpose: 'r
   }
 };
 
+export const sendWelcomeEmail = async (toEmail: string, userName?: string) => {
+  try {
+    const response = await fetch('/api/send-welcome', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: toEmail, userName }),
+    });
+
+    const data = await response.json();
+    if (!response.ok || !data.success) {
+      throw new Error(data.error || 'Failed to send welcome email.');
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Failed to send welcome email:', error);
+    // Silent catch so it doesn't block user registration if welcome email fails
+  }
+};
+
 export const getEmailDispatches = (): EmailNotificationRecord[] => {
   if (typeof window === 'undefined') return [];
   try {
