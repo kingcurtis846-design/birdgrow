@@ -112,9 +112,10 @@ export const ReferralDashboard: React.FC<ReferralDashboardProps> = ({
 
   // Filter referrals table
   const filteredReferrals = referrals.filter((item) => {
+    const search = tableSearch.toLowerCase();
     const matchesSearch =
-      item.relationship.referredUserName.toLowerCase().includes(tableSearch.toLowerCase()) ||
-      item.relationship.referredUserEmail.toLowerCase().includes(tableSearch.toLowerCase());
+      (item.relationship?.referredUserName || '').toLowerCase().includes(search) ||
+      (item.relationship?.referredUserEmail || '').toLowerCase().includes(search);
     const matchesStatus =
       statusFilter === 'all'
         ? true

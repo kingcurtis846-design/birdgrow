@@ -26,7 +26,7 @@ export interface AdminNotification {
   title: string;
   message: string;
   amount?: number;
-  userId: string;
+  userId?: string;
   userName: string;
   timestamp: string;
   read: boolean;

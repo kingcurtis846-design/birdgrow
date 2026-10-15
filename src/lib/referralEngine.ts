@@ -15,10 +15,19 @@ import {
   CURRENCY_SYMBOLS,
 } from './formatters';
 
-export const NON_INVESTOR_MAX_REWARD_USD = 81750;
-// With EUR as native platform base (1 EUR = 1.09 USD), $16,000 USD is €14,678.90
-export const NON_INVESTOR_MAX_REWARD_BASE = Math.round((81750 / 1.09) * 100) / 100; // ~75,000.00 EUR
+export const CYCLE_TARGET_VOLUME = 500000;
 
+// Cumulative basic rewards for all 10 milestones (€62,150)
+export const NON_INVESTOR_MAX_REWARD_BASE = 62150;
+// With EUR native platform base (1 EUR = 1.09 USD), €62,150 is ~$67,744 USD
+export const NON_INVESTOR_MAX_REWARD_USD = Math.round(NON_INVESTOR_MAX_REWARD_BASE * 1.09);
+
+/**
+ * 10 Progressive European Referral Milestones:
+ * Capped at €500,000.
+ * Investor Referrers receive exactly 10.0% of the milestone threshold.
+ * Basic Referrers receive exactly 5.0% of the milestone threshold.
+ */
 export const REFERRAL_MILESTONES: ReferralMilestoneDefinition[] = [
   {
     id: 'milestone-500',
@@ -26,9 +35,64 @@ export const REFERRAL_MILESTONES: ReferralMilestoneDefinition[] = [
     volumeThreshold: 500,
     label: '€500',
     shortLabel: '€500',
-    basicReward: 25,
-    investorReward: 50,
+    basicReward: 25, // 5%
+    investorReward: 50, // 10%
     image: '/images/lohmann_brown_1790702651612.jpg',
+    cycle: 1,
+  },
+  {
+    id: 'milestone-2.5k',
+    name: 'Green Sprout Partner',
+    volumeThreshold: 2500,
+    label: '€2,500',
+    shortLabel: '€2.5K',
+    basicReward: 125, // 5%
+    investorReward: 250, // 10%
+    image: '/images/lohmann_brown_1790702651612.jpg',
+    cycle: 1,
+  },
+  {
+    id: 'milestone-5k',
+    name: 'Bronze Farm Advocate',
+    volumeThreshold: 5000,
+    label: '€5,000',
+    shortLabel: '€5K',
+    basicReward: 250, // 5%
+    investorReward: 500, // 10%
+    image: '/images/sussex_hen_1790702720503.jpg',
+    cycle: 1,
+  },
+  {
+    id: 'milestone-10k',
+    name: 'Silver Coop Champion',
+    volumeThreshold: 10000,
+    label: '€10,000',
+    shortLabel: '€10K',
+    basicReward: 500, // 5%
+    investorReward: 1000, // 10%
+    image: '/images/sussex_hen_1790702720503.jpg',
+    cycle: 1,
+  },
+  {
+    id: 'milestone-25k',
+    name: 'Golden Flock Leader',
+    volumeThreshold: 25000,
+    label: '€25,000',
+    shortLabel: '€25K',
+    basicReward: 1250, // 5%
+    investorReward: 2500, // 10%
+    image: '/images/sussex_hen_1790702720503.jpg',
+    cycle: 1,
+  },
+  {
+    id: 'milestone-50k',
+    name: 'Emerald Poultry Patron',
+    volumeThreshold: 50000,
+    label: '€50,000',
+    shortLabel: '€50K',
+    basicReward: 2500, // 5%
+    investorReward: 5000, // 10%
+    image: '/images/bresse_chicken_1790702776088.jpg',
     cycle: 1,
   },
   {
@@ -37,20 +101,31 @@ export const REFERRAL_MILESTONES: ReferralMilestoneDefinition[] = [
     volumeThreshold: 100000,
     label: '€100,000',
     shortLabel: '€100K',
-    basicReward: 5000,
-    investorReward: 10000,
-    image: '/images/sussex_hen_1790702720503.jpg',
+    basicReward: 5000, // 5%
+    investorReward: 10000, // 10%
+    image: '/images/bresse_chicken_1790702776088.jpg',
     cycle: 1,
   },
   {
-    id: 'milestone-250k',
-    name: 'Gold Estate Syndicator',
-    volumeThreshold: 250000,
-    label: '€250,000',
-    shortLabel: '€250K',
-    basicReward: 12500,
-    investorReward: 24999,
+    id: 'milestone-200k',
+    name: 'Sapphire Estate Partner',
+    volumeThreshold: 200000,
+    label: '€200,000',
+    shortLabel: '€200K',
+    basicReward: 10000, // 5%
+    investorReward: 20000, // 10%
     image: '/images/bresse_chicken_1790702776088.jpg',
+    cycle: 1,
+  },
+  {
+    id: 'milestone-350k',
+    name: 'Gold Estate Syndicator',
+    volumeThreshold: 350000,
+    label: '€350,000',
+    shortLabel: '€350K',
+    basicReward: 17500, // 5%
+    investorReward: 35000, // 10%
+    image: '/images/marans_layer_1790702676906.jpg',
     cycle: 1,
   },
   {
@@ -59,60 +134,19 @@ export const REFERRAL_MILESTONES: ReferralMilestoneDefinition[] = [
     volumeThreshold: 500000,
     label: '€500,000',
     shortLabel: '€500K',
-    basicReward: 30000,
-    investorReward: 60000,
+    basicReward: 25000, // 5%
+    investorReward: 50000, // 10% (exact 10% = €50,000)
     image: '/images/marans_layer_1790702676906.jpg',
     cycle: 1,
   },
 ];
 
 // Subsequent Cycle 2 Milestones (Appears after Cycle 1 target reached and payment reflected)
-export const CYCLE_2_MILESTONES: ReferralMilestoneDefinition[] = [
-  {
-    id: 'c2-milestone-500',
-    name: 'Seedling Pioneer',
-    volumeThreshold: 500,
-    label: '€500',
-    shortLabel: '€500',
-    basicReward: 25,
-    investorReward: 50,
-    image: '/images/lohmann_brown_1790702651612.jpg',
-    cycle: 2,
-  },
-  {
-    id: 'c2-milestone-100k',
-    name: 'Silver Flock Ambassador',
-    volumeThreshold: 100000,
-    label: '€100,000',
-    shortLabel: '€100K',
-    basicReward: 5000,
-    investorReward: 10000,
-    image: '/images/sussex_hen_1790702720503.jpg',
-    cycle: 2,
-  },
-  {
-    id: 'c2-milestone-250k',
-    name: 'Gold Estate Syndicator',
-    volumeThreshold: 250000,
-    label: '€250,000',
-    shortLabel: '€250K',
-    basicReward: 12500,
-    investorReward: 24999,
-    image: '/images/bresse_chicken_1790702776088.jpg',
-    cycle: 2,
-  },
-  {
-    id: 'c2-milestone-500k',
-    name: 'Platinum Agri-Director',
-    volumeThreshold: 500000,
-    label: '€500,000',
-    shortLabel: '€500K',
-    basicReward: 30000, 
-    investorReward: 60000,
-    image: '/images/marans_layer_1790702676906.jpg',
-    cycle: 2,
-  },
-];
+export const CYCLE_2_MILESTONES: ReferralMilestoneDefinition[] = REFERRAL_MILESTONES.map((m) => ({
+  ...m,
+  id: `c2-${m.id}`,
+  cycle: 2,
+}));
 
 export const formatReferralCurrency = (
   amount: number,
@@ -140,8 +174,8 @@ export const formatReferralCompact = (
   const rate = curr === 'EUR' && typeof window === 'undefined' ? 1.0 : (MOCK_EXCHANGE_RATES[curr] || 1.0);
   const converted = amount * rate;
   const sym = CURRENCY_SYMBOLS[curr] || '€';
-  if (converted >= 500000) {
-    const val = converted / 500000;
+  if (converted >= 1000000) {
+    const val = converted / 1000000;
     return `${sym}${val % 1 === 0 ? val : val.toFixed(1)}M`;
   }
   if (converted >= 1000) {
@@ -157,14 +191,19 @@ export const formatNairaCompact = formatReferralCompact;
 
 /**
  * Determine whether a user is an Investor Referrer or Basic Referrer.
- * An Investor Referrer has at least one active, pending, or matured investment on the platform.
+ * An Investor Referrer has at least one active, pending, or matured investment on the platform
+ * with a principal amount strictly greater than 0.
  */
 export const isUserInvestorReferrer = (
   userId: string,
   userInvestments: Investment[]
 ): boolean => {
+  if (!Array.isArray(userInvestments)) return false;
   return userInvestments.some(
-    (inv) => inv.user_id === userId && inv.status !== 'cancelled'
+    (inv) =>
+      inv.user_id === userId &&
+      inv.status !== 'cancelled' &&
+      Number(inv.principal_amount) > 0
   );
 };
 
@@ -172,12 +211,12 @@ export const isUserInvestorReferrer = (
  * Generate a clean, human-readable referral code for a user
  */
 export const generateReferralCode = (profile: Profile): string => {
-  const cleanName = (profile.full_name || 'member')
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, '')
-    .slice(0, 8);
-  const suffix = profile.user_id.slice(-4);
-  return `${cleanName}-${suffix}`;
+  const rawName = (profile?.full_name || '').trim();
+  const cleanName = rawName.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 8);
+  const namePart = cleanName || 'member';
+  const idToUse = profile?.id || profile?.user_id || '0000';
+  const suffix = idToUse.slice(-4);
+  return `${namePart}-${suffix}`;
 };
 
 /**
@@ -208,31 +247,31 @@ export const buildSocialShareLinks = (referralLink: string, referralCode: string
 /**
  * Evaluate newly reached milestones when volume increases.
  * Returns array of new rewards to create.
- * Cycle 1 stops at €1,000,000.
- * Once Cycle 1 reaches 1M and payment has reflected, Cycle 2 activates starting from €500 with the same percentages.
+ * Cycle 1 stops at €500,000.
+ * Once Cycle 1 reaches 500k and payment has reflected, Cycle 2 activates starting from €500 with the same percentages.
  */
 export const evaluateNewMilestoneAwards = (
   userId: string,
   qualifiedVolume: number,
   isInvestor: boolean,
-  existingRewards: ReferralMilestoneReward[]
+  existingRewards: ReferralMilestoneReward[] = []
 ): ReferralMilestoneReward[] => {
   const referrerType: ReferrerType = isInvestor ? 'investor' : 'basic';
   const newAwards: ReferralMilestoneReward[] = [];
 
   // Filter existing active/paid rewards for this user
   const awardedMilestoneIds = new Set(
-    existingRewards
+    (existingRewards || [])
       .filter((r) => r.userId === userId && r.status !== 'reversed')
       .map((r) => r.milestoneId)
   );
 
-  // 1. Evaluate Cycle 1 milestones (starts from 500, stops at 1M)
+  // 1. Evaluate Cycle 1 milestones (starts from 500, stops at 500k)
   for (const milestone of REFERRAL_MILESTONES) {
     if (qualifiedVolume >= milestone.volumeThreshold) {
       if (!awardedMilestoneIds.has(milestone.id)) {
         let rewardAmount = isInvestor ? milestone.investorReward : milestone.basicReward;
-        let note = `Milestone ${milestone.label} unlocked as ${isInvestor ? 'Investor' : 'Basic'} Referrer`;
+        let note = `Milestone ${milestone.label} unlocked as ${isInvestor ? 'Investor' : 'Basic'} Referrer (10% Investor / 5% Basic)`;
 
         if (!isInvestor) {
           rewardAmount = Math.min(rewardAmount, NON_INVESTOR_MAX_REWARD_BASE);
@@ -260,16 +299,16 @@ export const evaluateNewMilestoneAwards = (
     }
   }
 
-  // 2. Check if Cycle 1 target (1M) has been reached and payment has reflected
-  const is1mPaid = existingRewards.some(
+  // 2. Check if Cycle 1 target (500k) has been reached and payment has reflected
+  const is500kPaid = (existingRewards || []).some(
     (r) =>
       r.userId === userId &&
-      (r.milestoneId === 'milestone-1m' || (r.volumeThreshold === 500000 && r.cycle !== 2)) &&
+      (r.milestoneId === 'milestone-500k' || (r.volumeThreshold === 500000 && r.cycle !== 2)) &&
       r.status === 'paid'
   );
 
-  // If Cycle 1 1M payment has reflected, activate Cycle 2
-  if (is1mPaid) {
+  // If Cycle 1 500k payment has reflected, activate Cycle 2
+  if (is500kPaid) {
     const cycle2Volume = Math.max(0, qualifiedVolume - 500000);
 
     for (const milestone of CYCLE_2_MILESTONES) {
@@ -323,26 +362,37 @@ export const calculateReferralUserSummary = (
   const referralLink = buildReferralLink(referralCode);
 
   // Check if current user is Investor or Basic Referrer
-  const isInvestor = isUserInvestorReferrer(userId, allInvestments);
+  const isInvestor = isUserInvestorReferrer(userId, allInvestments || []);
   const referrerType: ReferrerType = isInvestor ? 'investor' : 'basic';
 
-  // Find all people referred by this user
-  const userRelationships = relationships.filter((r) => r.referrerUserId === userId);
-
-  // Find all qualified investments generated through this user's referrals
-  const userQualifiedInvs = qualifiedInvestments.filter(
-    (inv) => inv.referrerUserId === userId && inv.qualificationStatus === 'qualified'
+  // Find all people referred by this user (handles camelCase and snake_case)
+  const userRelationships = (relationships || []).filter(
+    (r) => (r.referrerUserId || (r as any).referrer_user_id) === userId
   );
 
+  // Find all qualified investments generated through this user's referrals
+  const userQualifiedInvs = (qualifiedInvestments || []).filter((inv) => {
+    const rId = inv.referrerUserId || (inv as any).referrer_user_id;
+    const qStatus = inv.qualificationStatus || (inv as any).qualification_status || 'qualified';
+    return rId === userId && qStatus === 'qualified';
+  });
+
   // Cumulative qualified referral volume
-  const totalQualifiedVolume = userQualifiedInvs.reduce((sum, inv) => sum + inv.amount, 0);
+  const totalQualifiedVolume = userQualifiedInvs.reduce(
+    (sum, inv) => sum + (Number(inv.amount) || Number((inv as any).principal_amount) || 0),
+    0
+  );
 
   // Find active referred investors
-  const referredUsersWithInvestments = new Set(userQualifiedInvs.map((inv) => inv.referredUserId));
+  const referredUsersWithInvestments = new Set(
+    userQualifiedInvs.map((inv) => inv.referredUserId || (inv as any).referred_user_id)
+  );
   const activeReferredInvestorsCount = referredUsersWithInvestments.size;
 
   // Rewards for this user
-  const userRewards = milestoneRewards.filter((r) => r.userId === userId && r.status !== 'reversed');
+  const userRewards = (milestoneRewards || []).filter(
+    (r) => r.userId === userId && r.status !== 'reversed'
+  );
   const totalRewardsEarned = userRewards.reduce((sum, r) => sum + r.rewardAmount, 0);
   const totalRewardsPaid = userRewards
     .filter((r) => r.status === 'paid')
@@ -358,7 +408,7 @@ export const calculateReferralUserSummary = (
   const cycle1Completed = totalQualifiedVolume >= 500000;
   const cycle1PaymentReflected = userRewards.some(
     (r) =>
-      (r.milestoneId === 'milestone-1m' || (r.volumeThreshold === 500000 && r.cycle !== 2)) &&
+      (r.milestoneId === 'milestone-500k' || (r.volumeThreshold === 500000 && r.cycle !== 2)) &&
       r.status === 'paid'
   );
 
@@ -476,7 +526,7 @@ export const calculateReferralUserSummary = (
       cycle: 2,
       title: 'Cycle 2 Milestone Ladder (Active · New Referral Bar)',
       isCompleted: cycle2Volume >= 500000,
-      isPaymentReflected: userRewards.some((r) => r.milestoneId === 'c2-milestone-1m' && r.status === 'paid'),
+      isPaymentReflected: userRewards.some((r) => r.milestoneId === 'c2-milestone-500k' && r.status === 'paid'),
       currentVolume: cycle2Volume,
       targetVolume: 500000,
       progressPercentage:
@@ -507,25 +557,31 @@ export const calculateReferralUserSummary = (
 
   // Group referrals with their qualified investments
   const referralsList = userRelationships.map((rel) => {
-    const invs = qualifiedInvestments.filter((qi) => qi.referredUserId === rel.referredUserId);
+    const relReferredId = rel.referredUserId || (rel as any).referred_user_id;
+    const invs = (qualifiedInvestments || []).filter((qi) => {
+      const qiReferredId = qi.referredUserId || (qi as any).referred_user_id;
+      return qiReferredId === relReferredId;
+    });
     const totalInvested = invs
-      .filter((qi) => qi.qualificationStatus === 'qualified')
-      .reduce((sum, qi) => sum + qi.amount, 0);
+      .filter((qi) => (qi.qualificationStatus || (qi as any).qualification_status || 'qualified') === 'qualified')
+      .reduce((sum, qi) => sum + (Number(qi.amount) || Number((qi as any).principal_amount) || 0), 0);
     const hasActiveInvestment = totalInvested > 0;
-    const sortedInvs = [...invs].sort(
-      (a, b) => new Date(b.investmentDate).getTime() - new Date(a.investmentDate).getTime()
-    );
+    const sortedInvs = [...invs].sort((a, b) => {
+      const dateA = a.investmentDate || (a as any).created_at || '';
+      const dateB = b.investmentDate || (b as any).created_at || '';
+      return new Date(dateB).getTime() - new Date(dateA).getTime();
+    });
 
     return {
       relationship: rel,
       investments: invs,
       totalInvested,
       hasActiveInvestment,
-      lastInvestmentDate: sortedInvs[0]?.investmentDate,
+      lastInvestmentDate: sortedInvs[0]?.investmentDate || (sortedInvs[0] as any)?.created_at,
     };
   });
 
-  return {
+  const baseSummary = {
     userId,
     referrerType,
     referralCode,
@@ -547,4 +603,12 @@ export const calculateReferralUserSummary = (
     cycleBars,
     referrals: referralsList,
   };
+
+  return Object.assign(baseSummary, {
+    totalReferralsCount: userRelationships.length,
+    activeReferredCount: activeReferredInvestorsCount,
+    totalRewardsUnlocked: totalRewardsEarned,
+    pendingPayoutAmount: availableRewards + pendingRewards,
+    currentCycle: cycle1PaymentReflected ? 2 : 1,
+  }) as ReferralUserSummary;
 };

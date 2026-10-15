@@ -1958,29 +1958,29 @@ export const PlatformProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     );
 
     if (referralRel) {
-      const newQualifiedInv: ReferralQualifiedInvestment = {
-        id: `qinv-${Date.now()}`,
-        investmentId: newInvId,
-        referrerUserId: referralRel.referrerUserId,
-        referredUserId: currentUser.user_id,
-        referredUserName: currentUser.full_name,
-        amount: amountInGbp,
-        qualificationStatus: 'qualified',
-        investmentDate: new Date().toISOString().split('T')[0],
-        qualificationDate: new Date().toISOString().split('T')[0],
-        notes: `${plan.title} allocation (${currencySymbol}${amountInActive.toLocaleString()})`,
-      };
+  const newQualifiedInv: ReferralQualifiedInvestment = {
+    id: `qinv-${Date.now()}`,
+    investmentId: newInvId,
+    referrerUserId: referralRel.referrerUserId,
+    referredUserId: currentUser.user_id,
+    referredUserName: currentUser.full_name,
+    amount: amountInGbp,
+    qualificationStatus: 'qualified',
+    investmentDate: new Date().toISOString().split('T')[0],
+    qualificationDate: new Date().toISOString().split('T')[0],
+    notes: `${plan.title} allocation (${currencySymbol}${amountInActive.toLocaleString()})`,
+  };
 
-      const updatedQualifiedInvs = [...qualifiedInvestments, newQualifiedInv];
-      setQualifiedInvestments(updatedQualifiedInvs);
+  const updatedQualifiedInvs = [...qualifiedInvestments, newQualifiedInv];
+  setQualifiedInvestments(updatedQualifiedInvs);
 
-      const referrerId = referralRel.referrerUserId;
-      const totalVol = updatedQualifiedInvs
-        .filter((q) => q.referrerUserId === referrerId && q.qualificationStatus === 'qualified')
-        .reduce((sum, q) => sum + q.amount, 0);
+  const referrerId = referralRel.referrerUserId;
+  const totalVol = updatedQualifiedInvs
+    .filter((q) => q.referrerUserId === referrerId && q.qualificationStatus === 'qualified')
+    .reduce((sum, q) => sum + q.amount, 0);
 
-      const isReferrerInvestor = isUserInvestorReferrer(referrerId, [newInvestment, ...investments]);
-      const newAwards = evaluateNewMilestoneAwards(referrerId, totalVol, isReferrerInvestor, milestoneRewards);
+  const isReferrerInvestor = isUserInvestorReferrer(referrerId!, [newInvestment, ...investments]);
+  const newAwards = evaluateNewMilestoneAwards(referrerId!, totalVol, isReferrerInvestor, milestoneRewards);
 
       if (newAwards.length > 0) {
         setMilestoneRewards((prev) => [...prev, ...newAwards]);

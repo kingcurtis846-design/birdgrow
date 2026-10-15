@@ -1,19 +1,18 @@
 export type ReferrerType = 'basic' | 'investor';
 
-export type MilestoneRewardStatus = 'locked' | 'in_progress' | 'unlocked' | 'pending' | 'paid' | 'reversed';
-
-export type ReferralInvestmentQualification = 'qualified' | 'pending_verification' | 'reversed' | 'fraud_flagged';
+export type ReferralInvestmentQualification = 'qualified' | 'pending' | 'ineligible' | 'reversed';
 
 export interface ReferralMilestoneDefinition {
   id: string;
-  name: string; // e.g. "Seedling Pioneer", "Silver Flock Ambassador", "Gold Estate Syndicator", "Platinum Agri-Director"
-  volumeThreshold: number; // e.g. 500, 100000, 250000, 500000, 500000
-  label: string; // "€500", "€100,000"
-  shortLabel: string; // "€500", "€100K"
-  basicReward: number; // 5% calculation (€25, €5,000, €12,500, €30,000, €75,000)
-  investorReward: number; // 10% calculation (€50, €10,000, €25,000, €60,000, €150,000)
-  image?: string; // Image asset displayed by the left side of the milestone
-  cycle?: number; // 1 for first bar, 2 for subsequent bar
+  name: string;
+  volumeThreshold: number;
+  label: string;
+  shortLabel: string;
+  basicReward: number;
+  investorReward: number;
+  image?: string;
+  cycle?: number;
+  [key: string]: any;
 }
 
 export interface ReferralMilestoneReward {
@@ -23,46 +22,64 @@ export interface ReferralMilestoneReward {
   volumeThreshold: number;
   rewardAmount: number;
   referrerTypeAtAward: ReferrerType;
-  status: MilestoneRewardStatus;
-  referenceId: string; // Immutable ref e.g. REF-REW-100K-928172
+  status: 'unlocked' | 'pending' | 'approved' | 'paid' | 'rejected' | 'reversed';
+  referenceId: string;
   awardedAt: string;
-  paidAt?: string;
+  cycle: number;
   notes?: string;
-  cycle?: number; // 1 or 2
+  paidAt?: string;
+  [key: string]: any;
 }
 
 export interface ReferralRelationship {
   id: string;
-  referrerUserId: string; // Referrer's user_id
-  referrerCode: string; // The code used
-  referredUserId: string; // The new user
-  referredUserName: string;
-  referredUserEmail: string;
-  registrationDate: string;
-  status: 'active' | 'suspended';
+  referrerUserId?: string;
+  referrer_user_id?: string;
+  referredUserId?: string;
+  referred_user_id?: string;
+  referredUserName?: string;
+  referred_user_name?: string;
+  referredUserEmail?: string;
+  referred_user_email?: string;
+  referrerCode?: string;
+  referrer_code?: string;
+  referralCode?: string;
+  referral_code?: string;
+  status: 'active' | 'pending' | 'inactive';
+  createdAt?: string;
+  created_at?: string;
+  [key: string]: any;
 }
 
 export interface ReferralQualifiedInvestment {
   id: string;
-  investmentId: string;
-  referrerUserId: string;
-  referredUserId: string;
-  referredUserName: string;
+  referrerUserId?: string;
+  referrer_user_id?: string;
+  referredUserId?: string;
+  referred_user_id?: string;
+  referredUserName?: string;
+  referred_user_name?: string;
+  investmentId?: string;
+  investment_id?: string;
   amount: number;
-  qualificationStatus: ReferralInvestmentQualification;
-  investmentDate: string;
-  qualificationDate: string;
-  notes?: string;
+  qualificationStatus?: ReferralInvestmentQualification;
+  qualification_status?: ReferralInvestmentQualification;
+  investmentDate?: string;
+  investment_date?: string;
+  qualifiedAt?: string;
+  cycle?: number;
+  [key: string]: any;
 }
 
 export interface MilestoneProgressItem {
   definition: ReferralMilestoneDefinition;
-  status: MilestoneRewardStatus;
+  status: 'locked' | 'in_progress' | 'unlocked' | 'pending' | 'approved' | 'paid' | 'rejected' | 'reversed';
   rewardAmount: number;
   isCompleted: boolean;
   isCurrentTarget: boolean;
   isLocked: boolean;
   awardedRecord?: ReferralMilestoneReward;
+  [key: string]: any;
 }
 
 export interface MilestoneCycleBar {
@@ -76,6 +93,16 @@ export interface MilestoneCycleBar {
   nextMilestone: ReferralMilestoneDefinition | null;
   volumeNeededForNextMilestone: number;
   milestones: MilestoneProgressItem[];
+  [key: string]: any;
+}
+
+export interface ReferralReferredUserItem {
+  relationship: ReferralRelationship;
+  investments: ReferralQualifiedInvestment[];
+  totalInvested: number;
+  hasActiveInvestment: boolean;
+  lastInvestmentDate?: string;
+  [key: string]: any;
 }
 
 export interface ReferralUserSummary {
@@ -98,11 +125,16 @@ export interface ReferralUserSummary {
   cycle1Completed: boolean;
   cycle1PaymentReflected: boolean;
   cycleBars: MilestoneCycleBar[];
-  referrals: Array<{
-    relationship: ReferralRelationship;
-    investments: ReferralQualifiedInvestment[];
-    totalInvested: number;
-    hasActiveInvestment: boolean;
-    lastInvestmentDate?: string;
-  }>;
+  referrals: ReferralReferredUserItem[];
+
+  // Backwards compatibility properties
+  totalReferralsCount?: number;
+  activeReferredCount?: number;
+  totalRewardsUnlocked?: number;
+  pendingPayoutAmount?: number;
+  currentCycle?: number;
+  [key: string]: any;
 }
+
+export type ReferralCycleMilestoneItem = MilestoneProgressItem;
+export type ReferralCycleBar = MilestoneCycleBar;
