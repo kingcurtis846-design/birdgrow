@@ -253,7 +253,7 @@ export const ReferralDashboard: React.FC<ReferralDashboardProps> = ({
           <div className="p-3.5 rounded-xl bg-[#C5A059]/15 border border-[#C5A059]/40 space-y-1 col-span-2 md:col-span-1">
             <span className="text-[#C5A059] block text-[11px] font-bold uppercase tracking-wider">Potential Max Payout</span>
             <span className="text-xl sm:text-2xl font-mono font-black text-white block">
-              {isInvestor ? formatCurrentCurrency(245050, false) : formatCurrentCurrency(122525, false)}
+              {isInvestor ? formatCurrentCurrency(124300, false) : formatCurrentCurrency(62150, false)}
             </span>
             <span className="text-[10px] text-white/70 block">Current cycle ceiling</span>
           </div>
@@ -501,7 +501,7 @@ export const ReferralDashboard: React.FC<ReferralDashboardProps> = ({
                   </span>
                   <div className="flex items-center gap-1.5">
                     <strong className="font-mono text-emerald-800 text-sm font-black">
-                      {isInvestor ? formatCurrentCurrency(245050, false) : formatCurrentCurrency(122525, false)}
+                      {isInvestor ? formatCurrentCurrency(124300, false) : formatCurrentCurrency(62150, false)}
                     </strong>
                     <span className="text-[11px] text-[#5C6572]">
                       ({isInvestor ? 'Investor Referrer Rate' : 'Basic Referrer Rate'})

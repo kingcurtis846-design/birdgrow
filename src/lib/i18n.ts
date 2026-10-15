@@ -2767,4 +2767,5 @@ export const translations: Record<string, any> = {
     cancel: 'キャンセル',
   },
   }
+  
 };  

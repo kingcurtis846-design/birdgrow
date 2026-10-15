@@ -6,7 +6,7 @@ export type TransactionType = 'deposit' | 'withdrawal' | 'investment' | 'payout'
 export type TransactionStatus = 'pending' | 'successful' | 'failed' | 'cancelled' | 'partial';
 export type PaymentGateway = 'crypto' | 'sepa' | 'stripe' | 'internal';
 export type CycleStage = 'planning' | 'chick_placement' | 'growth' | 'finishing' | 'harvest' | 'completed' | 'construction' | 'commissioning';
-export type Language = 'en' | 'de' | 'fr' | 'es';
+export type Language = 'en' | 'de' | 'fr' | 'es' | 'it' | 'pt' | 'nl' | 'pl' | 'ja';
 export type Currency = 'GBP' | 'EUR' | 'USD'| 'JPY';
 export type CryptoCoin = 'BTC' | 'ETH' | 'USDT' | 'USDC';
 

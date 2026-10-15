@@ -84,11 +84,11 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({
           </div>
 
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#1B3B2B] text-balance">
-            {t.refHeroHeadline || 'Refer Partners & Earn up to'} <span className="text-[#C5A059]">{formatCurrentCurrency(245050, false)}</span> {t.refHeroInACycle || 'in a Cycle'}
+            {t.refHeroHeadline || 'Refer Partners & Earn up to'} <span className="text-[#C5A059]">{formatCurrentCurrency(124300, false)}</span> {t.refHeroInACycle || 'in a Cycle'}
           </h2>
 
           <p className="text-sm sm:text-base lg:text-lg text-[#5C6572] leading-relaxed">
-            {t.refNoNeedInvestNotice || 'You do not need to have invested to start referring and earning rewards! Anyone can register, generate a unique referral link, and accumulate volume. Single milestone payouts reach up to 150,000, with cumulative cycle rewards totaling up to 245,050.'}
+            {t.refNoNeedInvestNotice || 'You do not need to have invested to start referring and earning rewards! Anyone can register, generate a unique referral link, and accumulate volume. Single milestone payouts reach up to 50,000, with cumulative cycle rewards totaling up to 124,300.'}
           </p>
         </div>
 
@@ -118,7 +118,7 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                <span><strong>{t.refPotentialMax || 'Potential Max Payout in a Cycle'}:</strong> Earn up to <strong>{formatCurrentCurrency(122525, false)}</strong> total cumulative payout per {formatCurrentCurrency(500000, false)} cycle.</span>
+                <span><strong>{t.refPotentialMax || 'Potential Max Payout in a Cycle'}:</strong> Earn up to <strong>{formatCurrentCurrency(62150, false)}</strong> total cumulative payout per {formatCurrentCurrency(500000, false)} cycle.</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
@@ -128,7 +128,7 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({
 
             <div className="pt-4 border-t border-[#F0EFEA] flex items-center justify-between text-xs">
               <span className="text-[#5C6572]">{t.refSingleMilestoneRange || 'Single Milestone Payout Range'}:</span>
-              <span className="font-mono font-bold text-[#1B3B2B] text-sm">{formatCurrentCurrency(25, false)} – {formatCurrentCurrency(75000, false)}</span>
+              <span className="font-mono font-bold text-[#1B3B2B] text-sm">{formatCurrentCurrency(25, false)} – {formatCurrentCurrency(25000, false)}</span>
             </div>
           </div>
 
@@ -154,11 +154,11 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({
             <ul className="space-y-2.5 text-xs text-[#D8DFD9]">
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#C5A059] shrink-0 mt-0.5" />
-                <span><strong>{t.refDoubleRewards || 'Double Milestone Payouts'}:</strong> Earn from <strong>{formatCurrentCurrency(50, false)}</strong> up to <strong>{formatCurrentCurrency(150000, false)}</strong> for a single milestone!</span>
+                <span><strong>{t.refDoubleRewards || 'Double Milestone Payouts'}:</strong> Earn from <strong>{formatCurrentCurrency(50, false)}</strong> up to <strong>{formatCurrentCurrency(50000, false)}</strong> for a single milestone!</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#C5A059] shrink-0 mt-0.5" />
-                <span><strong>{t.refPotentialMax || 'Potential Max Payout in a Cycle'}:</strong> Accumulate up to <strong>{formatCurrentCurrency(245050, false)}</strong> total across all 5 milestones in a single {formatCurrentCurrency(500000, false)} cycle!</span>
+                <span><strong>{t.refPotentialMax || 'Potential Max Payout in a Cycle'}:</strong> Accumulate up to <strong>{formatCurrentCurrency(124300, false)}</strong> total across all 10 milestones in a single {formatCurrentCurrency(500000, false)} cycle!</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#C5A059] shrink-0 mt-0.5" />
@@ -172,7 +172,7 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({
 
             <div className="pt-4 border-t border-white/15 flex items-center justify-between text-xs">
               <span className="text-[#A7B6AB]">{t.refSingleMilestoneRange || 'Single Milestone Payout Range'}:</span>
-              <span className="font-mono font-black text-[#C5A059] text-base">{formatCurrentCurrency(50, false)} – {formatCurrentCurrency(150000, false)}</span>
+              <span className="font-mono font-black text-[#C5A059] text-base">{formatCurrentCurrency(50, false)} – {formatCurrentCurrency(50000, false)}</span>
             </div>
           </div>
         </div>
@@ -210,14 +210,14 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({
             <div>
               <h3 className="text-xl font-extrabold text-[#1B3B2B] flex items-center gap-2">
                 <Award className="w-5 h-5 text-[#C5A059]" />
-                <span>5-Tier Milestone Visual Showcase</span>
+                <span>10-Tier Milestone Visual Showcase</span>
               </h3>
               <p className="text-xs text-[#5C6572]">
                 Each milestone features dedicated agricultural breeding assets, volume qualification thresholds, and instant reward unlocks.
               </p>
             </div>
             <div className="text-xs font-mono bg-white px-3 py-1.5 rounded-lg border border-[#DCDAD0] text-[#1B3B2B] self-start sm:self-auto">
-              Max Single Milestone Claim: <strong className="text-[#C5A059]">{formatCurrentCurrency(150000, false)}</strong>
+              Max Single Milestone Claim: <strong className="text-[#C5A059]">{formatCurrentCurrency(50000, false)}</strong>
             </div>
           </div>
 
@@ -330,16 +330,16 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({
                 <tr className="bg-[#F7F6F2] font-bold text-[#1B3B2B]">
                   <td className="py-3.5 px-5">
                     <div className="text-sm font-black text-[#1B3B2B]">Current Max Potential Payout in a Cycle</div>
-                    <div className="text-[11px] text-[#5C6572] font-normal">Cumulative across all 5 milestones up to {formatCurrentCurrency(500000, false)} target</div>
+                    <div className="text-[11px] text-[#5C6572] font-normal">Cumulative across all 10 milestones up to {formatCurrentCurrency(500000, false)} target</div>
                   </td>
                   <td className="py-3.5 px-5 font-mono font-bold text-[#5C6572] text-sm">
-                    {formatCurrentCurrency(122525, false)}
+                    {formatCurrentCurrency(62150, false)}
                   </td>
                   <td className="py-3.5 px-5 font-mono font-black text-emerald-800 text-base">
-                    {formatCurrentCurrency(245050, false)}
+                    {formatCurrentCurrency(124300, false)}
                   </td>
                   <td className="py-3.5 px-5 text-right font-mono text-[#C5A059]">
-                    +{formatCurrentCurrency(122525, false)} Bonus (2x)
+                    +{formatCurrentCurrency(62150, false)} Bonus (2x)
                   </td>
                 </tr>
               </tbody>

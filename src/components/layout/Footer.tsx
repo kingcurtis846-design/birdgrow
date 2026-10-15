@@ -225,7 +225,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection, onOpenAuth, o
         {/* Regulatory Disclosure Bottom */}
         <div className="pt-8 text-xs text-[#7D8E81] space-y-3 leading-relaxed">
           <p>
-            <strong className="text-[#A7B6AB]"> College Square, Townsend street, Dublin 2, Ireland </strong>
+            <strong className="text-[#A7B6AB]"> BIRDGROW -College Square, Townsend street, Dublin 2, Ireland </strong>
           </p>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-[#1C3628]">
             <p>© {new Date().getFullYear()} BirdGrow European Agri-Fintech S.A. {t.footerAllRightsReserved || 'All rights reserved.'}</p>

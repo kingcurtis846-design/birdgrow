@@ -115,6 +115,7 @@ interface PlatformContextType {
     es: number;
     hi: number;
     en: number;
+    ja: number;
   };
 
   // Multi-currency Switcher
@@ -322,12 +323,12 @@ const PlatformContext = createContext<PlatformContextType | undefined>(undefined
 
 const STORAGE_PREFIX = 'birdgrow_v2_';
 
-export type SupportedLanguage = 'zh' | 'fr' | 'es' | 'hi' | 'en';
+export type SupportedLanguage = 'zh' | 'fr' | 'es' | 'hi' | 'en' | 'ja';
 
 export function normalizeReviewLanguage(lang?: string): SupportedLanguage {
   if (!lang || !lang.trim()) return 'en';
   const clean = lang.trim().toLowerCase();
-  if (clean === 'zh' || clean === 'fr' || clean === 'es' || clean === 'hi') {
+  if (clean === 'zh' || clean === 'fr' || clean === 'es' || clean === 'hi' || clean === 'ja') {
     return clean;
   }
   return 'en';
@@ -339,6 +340,7 @@ export function detectLanguageFromText(text: string): SupportedLanguage {
   if (/[\u0900-\u097f]/.test(text)) return 'hi';
   if (/[ñ¿¡]/i.test(text)) return 'es';
   if (/[çœæ]/i.test(text)) return 'fr';
+  if (/[あ-ん]/.test(text)) return 'ja';
 
   const spanishKeywords = /\b(el|la|los|las|de|del|en|un|una|por|para|con|que|cosecha|inversión|rendimiento|avícola|retorno|granja|cartera|ganado|pollo|huevos|agrícola)\b/gi;
   const spanishMatches = (text.match(spanishKeywords) || []).length;
@@ -348,9 +350,10 @@ export function detectLanguageFromText(text: string): SupportedLanguage {
 
   if (/[áíóú]/.test(text) && spanishMatches >= frenchMatches) return 'es';
   if (/[èêëàâîïôùû]/.test(text) && frenchMatches >= spanishMatches) return 'fr';
+  if (/[あ-ん]/.test(text) && spanishMatches < frenchMatches) return 'ja';
   if (spanishMatches > frenchMatches && spanishMatches >= 2) return 'es';
   if (frenchMatches > spanishMatches && frenchMatches >= 2) return 'fr';
-
+  
   return 'en';
 }
 
@@ -358,7 +361,7 @@ export const PlatformProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   // Language state
   const [language, setLanguageState] = useState<Language>(() => {
     const saved = localStorage.getItem(STORAGE_PREFIX + 'language') as Language;
-    return saved && ['en', 'de', 'fr', 'es'].includes(saved) ? saved : 'en';
+    return saved && ['en', 'de', 'fr', 'es', 'ja'].includes(saved) ? saved : 'en';
   });
 
   // Review Language Filtering State
@@ -686,6 +689,7 @@ export const PlatformProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     let es = 0;
     let hi = 0;
     let en = 0;
+    let ja = 0;
 
     reviews.forEach((r) => {
       const normalized = normalizeReviewLanguage(r.language);
@@ -693,6 +697,7 @@ export const PlatformProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       else if (normalized === 'fr') fr++;
       else if (normalized === 'es') es++;
       else if (normalized === 'hi') hi++;
+      else if (normalized === 'ja') ja++;
       else en++;
     });
 
@@ -703,6 +708,7 @@ export const PlatformProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       es,
       hi,
       en,
+      ja,
     };
   }, [reviews]);
 

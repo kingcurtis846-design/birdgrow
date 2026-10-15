@@ -30,6 +30,7 @@ const LANGUAGES: { code: Language; label: string; flag: string }[] = [
   { code: 'de', label: 'Deutsch', flag: '🇩🇪' },
   { code: 'fr', label: 'Français', flag: '🇫🇷' },
   { code: 'es', label: 'Español', flag: '🇪🇸' },
+  { code: 'ja', label: '日本語', flag: '🇯🇵' },
 ];
 
 const CURRENCIES: { code: Currency; symbol: string; label: string; isNative?: boolean }[] = [
