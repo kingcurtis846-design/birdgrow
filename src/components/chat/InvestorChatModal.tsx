@@ -315,10 +315,10 @@ export const InvestorChatModal: React.FC<InvestorChatModalProps> = ({ onOpenInve
                 Off-Platform Deposits
               </button>
               <button
-                onClick={() => setInputContent('@AgriBot what is the status of the Alaska facility?')}
+                onClick={() => setInputContent('@AgriBot what is the status of the Portugal facility?')}
                 className="px-2.5 py-1 rounded-md bg-white border border-[#E5E3D8] text-[#1B3B2B] hover:border-[#1B3B2B] text-[11px] font-medium shrink-0 cursor-pointer"
               >
-                Alaska Sub-Zero Status
+                Portugal Sub-Zero Status
               </button>
               <button
                 onClick={() => setInputContent(`@AgriBot calculate return on ${formatCurrentCurrency(5000, false)} for 21 days`)}
@@ -803,10 +803,10 @@ export const InvestorChatModal: React.FC<InvestorChatModalProps> = ({ onOpenInve
                 ⏳ 24h Chat Policy
               </button>
               <button
-                onClick={() => setInputContent('Tell me about the Alaska Sub-Zero Bio-Dome opening')}
+                onClick={() => setInputContent('Tell me about the Portugal Sub-Zero Bio-Dome opening')}
                 className="px-3 py-1 bg-white border border-[#E5E3D8] rounded-lg text-[11px] font-medium text-[#1B3B2B] hover:border-[#1B3B2B] shrink-0 cursor-pointer"
               >
-                ❄️ Alaska Bio-Dome
+                ❄️ Portugal Bio-Dome
               </button>
             </div>
 

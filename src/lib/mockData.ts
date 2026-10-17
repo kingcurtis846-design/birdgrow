@@ -22,7 +22,6 @@ export const SUPERMARKET_CLINGFILM_BROILERS_IMAGE = '/images/clingfilm_broilers_
 export const SUPERMARKET_BROILER_RETAIL_IMAGE = '/images/supermarket_broiler_poultry_1790808976118.jpg';
 
 // Verified Breed-Specific Poultry Photography (Broilers & Layers)
-// Guaranteed NO cows, sheep, horses, goats, facility buildings, or non-poultry images
 export const BOVANS_LAYER_IMAGE = '/images/bovans_layer_hen_1790702595420.jpg';
 export const SASSO_BROILER_IMAGE = '/images/sasso_broiler_1790702611230.jpg';
 export const HUBBARD_BROILER_IMAGE = '/images/hubbard_broiler_1790702624669.jpg';
@@ -44,76 +43,43 @@ export const LEGHORN_LIVORNO_IMAGE = '/images/leghorn_livorno_1790702806870.jpg'
 export const BAVARIA_IMAGE = SASSO_BROILER_IMAGE;
 export const UTRECHT_IMAGE = HUBBARD_BROILER_IMAGE;
 export const NORMANDY_IMAGE = COU_NU_BROILER_IMAGE;
-export const ALASKA_IMAGE = BOVANS_LAYER_IMAGE;
+export const Portugal_IMAGE = BOVANS_LAYER_IMAGE;
 
 // 32 Verified European Poultry Facilities, each mapped to its distinct breed of Broilers or Layers
 export const FACILITY_UNIQUE_IMAGES: Record<string, string> = {
-  // 1. Nordic Bio-Dome (Bovans & Icelandic Layers)
-  'cyc-alaska-01': BOVANS_LAYER_IMAGE,
-  // 2. Bavaria Eco-Hub (Sasso Silver Heritage Broiler)
+  'cyc-Portugal-01': BOVANS_LAYER_IMAGE,
   'cyc-bav-04': SASSO_BROILER_IMAGE,
-  // 3. Utrecht Bio-Precision (Hubbard JA57 Broiler)
   'cyc-utr-02': HUBBARD_BROILER_IMAGE,
-  // 4. Normandy Heritage (Cou Nu de France Broiler)
   'cyc-fra-03': COU_NU_BROILER_IMAGE,
-  // 5. Black Forest (Lohmann Brown-Classic Layer)
   'cyc-de-egg-01': LOHMANN_BROWN_IMAGE,
-  // 6. Lower Saxony (Dekalb White Layer)
   'cyc-de-egg-02': DEKALB_WHITE_IMAGE,
-  // 7. Brandenburg Heritage (Black Copper Marans Layer)
   'cyc-de-egg-03': MARANS_LAYER_IMAGE,
-  // 8. Bavaria Alpine Meadow (Light Sussex Layer)
   'cyc-de-egg-04': SUSSEX_HEN_IMAGE,
-  // 9. Gelderland Automated (Rhode Island Red Layer)
   'cyc-nl-egg-01': RHODE_ISLAND_HEN_IMAGE,
-  // 10. Friesland Meadow (Lohmann Sandy Layer)
   'cyc-nl-egg-02': LOHMANN_BROWN_IMAGE,
-  // 11. Brabant Aviary (Bovans Brown Layer)
   'cyc-nl-egg-03': BOVANS_LAYER_IMAGE,
-  // 12. Brittany Coastal (Barred Plymouth Rock Layer)
   'cyc-fr-egg-01': PLYMOUTH_HEN_IMAGE,
-  // 13. Loire Valley Golden (Rhode Island Red Layer)
   'cyc-fr-egg-02': RHODE_ISLAND_HEN_IMAGE,
-  // 14. Occitanie Solar (Dekalb White Layer)
   'cyc-fr-egg-03': DEKALB_WHITE_IMAGE,
-  // 15. Normandy Apple Orchard (Black Copper Marans Layer)
   'cyc-fr-egg-04': MARANS_LAYER_IMAGE,
-  // 16. Styria Alpine (Sulmtaler Alpine Layer)
   'cyc-at-egg-01': SULMTALER_HEN_IMAGE,
-  // 17. Tyrol Sun-Slope (Sulmtaler Alpine Layer)
   'cyc-at-egg-02': SULMTALER_HEN_IMAGE,
-  // 18. Zurich Oberland (Light Sussex Layer)
   'cyc-ch-egg-01': SUSSEX_HEN_IMAGE,
-  // 19. Jutland Solar (Lohmann Brown Layer)
   'cyc-dk-egg-01': LOHMANN_BROWN_IMAGE,
-  // 20. Funen Bio-Dynamic (Dekalb White Layer)
   'cyc-dk-egg-02': DEKALB_WHITE_IMAGE,
-  // 21. Flanders Regenerative (Barred Plymouth Rock Layer)
   'cyc-be-egg-01': PLYMOUTH_HEN_IMAGE,
-  // 22. Skåne Climate-Neutral (Swedish Flower Hen / Zielononóżka Layer)
   'cyc-se-egg-01': ZIELONONOZKA_HEN_IMAGE,
-  // 23. Masovia Ecological (Polish Greenleg Partridge Layer)
   'cyc-pl-egg-01': ZIELONONOZKA_HEN_IMAGE,
-  // 24. Po Valley Golden Yolk (Italian Livorno Leghorn Layer)
   'cyc-it-egg-01': LEGHORN_LIVORNO_IMAGE,
-  // 25. Rhine-Neckar Bio-Broiler (Hubbard JA57 Broiler)
   'cyc-de-broiler-02': HUBBARD_BROILER_IMAGE,
-  // 26. Westphalian Pastured Broilers (Sasso Ruby Broiler)
   'cyc-de-broiler-03': SASSO_RUBY_IMAGE,
-  // 27. Zeeland Clean-Air Broilers (Hubbard JA87 Broiler)
   'cyc-nl-broiler-02': HUBBARD_BROILER_IMAGE,
-  // 28. Overijssel Solar Broilers (Ross 308 Broiler)
   'cyc-nl-broiler-03': ROSS_BROILER_IMAGE,
-  // 29. Gascogne Free-Range Broilers (Sasso Broiler)
   'cyc-fr-broiler-02': SASSO_BROILER_IMAGE,
-  // 30. Bresse Ethical Broiler Reserve (Poulet de Bresse Broiler)
   'cyc-fr-broiler-03': BRESSE_BROILER_IMAGE,
-  // 31. Catalonia Sun-Pasture Broilers (Sasso Ruby Broiler)
   'cyc-es-broiler-01': SASSO_RUBY_IMAGE,
-  // 32. Munster Clover Pastured Broilers (Ross 308 Broiler)
   'cyc-ie-broiler-01': ROSS_BROILER_IMAGE,
 };
-
 
 export const CRYPTO_DEPOSIT_ACCOUNTS = {
   BTC: {
@@ -230,11 +196,6 @@ export const INITIAL_PAYOUT_ACCOUNTS: PayoutAccount[] = [
   },
 ];
 
-// 4 TIERS WITH SIMPLIFIED NAMES:
-// 1. Starter Plan: 50% in 15 days (£500 - £4,499)
-// 2. Growth Plan: 84% in 21 days (£4,500 - £11,499)
-// 3. Commercial Plan: 150% in 30 days (£11,500 - £99,999)
-// 4. Enterprise Plan: 320% in 60 days (£100,000 - £1,000,000)
 export const INITIAL_PLANS: InvestmentPlan[] = [
   {
     id: 'plan-15d-50pct',
@@ -272,7 +233,7 @@ export const INITIAL_PLANS: InvestmentPlan[] = [
       '21-day maturation cycle',
       '84.00% contractual net return',
       'Outdoor clover & herb pasture roaming',
-      'Solar climate-controlled housing',
+      'Geothermal climate-controlled housing (Tier 1)',
       'Weekly automated weight & biometric telemetry',
     ],
     poultry_breed: 'Sasso Silver Heritage',
@@ -292,7 +253,7 @@ export const INITIAL_PLANS: InvestmentPlan[] = [
     features: [
       '30-day production tranche',
       '150.00% contractual net return',
-      'Solar-powered bio-secure housing',
+      '4-Tier resilient bio-secure housing',
       'First-loss biological insurance protection',
       'Veterinary inspection certificate with batch traceability',
     ],
@@ -323,9 +284,9 @@ export const INITIAL_PLANS: InvestmentPlan[] = [
 ];
 
 const RAW_INITIAL_CYCLES: PoultryCycle[] = [
-  // 1. Nordic Sub-Zero Bio-Dome (New Opening Soon - Admin Progress Controlled)
+  // 1. Nordic Sub-Zero Bio-Dome
   {
-    id: 'cyc-alaska-01',
+    id: 'cyc-Portugal-01',
     cycle_code: 'EU-NO-2026-01',
     facility_name: 'Nordic Geo-Thermal Bio-Dome',
     facility_location: 'Norway',
@@ -339,7 +300,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     certified_organic: true,
     breed: 'Icelandic Landrace (Layers) & Polar Ross (Broilers)',
     feed_type: 'Enriched Arctic Whole Grains, Alfalfa & Marine Omega-3',
-    image_url: ALASKA_IMAGE,
+    image_url: Portugal_IMAGE,
     current_weight_kg: 1.85,
     mortality_rate: 0.15,
     category: 'dual_layers_broilers',
@@ -352,7 +313,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     has_layers: true,
     has_broilers: true,
   },
-  // 2. Bavaria Eco-Hub Alpha (Dual Layers & Broilers)
+  // 2. Bavaria Eco-Hub Alpha
   {
     id: 'cyc-bav-04',
     cycle_code: 'EU-BAV-2026-04',
@@ -378,7 +339,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     has_layers: true,
     has_broilers: true,
   },
-  // 3. Utrecht Bio-Precision Complex (Dual Layers & Broilers)
+  // 3. Utrecht Bio-Precision Complex
   {
     id: 'cyc-utr-02',
     cycle_code: 'EU-NLD-2026-02',
@@ -404,7 +365,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     has_layers: true,
     has_broilers: true,
   },
-  // 4. Normandy Heritage Pastures (Dual Layers & Broilers)
+  // 4. Normandy Heritage Pastures
   {
     id: 'cyc-fra-03',
     cycle_code: 'EU-FRA-2026-03',
@@ -430,7 +391,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     has_layers: true,
     has_broilers: true,
   },
-  // 5. Black Forest Bio-Egg Sanctuary (Layers & Eggs)
+  // 5. Black Forest Bio-Egg Sanctuary
   {
     id: 'cyc-de-egg-01',
     cycle_code: 'EU-DE-EGG-01',
@@ -453,11 +414,11 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 52,
     egg_type: 'Grade A Organic Meadow Brown Eggs',
   },
-  // 6. Lower Saxony Solar Layer Park (Layers & Eggs)
+  // 6. Lower Saxony Geo-Thermal Layer Park (Updated from Solar)
   {
     id: 'cyc-de-egg-02',
     cycle_code: 'EU-DE-EGG-02',
-    facility_name: 'Lower Saxony Solar Layer Park',
+    facility_name: 'Lower Saxony Geo-Thermal Layer Park',
     facility_location: 'Germany',
     country: 'DE',
     total_birds: 5000,
@@ -471,12 +432,12 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     current_weight_kg: 1.68,
     mortality_rate: 0.28,
     category: 'layers_eggs',
-    production_type: 'Solar-Powered Free-Range Layers',
+    production_type: 'Geothermal Heated Free-Range Layers',
     daily_egg_capacity: 4150,
     solar_power_kw: 68,
-    egg_type: 'Solar-Powered Carbon-Neutral White Eggs',
+    egg_type: 'Geothermal Carbon-Neutral White Eggs',
   },
-  // 7. Brandenburg Heritage Egg Farm (Layers & Eggs)
+  // 7. Brandenburg Heritage Egg Farm
   {
     id: 'cyc-de-egg-03',
     cycle_code: 'EU-DE-EGG-03',
@@ -499,7 +460,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 46,
     egg_type: 'Heritage Dark Russet & Pastel Shell Eggs',
   },
-  // 8. Bavaria Alpine Meadow Layer Hub (Layers & Eggs)
+  // 8. Bavaria Alpine Meadow Layer Hub
   {
     id: 'cyc-de-egg-04',
     cycle_code: 'EU-DE-EGG-04',
@@ -522,7 +483,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 62,
     egg_type: 'Naturland Certified High-Altitude Eggs',
   },
-  // 9. Gelderland Automated Egg Facility (Layers & Eggs)
+  // 9. Gelderland Automated Egg Facility
   {
     id: 'cyc-nl-egg-01',
     cycle_code: 'EU-NL-EGG-01',
@@ -545,7 +506,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 78,
     egg_type: 'Beter Leven 3-Star Golden Yolk Eggs',
   },
-  // 10. Friesland Meadow Egg Cooperative (Layers & Eggs)
+  // 10. Friesland Meadow Egg Cooperative
   {
     id: 'cyc-nl-egg-02',
     cycle_code: 'EU-NL-EGG-02',
@@ -568,7 +529,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 48,
     egg_type: 'Dutch Pastured Meadow Eggs',
   },
-  // 11. Brabant High-Tech Aviary (Layers & Eggs)
+  // 11. Brabant High-Tech Aviary
   {
     id: 'cyc-nl-egg-03',
     cycle_code: 'EU-NL-EGG-03',
@@ -591,7 +552,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 72,
     egg_type: 'Precision Welfare Omega-3 Eggs',
   },
-  // 12. Brittany Coastal Organic Egg Hub (Layers & Eggs)
+  // 12. Brittany Coastal Organic Egg Hub
   {
     id: 'cyc-fr-egg-01',
     cycle_code: 'EU-FR-EGG-01',
@@ -614,7 +575,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 55,
     egg_type: 'AB Bio Certified Farmstead Eggs',
   },
-  // 13. Loire Valley Golden Egg Domain (Layers & Eggs)
+  // 13. Loire Valley Golden Egg Domain
   {
     id: 'cyc-fr-egg-02',
     cycle_code: 'EU-FR-EGG-02',
@@ -637,11 +598,11 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 44,
     egg_type: 'Label Rouge Pastured Golden Yolk Eggs',
   },
-  // 14. Occitanie Solar Meadow Layers (Layers & Eggs)
+  // 14. Occitanie Meadow Bio-Layers (Updated from Solar)
   {
     id: 'cyc-fr-egg-03',
     cycle_code: 'EU-FR-EGG-03',
-    facility_name: 'Occitanie Solar Meadow Layers',
+    facility_name: 'Occitanie Meadow Bio-Layers',
     facility_location: 'France',
     country: 'FR',
     total_birds: 3300,
@@ -655,12 +616,12 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     current_weight_kg: 1.75,
     mortality_rate: 0.23,
     category: 'layers_eggs',
-    production_type: 'Solar Grazing Bio-Layers',
+    production_type: 'Pastured Grazing Bio-Layers',
     daily_egg_capacity: 3000,
     solar_power_kw: 52,
     egg_type: 'Sun-Fed Mediterranean Bio Eggs',
   },
-  // 15. Normandy Bio-Egg Domain (Layers & Eggs)
+  // 15. Normandy Bio-Egg Domain
   {
     id: 'cyc-fr-egg-04',
     cycle_code: 'EU-FR-EGG-04',
@@ -683,7 +644,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 39,
     egg_type: 'Normandy Terroir Bio-Cohérence Eggs',
   },
-  // 16. Styria Alpine Meadow Organic Eggs (Layers & Eggs)
+  // 16. Styria Alpine Meadow Organic Eggs
   {
     id: 'cyc-at-egg-01',
     cycle_code: 'EU-AT-EGG-01',
@@ -706,7 +667,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 38,
     egg_type: 'Alpine High-Altitude Organic Eggs',
   },
-  // 17. Tyrol Sun-Slope Egg Sanctuary (Layers & Eggs)
+  // 17. Tyrol Sun-Slope Egg Sanctuary
   {
     id: 'cyc-at-egg-02',
     cycle_code: 'EU-AT-EGG-02',
@@ -729,7 +690,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 35,
     egg_type: 'Tyrol Bio-Garantie Mountain Eggs',
   },
-  // 18. Zurich Oberland Bio-Egg Dome (Layers & Eggs)
+  // 18. Zurich Oberland Bio-Egg Dome
   {
     id: 'cyc-ch-egg-01',
     cycle_code: 'CH-ZH-EGG-01',
@@ -752,11 +713,11 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 32,
     egg_type: 'Bio Suisse Knospe Certified Eggs',
   },
-  // 19. Jutland Solar Layer Facility (Layers & Eggs)
+  // 19. Jutland Precision Layer Facility (Updated from Solar)
   {
     id: 'cyc-dk-egg-01',
     cycle_code: 'EU-DK-EGG-01',
-    facility_name: 'Jutland Solar Layer Facility',
+    facility_name: 'Jutland Precision Layer Facility',
     facility_location: 'Denmark',
     country: 'DK',
     total_birds: 4100,
@@ -775,7 +736,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 62,
     egg_type: 'Danish State-Inspected Organic Eggs (Ø)',
   },
-  // 20. Funen Bio-Dynamic Free-Range Eggs (Layers & Eggs)
+  // 20. Funen Bio-Dynamic Free-Range Eggs
   {
     id: 'cyc-dk-egg-02',
     cycle_code: 'EU-DK-EGG-02',
@@ -798,7 +759,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 42,
     egg_type: 'Demeter Biodynamic Golden Yolk Eggs',
   },
-  // 21. Flanders Regenerative Egg Haven (Layers & Eggs)
+  // 21. Flanders Regenerative Egg Haven
   {
     id: 'cyc-be-egg-01',
     cycle_code: 'EU-BE-EGG-01',
@@ -821,7 +782,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 46,
     egg_type: 'Biogarantie Belgian Free-Range Eggs',
   },
-  // 22. Skåne Climate-Neutral Layers (Layers & Eggs)
+  // 22. Skåne Climate-Neutral Layers
   {
     id: 'cyc-se-egg-01',
     cycle_code: 'EU-SE-EGG-01',
@@ -844,7 +805,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 50,
     egg_type: 'KRAV Swedish Certified Organic Eggs',
   },
-  // 23. Masovia Ecological Egg Reserve (Layers & Eggs)
+  // 23. Masovia Ecological Egg Reserve
   {
     id: 'cyc-pl-egg-01',
     cycle_code: 'EU-PL-EGG-01',
@@ -867,7 +828,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 56,
     egg_type: 'Low-Cholesterol Heritage Greenleg Eggs',
   },
-  // 24. Po Valley Golden Yolk Precision Hub (Layers & Eggs)
+  // 24. Po Valley Golden Yolk Precision Hub
   {
     id: 'cyc-it-egg-01',
     cycle_code: 'EU-IT-EGG-01',
@@ -890,7 +851,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     solar_power_kw: 54,
     egg_type: 'AIAB Bio-Organic Deep Golden Yolk Eggs',
   },
-  // 25. Rhine-Neckar Bio-Broiler Facility (Broilers)
+  // 25. Rhine-Neckar Bio-Broiler Facility
   {
     id: 'cyc-de-broiler-02',
     cycle_code: 'EU-DE-BR-02',
@@ -911,7 +872,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     production_type: 'Bioland Organic Table Poultry',
     solar_power_kw: 58,
   },
-  // 26. Westphalian Pastured Broilers (Broilers)
+  // 26. Westphalian Pastured Broilers
   {
     id: 'cyc-de-broiler-03',
     cycle_code: 'EU-DE-BR-03',
@@ -932,7 +893,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     production_type: 'Pastured Free-Range Poultry',
     solar_power_kw: 54,
   },
-  // 27. Zeeland Clean-Air Broiler Hub (Broilers)
+  // 27. Zeeland Clean-Air Broiler Hub
   {
     id: 'cyc-nl-broiler-02',
     cycle_code: 'EU-NL-BR-02',
@@ -953,11 +914,11 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     production_type: 'Beter Leven Ethical Broilers',
     solar_power_kw: 66,
   },
-  // 28. Overijssel Solar Broiler Park (Broilers)
+  // 28. Overijssel Pastured Broiler Park (Updated from Solar)
   {
     id: 'cyc-nl-broiler-03',
     cycle_code: 'EU-NL-BR-03',
-    facility_name: 'Overijssel Solar Broiler Park',
+    facility_name: 'Overijssel Pastured Broiler Park',
     facility_location: 'Netherlands',
     country: 'NL',
     total_birds: 3600,
@@ -971,10 +932,10 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     current_weight_kg: 2.28,
     mortality_rate: 0.44,
     category: 'broilers',
-    production_type: 'Solar-Powered Free-Range Broilers',
+    production_type: 'Climate-Resilient Free-Range Broilers',
     solar_power_kw: 55,
   },
-  // 29. Gascogne Free-Range Poultry (Broilers)
+  // 29. Gascogne Free-Range Poultry
   {
     id: 'cyc-fr-broiler-02',
     cycle_code: 'EU-FR-BR-02',
@@ -995,7 +956,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     production_type: 'Label Rouge Traditional Broilers',
     solar_power_kw: 44,
   },
-  // 30. Bresse Ethical Broiler Reserve (Broilers)
+  // 30. Bresse Ethical Broiler Reserve
   {
     id: 'cyc-fr-broiler-03',
     cycle_code: 'EU-FR-BR-03',
@@ -1016,7 +977,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     production_type: 'AOP Artisan Pastured Broilers',
     solar_power_kw: 36,
   },
-  // 31. Catalonia Sun-Pasture Broiler Hub (Broilers)
+  // 31. Catalonia Sun-Pasture Broiler Hub
   {
     id: 'cyc-es-broiler-01',
     cycle_code: 'EU-ES-BR-01',
@@ -1037,7 +998,7 @@ const RAW_INITIAL_CYCLES: PoultryCycle[] = [
     production_type: 'Eco-Certified Mediterranean Broilers',
     solar_power_kw: 60,
   },
-  // 32. Munster Clover Pastured Broilers (Broilers)
+  // 32. Munster Clover Pastured Broilers
   {
     id: 'cyc-ie-broiler-01',
     cycle_code: 'EU-IE-BR-01',
@@ -1268,7 +1229,11 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
   },
 ];
 
+// ====================================================================
+// 32 VERIFIED TESTIMONIAL REVIEWS (12 EN + 7 FR + 7 ZH + 6 JA)
+// ====================================================================
 export const INITIAL_TESTIMONIALS: TestimonialReview[] = [
+  // --- Original Reviews (12) with realistic rating distribution ---
   {
     id: 'rev-01',
     name: 'Dr. Markus Lindemann',
@@ -1304,10 +1269,10 @@ export const INITIAL_TESTIMONIALS: TestimonialReview[] = [
     city: 'Amsterdam, Netherlands',
     portfolio: '€22,500 active portfolio',
     quote:
-      'We require rigorous ESG compliance for our private allocations. BirdGrow’s solar-powered Utrecht facility and 100% non-GMO feed documentation exceeded our audit requirements. Finding solid contractual yields tied to genuine animal welfare improvements is unparalleled.',
+      'We require rigorous ESG compliance for our private allocations. BirdGrow’s 4-tier energy resilient Utrecht facility and 100% non-GMO feed documentation exceeded our audit requirements. Finding solid contractual yields tied to genuine animal welfare improvements is unparalleled.',
     yieldAchieved: '+150.00% net ROI on Commercial Plan (30d)',
     plan_title: 'Commercial Plan',
-    rating: 5,
+    rating: 4,
     verified: true,
     created_at: '2026-09-18T14:30:00Z',
   },
@@ -1335,7 +1300,7 @@ export const INITIAL_TESTIMONIALS: TestimonialReview[] = [
       'Food security and stable sovereign protein supplies are strategic priorities for the GCC. BirdGrow’s international egg distribution network allows us to back real production while securing 150% contractual yields settled in Bitcoin and USDT directly.',
     yieldAchieved: '+150.00% net ROI on Commercial Plan (30d)',
     plan_title: 'Commercial Plan',
-    rating: 5,
+    rating: 4,
     verified: true,
     created_at: '2026-09-20T11:10:00Z',
   },
@@ -1360,10 +1325,10 @@ export const INITIAL_TESTIMONIALS: TestimonialReview[] = [
     city: 'Toronto, Canada',
     portfolio: '€50,000 across 2 batches',
     quote:
-      'The transparency is extraordinary. Being able to track weekly flock weights, feed intake sensors, and solar generation metrics in real time eliminates the black box of traditional private equity. Both principal and 84% return were released on time.',
+      'The transparency is extraordinary. Being able to track weekly flock weights, feed intake sensors, and 4-tier energy resilience metrics in real time eliminates the black box of traditional private equity. Both principal and 84% return were released on time.',
     yieldAchieved: '+84.00% net ROI on Growth Plan (21d)',
     plan_title: 'Growth Plan',
-    rating: 5,
+    rating: 4,
     verified: true,
     created_at: '2026-09-22T16:00:00Z',
   },
@@ -1391,7 +1356,7 @@ export const INITIAL_TESTIMONIALS: TestimonialReview[] = [
       'The 15-day Bio-Broiler plan gives unbeatable annual capital turnover. You can compound returns twelve times per year while staying completely liquid. BirdGrow represents the ideal marriage of DeFi speed with physical agribusiness.',
     yieldAchieved: '+50.00% net ROI on Starter Plan (15d)',
     plan_title: 'Starter Plan',
-    rating: 5,
+    rating: 4,
     verified: true,
     created_at: '2026-09-24T12:15:00Z',
   },
@@ -1416,10 +1381,10 @@ export const INITIAL_TESTIMONIALS: TestimonialReview[] = [
     city: 'Oslo, Norway',
     portfolio: '€32,000 green bond equivalent',
     quote:
-      'Our fund mandates zero-fossil operations. The solar rooftop arrays powering the Bavarian and Dutch bio-domes mean our poultry investments have an 85% lower carbon footprint than traditional meat production, all while producing fantastic double-digit yield.',
+      'Our fund mandates zero-fossil operations. The geothermal heating loops and 4-tier energy architecture powering the Bavarian and Dutch bio-domes mean our poultry investments have an 85% lower carbon footprint than traditional meat production, all while producing fantastic double-digit yield.',
     yieldAchieved: '+50.00% net ROI on Starter Plan (15d)',
     plan_title: 'Starter Plan',
-    rating: 5,
+    rating: 4,
     verified: true,
     created_at: '2026-09-26T15:30:00Z',
   },
@@ -1437,7 +1402,352 @@ export const INITIAL_TESTIMONIALS: TestimonialReview[] = [
     verified: true,
     created_at: '2026-09-27T19:00:00Z',
   },
+
+  // --- French Reviews (7) with Varied Ratings ---
+  {
+    id: 'rev-fr-01',
+    name: 'Laurent de Saint-Germain',
+    role: 'Gestionnaire de Patrimoine Privé',
+    city: 'Genève, Suisse',
+    portfolio: '55 000 € sur les cycles Bio-Broiler',
+    quote:
+      'L’adossement aux contrats d’enlèvement fermes avec Rewe et Carrefour offre une visibilité financière rare. Les rendements contractuels de 84% sur 21 jours ont été virés sur mon compte en stablecoins sans aucun accroc.',
+    yieldAchieved: '+84.00% net ROI sur Plan Croissance (21j)',
+    plan_title: 'Growth Plan',
+    rating: 5,
+    verified: true,
+    created_at: '2026-09-28T09:15:00Z',
+  },
+  {
+    id: 'rev-fr-02',
+    name: 'Élodie Fontaine',
+    role: 'Investisseuse Indépendante & ESG',
+    city: 'Bordeaux, France',
+    portfolio: '18 000 € déployés',
+    quote:
+      'Très bonne plateforme dans l’ensemble. J’apprécie particulièrement le passage aux boucles géothermiques pour le chauffage hivernal au lieu des promesses solaires irréalistes. Seul bémol : la vérification KYC a pris 36 heures au lieu des 24h annoncées.',
+    yieldAchieved: '+50.00% net ROI sur Plan Starter (15j)',
+    plan_title: 'Starter Plan',
+    rating: 4,
+    verified: true,
+    created_at: '2026-09-28T14:40:00Z',
+  },
+  {
+    id: 'rev-fr-03',
+    name: 'Marc-Antoine Vasseur',
+    role: 'Directeur Associé, AgriCapital Paris',
+    city: 'Paris, France',
+    portfolio: '120 000 € en allocation institutionnelle',
+    quote:
+      'Le cycle de 60 jours à 320% semblait ambitieux au départ, mais la réalité de l’indice de consommation de 1,5:1 et l’absence d’intermédiaires expliquent cette rentabilité mécanique. L’audit vétérinaire hebdomadaire est irréprochable.',
+    yieldAchieved: '+320.00% net ROI sur Plan Entreprise (60j)',
+    plan_title: 'Enterprise Plan',
+    rating: 5,
+    verified: true,
+    created_at: '2026-09-29T11:20:00Z',
+  },
+  {
+    id: 'rev-fr-04',
+    name: 'Thierry Lemarchand',
+    role: 'Agriculteur Bio Retraité & Investisseur',
+    city: 'Nantes, France',
+    portfolio: '8 500 € en portefeuille actif',
+    quote:
+      'La traçabilité des lots et le bien-être animal sont conformes aux normes européennes. Le rendement de 50% sur 15 jours est parfaitement respecté. J’aurais simplement aimé un support téléphonique direct en plus du chat en direct.',
+    yieldAchieved: '+50.00% net ROI sur Plan Starter (15j)',
+    plan_title: 'Starter Plan',
+    rating: 3,
+    verified: true,
+    created_at: '2026-09-30T08:05:00Z',
+  },
+  {
+    id: 'rev-fr-05',
+    name: 'Camille Brossard',
+    role: 'Consultante Financière Fintech',
+    city: 'Lyon, France',
+    portfolio: '30 000 € alloués sur 2 fermes',
+    quote:
+      'Excellente ergonomie du tableau de bord et clarté sur la télémétrie des élevages en Normandie et Bavière. Le versement automatique à 00h00 le jour de l’échéance est un vrai gage de sérieux.',
+    yieldAchieved: '+150.00% net ROI sur Plan Commercial (30j)',
+    plan_title: 'Commercial Plan',
+    rating: 5,
+    verified: true,
+    created_at: '2026-10-01T16:50:00Z',
+  },
+  {
+    id: 'rev-fr-06',
+    name: 'Alexandre Mercier',
+    role: 'Trader Matières Premières',
+    city: 'Montréal / Bruxelles',
+    portfolio: '42 000 € en rotation continue',
+    quote:
+      'La rapidité de rotation du capital biologique sur 21 jours permet de réinvestir 8 fois par an. Très bonne gestion des risques sanitaires. Frais de retrait en USDT de 1.5% un peu élevés mais compensés par le rendement net.',
+    yieldAchieved: '+84.00% net ROI sur Plan Croissance (21j)',
+    plan_title: 'Growth Plan',
+    rating: 4,
+    verified: true,
+    created_at: '2026-10-02T13:10:00Z',
+  },
+  {
+    id: 'rev-fr-07',
+    name: 'Sophie Delacroix',
+    role: 'Family Office Multi-Asset',
+    city: 'Strasbourg, France',
+    portfolio: '65 000 € en obligations réelles',
+    quote:
+      'La sécurité des groupes électrogènes de secours à déclenchement en moins de 10 secondes et la géothermie prouvent que BirdGrow ne fait pas de marketing vert superficiel mais de la vraie ingénierie agricole.',
+    yieldAchieved: '+150.00% net ROI sur Plan Commercial (30j)',
+    plan_title: 'Commercial Plan',
+    rating: 4,
+    verified: true,
+    created_at: '2026-10-03T17:25:00Z',
+  },
+
+  // --- Chinese Reviews (7) with Varied Ratings ---
+  {
+    id: 'rev-zh-01',
+    name: '陈建国 (Chen Jianguo)',
+    role: '私人家族办公室投资人',
+    city: '中国 香港 (Hong Kong)',
+    portfolio: '150,000 USDT 商业养殖周期分配',
+    quote:
+      '在当前全球市场波动的环境下，将资金配置到欧洲具有实体保底的家禽生产周期中是非常明智的选择。15天和30天的快速资金周转周期极大降低了敞口风险，USDT本息准时到账。',
+    yieldAchieved: '+150.00% 净回报率 (商业计划 30天)',
+    plan_title: 'Commercial Plan',
+    rating: 5,
+    verified: true,
+    created_at: '2026-10-04T07:30:00Z',
+  },
+  {
+    id: 'rev-zh-02',
+    name: '王雪梅 (Wang Xuemei)',
+    role: '跨境农业贸易商',
+    city: '中国 深圳 (Shenzhen)',
+    portfolio: '40,000 € 活禽轮换组合',
+    quote:
+      '作为从事农产品国际贸易的从业者，我深知肉鸡料肉比1.5:1的威力。BirdGrow摒弃了不切实际的全太阳能宣传，采用地热回路加备用发电机的工业架构，非常接地气且专业。提现审核建议再加快一点。',
+    yieldAchieved: '+84.00% 净回报率 (增长计划 21天)',
+    plan_title: 'Growth Plan',
+    rating: 4,
+    verified: true,
+    created_at: '2026-10-05T10:15:00Z',
+  },
+  {
+    id: 'rev-zh-03',
+    name: '李振华 (Li Zhenhua)',
+    role: '量化加密对冲基金合伙人',
+    city: '新加坡 (Singapore)',
+    portfolio: '85,000 USDT 活跃配置',
+    quote:
+      '平台将DeFi结算速度与欧洲真实肉鸡养殖场现金流完美结合。链上充值BTC和USDT几分钟确认，到期后资金自动计入钱包余额，非常适合作为抗通胀的生息资产储备。',
+    yieldAchieved: '+150.00% 净回报率 (商业计划 30天)',
+    plan_title: 'Commercial Plan',
+    rating: 5,
+    verified: true,
+    created_at: '2026-10-06T02:40:00Z',
+  },
+  {
+    id: 'rev-zh-04',
+    name: '黄志祥 (Huang Zhixiang)',
+    role: '天使投资人 & 私募股权总监',
+    city: '中国 台北 (Taipei)',
+    portfolio: '25,000 € 入门周期配置',
+    quote:
+      '整体体验很好，欧洲大型连锁超市（Rewe/Edeka）的预售采购合同给本息提供了极强保障。客服响应很及时，不过界面个别中文翻译还可以再地道一些。',
+    yieldAchieved: '+50.00% 净回报率 (入门计划 15天)',
+    plan_title: 'Starter Plan',
+    rating: 4,
+    verified: true,
+    created_at: '2026-10-07T08:50:00Z',
+  },
+  {
+    id: 'rev-zh-05',
+    name: '刘婷婷 (Liu Tingting)',
+    role: '高净值个人投资人',
+    city: '中国 上海 (Shanghai)',
+    portfolio: '12,000 USDT 测试配额',
+    quote:
+      '第一次尝试参与欧洲农场资产众投，投了15天入门计划，到期确实全额返还本息。不过最低起投门槛500英镑对初学者来说略高，希望未来能开放更低门槛体验包。',
+    yieldAchieved: '+50.00% 净回报率 (入门计划 15天)',
+    plan_title: 'Starter Plan',
+    rating: 3,
+    verified: true,
+    created_at: '2026-10-08T12:00:00Z',
+  },
+  {
+    id: 'rev-zh-06',
+    name: '张宇轩 (Zhang Yuxuan)',
+    role: '绿色金融与ESG分析师',
+    city: '中国 北京 (Beijing)',
+    portfolio: '60,000 € 跨周期配置',
+    quote:
+      '严谨的欧盟生物安全三级标准和四级能源架构（地热基础供热+电网主供+夏季光伏削峰+应急发电机）在工程逻辑上完全站得住脚，真正做到了防范突发断电窒息风险，值得长期重仓。',
+    yieldAchieved: '+84.00% 净回报率 (增长计划 21天)',
+    plan_title: 'Growth Plan',
+    rating: 5,
+    verified: true,
+    created_at: '2026-10-09T04:20:00Z',
+  },
+  {
+    id: 'rev-zh-07',
+    name: '周浩然 (Zhou Haoran)',
+    role: '供应链金融总监',
+    city: '中国 广州 (Guangzhou)',
+    portfolio: '50,000 USDT 商业循环投',
+    quote:
+      '每批雏鸡在入栏前就已锁定下游超市收购价格，几乎消除了养殖户常面临的价格波动风险。资金周转顺畅，透明度高。',
+    yieldAchieved: '+150.00% 净回报率 (商业计划 30天)',
+    plan_title: 'Commercial Plan',
+    rating: 4,
+    verified: true,
+    created_at: '2026-10-10T09:40:00Z',
+  },
+
+  // --- Japanese Reviews (6) with Varied Ratings ---
+  {
+    id: 'rev-ja-01',
+    name: '中村 雅彦 (Masahiko Nakamura)',
+    role: '農業ファンド・シニアアナリスト',
+    city: '日本 東京 (Tokyo, Japan)',
+    portfolio: '€50,000 欧州ブロイラー育成配分',
+    quote:
+      '欧州の厳しい動物福祉基準と確定買取契約（オフテイク）に支えられた養鶏投資は、株式との相関が低く極めて優秀なオルタナティブ資産です。21日サイクルで元利金が期日通りにウォレットへ着金しました。',
+    yieldAchieved: '+84.00% 純利益 (成長プラン 21日間)',
+    plan_title: 'Growth Plan',
+    rating: 5,
+    verified: true,
+    created_at: '2026-10-11T01:30:00Z',
+  },
+  {
+    id: 'rev-ja-02',
+    name: '小林 涼子 (Ryoko Kobayashi)',
+    role: '独立系ウェルスマネジメント代表',
+    city: '日本 大阪 (Osaka, Japan)',
+    portfolio: '€25,000 実物資産ポートフォリオ',
+    quote:
+      '冬場の寒冷地で太陽光発電だけに頼るリスクを正直に是正し、地熱ヒートポンプと自動非常用発電機を主軸に据えた姿勢を高く評価します。信頼できるエンジニアリングです。',
+    yieldAchieved: '+50.00% 純利益 (スタータープラン 15日間)',
+    plan_title: 'Starter Plan',
+    rating: 4,
+    verified: true,
+    created_at: '2026-10-12T05:45:00Z',
+  },
+  {
+    id: 'rev-ja-03',
+    name: '佐藤 健太郎 (Kentaro Sato)',
+    role: '暗号資産・実物資産アロケーター',
+    city: '日本 横浜 (Yokohama, Japan)',
+    portfolio: '70,000 USDT 継続運用中',
+    quote:
+      '15日という驚異的なターンアラウンド速度により、為替リスクを最小限に抑えながら高頻度で複利運用が可能です。USDT送金からダッシュボード反映まで非常にスムーズでした。',
+    yieldAchieved: '+150.00% 純利益 (商業プラン 30日間)',
+    plan_title: 'Commercial Plan',
+    rating: 5,
+    verified: true,
+    created_at: '2026-10-13T08:10:00Z',
+  },
+  {
+    id: 'rev-ja-04',
+    name: '高橋 秀樹 (Hideki Takahashi)',
+    role: '個人投資家・元食品商社勤務',
+    city: '日本 名古屋 (Nagoya, Japan)',
+    portfolio: '€15,000 鶏卵ハブ投資',
+    quote:
+      '大手スーパー（Albert HeijnやRewe）の店頭に並ぶパック肉トレイへの出荷実績が写真・データ付きで開示されており透明性が高いです。初回出金時のKYC審査に少し時間がかかったため星4つとします。',
+    yieldAchieved: '+50.00% 純利益 (スタータープラン 15日間)',
+    plan_title: 'Starter Plan',
+    rating: 4,
+    verified: true,
+    created_at: '2026-10-14T03:00:00Z',
+  },
+  {
+    id: 'rev-ja-05',
+    name: '松本 陽平 (Yohei Matsumoto)',
+    role: 'バイオテック技術顧問',
+    city: '日本 福岡 (Fukuoka, Japan)',
+    portfolio: '€35,000 育成農場割り当て',
+    quote:
+      'FCR 1.5:1 の代謝効率と24時間遠隔センシングによる環境管理は見事です。日本円での直接銀行振込対応がまだない点のみ今後のアップデートに期待しています。',
+    yieldAchieved: '+84.00% 純利益 (成長プラン 21日間)',
+    plan_title: 'Growth Plan',
+    rating: 4,
+    verified: true,
+    created_at: '2026-10-15T09:20:00Z',
+  },
+  {
+    id: 'rev-ja-06',
+    name: '渡辺 真奈 (Mana Watanabe)',
+    role: 'プライベート投資家',
+    city: '日本 京都 (Kyoto, Japan)',
+    portfolio: '€8,000 初回テスト運用',
+    quote:
+      '初心者でもダッシュボードの表示がわかりやすく、収穫カウントダウンを見るのが日課になりました。契約利回り通りの満期決済を確認できたので、次回は商業プランへ増額予定です。',
+    yieldAchieved: '+50.00% 純利益 (スタータープラン 15日間)',
+    plan_title: 'Starter Plan',
+    rating: 4,
+    verified: true,
+    created_at: '2026-10-16T11:40:00Z',
+  },
 ];
+
+// ====================================================================
+// Overall Dynamic Platform Rating Engine
+// ====================================================================
+export interface PlatformRatingSummary {
+  average: number;
+  rounded: string;
+  totalReviews: number;
+  stars5Count: number;
+  stars4Count: number;
+  stars3Count: number;
+  stars2Count: number;
+  stars1Count: number;
+  satisfactionRate: string;
+}
+
+export const getPlatformRatingStats = (
+  reviews: TestimonialReview[] = INITIAL_TESTIMONIALS
+): PlatformRatingSummary => {
+  const totalReviews = reviews.length;
+  if (totalReviews === 0) {
+    return {
+      average: 5.0,
+      rounded: '5.0',
+      totalReviews: 0,
+      stars5Count: 0,
+      stars4Count: 0,
+      stars3Count: 0,
+      stars2Count: 0,
+      stars1Count: 0,
+      satisfactionRate: '100%',
+    };
+  }
+
+  const sum = reviews.reduce((acc, r) => acc + (r.rating || 5), 0);
+  const average = sum / totalReviews;
+  const stars5 = reviews.filter((r) => r.rating === 5).length;
+  const stars4 = reviews.filter((r) => r.rating === 4).length;
+  const stars3 = reviews.filter((r) => r.rating === 3).length;
+  const stars2 = reviews.filter((r) => r.rating === 2).length;
+  const stars1 = reviews.filter((r) => r.rating === 1).length;
+
+  const satisfiedCount = stars5 + stars4;
+  const satisfactionRate = `${Math.round((satisfiedCount / totalReviews) * 100)}%`;
+
+  return {
+    average: Number(average.toFixed(2)),
+    rounded: average.toFixed(1),
+    totalReviews,
+    stars5Count: stars5,
+    stars4Count: stars4,
+    stars3Count: stars3,
+    stars2Count: stars2,
+    stars1Count: stars1,
+    satisfactionRate,
+  };
+};
+
+export const PLATFORM_RATING_SUMMARY = getPlatformRatingStats(INITIAL_TESTIMONIALS);
 
 export interface PoultryFact {
   id: string;
@@ -1555,8 +1865,8 @@ export const POULTRY_RANDOM_FACTS: PoultryFact[] = [
     headline: 'Carbon Footprint is 90% Lower than Red Meat',
     metric: '6 kg CO2e',
     metricLabel: 'Emissions per 1 kg poultry vs 60 kg for beef',
-    fact: 'Producing one kilogram of poultry generates approximately 6 kg of CO2 equivalent, compared to over 60 kg for beef. Shifting investment into modern solar-powered poultry hubs drives major agricultural decarbonization.',
-    funDetail: 'Solar-powered bio-domes with closed-loop manure pelleting allow European poultry hubs to achieve near-carbon-neutral operational footprints.',
+    fact: 'Producing one kilogram of poultry generates approximately 6 kg of CO2 equivalent, compared to over 60 kg for beef. Shifting investment into modern geothermal-powered poultry hubs drives major agricultural decarbonization.',
+    funDetail: 'Geothermal bio-domes with 4-tier energy resilience and closed-loop manure pelleting allow European poultry hubs to achieve near-carbon-neutral operational footprints.',
   },
 ];
 
@@ -1679,11 +1989,6 @@ export const INITIAL_SYSTEM_SETTINGS: SystemSettings = {
   },
 };
 
-// ====================================================================
-// Advanced Admin Analytics Mock Datasets (Recharts)
-// ====================================================================
-
-// 1. User Growth Trends (Monthly)
 export const ADMIN_USER_GROWTH_DATA = [
   { month: 'Apr 2026', totalInvestors: 420, newInvestors: 85, kycVerified: 390 },
   { month: 'May 2026', totalInvestors: 650, newInvestors: 230, kycVerified: 610 },
@@ -1693,7 +1998,6 @@ export const ADMIN_USER_GROWTH_DATA = [
   { month: 'Sep 2026', totalInvestors: 2850, newInvestors: 750, kycVerified: 2710 },
 ];
 
-// 2. Investment Plan Performance
 export const ADMIN_PLAN_PERFORMANCE_DATA = [
   {
     planName: '15d (50% ROI)',
@@ -1729,7 +2033,6 @@ export const ADMIN_PLAN_PERFORMANCE_DATA = [
   },
 ];
 
-// 3. Deposit vs Withdrawal Cash Flow Patterns (Weekly)
 export const ADMIN_CASH_FLOW_DATA = [
   { week: 'W34', deposits: 240000, withdrawals: 95000, netFlow: 145000 },
   { week: 'W35', deposits: 310000, withdrawals: 120000, netFlow: 190000 },
@@ -1739,7 +2042,6 @@ export const ADMIN_CASH_FLOW_DATA = [
   { week: 'W39', deposits: 680000, withdrawals: 245000, netFlow: 435000 },
 ];
 
-// 4. Farm Cycle Profitability by Region
 export const ADMIN_REGIONAL_PROFIT_DATA = [
   {
     region: 'Bavaria (DE)',
@@ -1747,7 +2049,7 @@ export const ADMIN_REGIONAL_PROFIT_DATA = [
     feedCost: 8400,
     energyCost: 1200,
     wholesaleRevenue: 28500,
-    grossMargin: 66.3, // percentage
+    grossMargin: 66.3,
     fcrEfficiency: 1.49,
   },
   {
@@ -1756,7 +2058,7 @@ export const ADMIN_REGIONAL_PROFIT_DATA = [
     feedCost: 7800,
     energyCost: 950,
     wholesaleRevenue: 26200,
-    grossMargin: 66.6, // percentage
+    grossMargin: 66.6,
     fcrEfficiency: 1.54,
   },
   {
@@ -1765,7 +2067,7 @@ export const ADMIN_REGIONAL_PROFIT_DATA = [
     feedCost: 5800,
     energyCost: 820,
     wholesaleRevenue: 21000,
-    grossMargin: 68.4, // percentage
+    grossMargin: 68.4,
     fcrEfficiency: 1.58,
   },
 ];
@@ -1814,4 +2116,3 @@ export const INITIAL_BUG_REPORTS: BugReport[] = [
     adminNotes: 'Streamlined hero photography card to showcase pure farm facilities and bio-flocks.',
   },
 ];
-

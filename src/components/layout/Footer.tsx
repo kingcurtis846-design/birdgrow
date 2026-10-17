@@ -172,7 +172,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection, onOpenAuth, o
                   onClick={(e) => handleSectionClick('facilities', e)}
                   className="hover:text-[#F7F6F2] transition-colors text-left cursor-pointer py-1 block w-full"
                 >
-                  Alaska Arctic Sub-Zero Bio-Dome (Opening Soon)
+                  Portugal Arctic Sub-Zero Bio-Dome (Opening Soon)
                 </button>
               </li>
               <li>

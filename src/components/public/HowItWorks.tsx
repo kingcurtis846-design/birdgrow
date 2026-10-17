@@ -10,9 +10,9 @@ import {
   Flame,
   ShieldCheck,
   CheckCircle2,
-  Layers,
-  ArrowRight,
-  TrendingUp,
+  Zap,
+  Sun,
+  ShieldAlert,
 } from 'lucide-react';
 
 export const HowItWorks: React.FC = () => {
@@ -35,7 +35,7 @@ export const HowItWorks: React.FC = () => {
       title: t.howStep2Title || 'Physical Pairing with Farm Expenses',
       description:
         t.howStep2Desc ||
-        'Your capital does not sit idle. Every euro is physically deployed into direct flock production, automated feed milling, and bio-secure facility construction.',
+        'Your capital does not sit idle. Every euro is physically deployed into direct flock production, automated feed milling, and 4-tier climate-resilient facility engineering.',
       highlight: t.howStep2Highlight || 'Direct real-world asset collateralization & 100% Non-GMO feed',
     },
     {
@@ -80,17 +80,17 @@ export const HowItWorks: React.FC = () => {
     },
     {
       id: 'facility_building',
-      title: t.howExpensePillar3 || '3. Bio-Dome Facility Building & Solar Microgrids',
+      title: t.howExpensePillar3 || '3. Geothermal Heating Loops & 4-Tier Energy Resilience',
       tag: t.howExpensePillar3Tag || 'Infrastructure & Real Property',
       sharePct: '20%',
       icon: Building2,
-      summary: t.howExpensePillar3Summary || 'Constructing and modernizing climate-controlled bio-domes across Germany, Netherlands, France, and Arctic Alaska.',
+      summary: t.howExpensePillar3Summary || 'Constructing and modernizing climate-controlled facilities powered by Tier 1 geothermal ground loops, 24/7 grid stability, summer peak-shaving solar, and emergency life-safety generators.',
       details: [
-        'Thermal Bio-Domes: High-insulation geodesic bio-domes designed for sub-zero climates with geothermal heat exchange.',
-        'Renewable Power: 350 kW to 850 kW rooftop solar microgrids per facility, drastically cutting operational heating and lighting costs.',
-        'Automated Aviary Conveyors: Robotic egg collection belts and climate sensors logging ambient temperature and humidity.',
+        'Tier 1 Primary Heat: Subterranean deep or shallow geothermal loops providing 100% of base brooding heat (COP 4.2), completely immune to European winter sub-zero freezes.',
+        'Tier 2 & 3 Power Mix: Three-phase 400V grid power for continuous 24/7 ventilation, coupled with rooftop solar & battery strictly for summer peak shaving when fans run hard in July and August.',
+        'Tier 4 Lifeline Backup: Industrial on-site diesel/biomass generators with Automatic Transfer Switches (<10s failover) mandated by EU animal welfare directives to prevent fatal flock suffocation.',
       ],
-      capitalUsage: 'Funds structural bio-dome fabrication, solar panel installations, automated ventilation ducts, and biosecurity sanitation airlocks.',
+      capitalUsage: 'Funds geothermal borehole drilling, 3-phase grid transformer integration, summer peak-shaving rooftop solar arrays, automated ventilation ducts, and biosecurity sanitation airlocks.',
     },
     {
       id: 'operational_expenses',
@@ -155,9 +155,7 @@ export const HowItWorks: React.FC = () => {
           })}
         </div>
 
-        {/* ========================================================================= */}
-        {/* DEEP DIVE: HOW INVESTOR CAPITAL IS PAIRED WITH FARM EXPENSES            */}
-        {/* ========================================================================= */}
+        {/* Deep Dive: How Investor Capital is Paired with Farm Expenses */}
         <div className="bg-white rounded-3xl border-2 border-[#1B3B2B]/20 p-5 sm:p-10 shadow-xs space-y-6 sm:space-y-8">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-[#E5E3D8]">
             <div className="space-y-1.5 max-w-2xl">
@@ -301,4 +299,3 @@ export const HowItWorks: React.FC = () => {
     </section>
   );
 };
-

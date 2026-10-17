@@ -11,7 +11,8 @@ import {
   Sparkles,
   Zap,
   ArrowRight,
-  Sun,
+  Flame,
+  ShieldAlert,
   ShieldCheck,
   Eye,
 } from 'lucide-react';
@@ -26,7 +27,7 @@ interface FeaturedHub {
   category: string;
   birds: string;
   output: string;
-  solar: string;
+  energyBadge: string;
   stage: string;
   stageBadgeClass: string;
   image: string;
@@ -43,7 +44,7 @@ const FEATURED_HUBS: FeaturedHub[] = [
     category: 'Free-Range Broilers & Layers',
     birds: '1,850 Birds',
     output: '450 eggs/day',
-    solar: '65 kWp Solar',
+    energyBadge: 'Tier 1 Geothermal (COP 4.1)',
     stage: 'Active Laying',
     stageBadgeClass: 'bg-emerald-100 text-emerald-900 border-emerald-300',
     image: '/images/farm_normandy_facility_1790556829062.jpg',
@@ -58,11 +59,11 @@ const FEATURED_HUBS: FeaturedHub[] = [
     category: 'Commercial Bio-Broiler Facility',
     birds: '2,000 Birds',
     output: 'Rewe / Edeka Retail Trays',
-    solar: '85 kWp Solar',
+    energyBadge: 'Deep Geothermal Loops + ATS',
     stage: 'Finishing Stage',
     stageBadgeClass: 'bg-amber-100 text-amber-900 border-amber-300',
     image: '/images/farm_bavaria_facility_1790556807167.jpg',
-    highlight: 'Zero-Emission Closed Bio-Pellet Heating',
+    highlight: 'Zero-Emission Closed Bio-Pellet & Earth Loop Heat',
   },
   {
     id: 'utrecht-hub',
@@ -73,7 +74,7 @@ const FEATURED_HUBS: FeaturedHub[] = [
     category: 'High-Density Automated Layer',
     birds: '3,100 Birds',
     output: '900 eggs/day',
-    solar: '95 kWp Microgrid',
+    energyBadge: '400V Grid + 95 kWp Summer Shaving',
     stage: 'Fully Commissioned',
     stageBadgeClass: 'bg-emerald-100 text-emerald-900 border-emerald-300',
     image: '/images/farm_utrecht_facility_1790556818162.jpg',
@@ -82,16 +83,16 @@ const FEATURED_HUBS: FeaturedHub[] = [
   {
     id: 'arctic-hub',
     name: 'Arctic Geothermal Bio-Dome',
-    country: 'USA / Alaska',
+    country: 'USA / Portugal',
     countryFlag: '❄️',
-    location: 'Alaska / Arctic Expansion',
+    location: 'Portugal /Smart Agro Farm',
     category: 'Sub-Zero Geothermal Colony',
     birds: '1,200 Birds',
     output: '250 eggs/day',
-    solar: '55 kWp Microgrid',
+    energyBadge: '100% Geothermal Heat (Sub-Zero)',
     stage: '65% Commissioned',
     stageBadgeClass: 'bg-sky-100 text-sky-900 border-sky-300',
-    image: '/images/farm_alaska_facility_1790558782367.jpg',
+    image: '/images/farm_Portugal_facility_1790558782367.jpg',
     highlight: 'Flagship Frontier Polar Agricultural Dome',
   },
 ];
@@ -99,47 +100,41 @@ const FEATURED_HUBS: FeaturedHub[] = [
 export const FacilitiesSection: React.FC = () => {
   const { cycles, t } = usePlatform();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [categoryFilter, setCategoryFilter] = useState<'all' | 'dual' | 'layers_eggs' | 'broilers' | 'alaska'>('all');
+  const [categoryFilter, setCategoryFilter] = useState<'all' | 'dual' | 'layers_eggs' | 'broilers' | 'Portugal'>('all');
   const [countryFilter, setCountryFilter] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Alaska farm from platform context
-  const alaskaFarm = useMemo(() => {
-    return cycles.find((c) => c.id === 'cyc-alaska-01' || c.facility_location.toLowerCase().includes('alaska'));
+  const PortugalFarm = useMemo(() => {
+    return cycles.find((c) => c.id === 'cyc-Portugal-01' || c.facility_location.toLowerCase().includes('Portugal'));
   }, [cycles]);
 
-  const alaskaProgress = alaskaFarm?.construction_progress ?? 65;
+  const PortugalProgress = PortugalFarm?.construction_progress ?? 65;
 
-  // Aggregate metrics
   const totalFarms = cycles.length;
   const dualFarms = useMemo(() => cycles.filter((c) => c.category === 'dual_layers_broilers' || (c.has_layers && c.has_broilers)), [cycles]);
   const layerFarms = useMemo(() => cycles.filter((c) => c.category === 'layers_eggs' || c.category === 'dual_layers_broilers' || c.has_layers || !!c.daily_egg_capacity), [cycles]);
   const broilerFarms = useMemo(() => cycles.filter((c) => c.category === 'broilers' || c.category === 'dual_layers_broilers' || c.has_broilers), [cycles]);
   const layerPercentage = totalFarms > 0 ? ((layerFarms.length / totalFarms) * 100).toFixed(1) : '65.6';
 
-  // Total daily egg capacity
   const totalDailyEggs = useMemo(() => {
     return layerFarms.reduce((acc, curr) => acc + (curr.daily_egg_capacity || 0), 0);
   }, [layerFarms]);
 
-  // Total bird capacity
   const totalBirdCapacity = useMemo(() => {
     return cycles.reduce((acc, curr) => acc + (curr.total_birds || 0), 0);
   }, [cycles]);
 
-  // Unique countries
   const countries = useMemo(() => {
     const list = Array.from(new Set(cycles.map((c) => c.country).filter(Boolean)));
     return list.sort();
   }, [cycles]);
 
-  // Filtered list
   const filteredCycles = useMemo(() => {
     return cycles.filter((c) => {
       if (categoryFilter === 'dual' && c.category !== 'dual_layers_broilers' && (!c.has_layers || !c.has_broilers)) return false;
       if (categoryFilter === 'layers_eggs' && c.category !== 'layers_eggs' && c.category !== 'dual_layers_broilers' && !c.has_layers && !c.daily_egg_capacity) return false;
       if (categoryFilter === 'broilers' && c.category !== 'broilers' && c.category !== 'dual_layers_broilers' && !c.has_broilers) return false;
-      if (categoryFilter === 'alaska' && !c.is_opening_soon && !c.facility_location.toLowerCase().includes('alaska') && !c.facility_location.toLowerCase().includes('norway')) return false;
+      if (categoryFilter === 'Portugal' && !c.is_opening_soon && !c.facility_location.toLowerCase().includes('Portugal') && !c.facility_location.toLowerCase().includes('norway')) return false;
 
       if (countryFilter !== 'all' && c.country !== countryFilter) return false;
 
@@ -161,12 +156,9 @@ export const FacilitiesSection: React.FC = () => {
     <section id="facilities" className="py-20 bg-white border-b border-[#E5E3D8] scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* ========================================================= */}
-        {/* 1. SECTION HEADER WITH EVENLY SPACED METRICS               */}
-        {/* ========================================================= */}
+        {/* 1. Section Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-12">
           
-          {/* Left Text Block (7 cols) */}
           <div className="lg:col-span-7 space-y-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1B3B2B]/5 border border-[#1B3B2B]/15 text-[#C5A059] text-xs font-bold uppercase tracking-wider">
               <Building2 className="w-3.5 h-3.5 text-[#C5A059]" />
@@ -174,17 +166,15 @@ export const FacilitiesSection: React.FC = () => {
             </div>
             
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1B3B2B] tracking-tight leading-tight">
-              {t.facTitle || '30+ Certified European Production Hubs & Arctic Expansion'}
+              {t.facTitle || '30+ Certified European Production Hubs & Smart Agro Farm'}
             </h2>
             
             <p className="text-sm sm:text-base text-[#5C6572] leading-relaxed max-w-2xl">
-              {t.facDesc || 'Our industrial infrastructure spans bio-secure facilities across France, Germany, the Netherlands, Poland, and Austria, with cutting-edge geothermal expansion in polar climates. Every facility is underwritten by forward retail contracts.'}
+              {t.facDesc || 'Our industrial infrastructure spans bio-secure facilities across France, Germany, the Netherlands, Poland, and Austria, with cutting-edge geothermal expansion in polar climates. Every facility is underwritten by forward retail contracts and protected by 4-Tier Energy Resilience.'}
             </p>
           </div>
 
-          {/* Right Metrics Grid (5 cols, 4 uniform boxes in 2x2 grid) */}
           <div className="lg:col-span-5 grid grid-cols-2 gap-3 sm:gap-4">
-            
             <div className="h-full min-h-[92px] flex flex-col justify-between p-3.5 sm:p-4 bg-[#F7F6F2] rounded-2xl border border-[#E5E3D8] hover:border-[#C5A059]/40 transition-colors">
               <div className="text-[10px] sm:text-[11px] font-bold text-[#5C6572] uppercase tracking-wider flex items-center justify-between">
                 <span>{t.facActiveHubsCount || 'Active Hubs'}</span>
@@ -228,24 +218,19 @@ export const FacilitiesSection: React.FC = () => {
               </div>
               <div className="text-[10px] text-emerald-800 font-semibold">Top Tier EU Grocers</div>
             </div>
-
           </div>
-
         </div>
 
-        {/* ========================================================= */}
-        {/* 2. COMBINED SHOWCASE: HUBS TO SUPERMARKET-SEALED TRAYS     */}
-        {/* ========================================================= */}
+        {/* 2. Combined Showcase: Retail Ready */}
         <div className="mb-14 rounded-3xl bg-[#11271D] border-2 border-[#C5A059]/40 p-5 sm:p-8 lg:p-10 text-white shadow-2xl overflow-hidden relative">
           <div className="absolute right-0 top-0 w-96 h-96 bg-[#C5A059]/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             
-            {/* Left Image: Clingfilm-Wrapped Broilers on Retail Grocery Trays */}
             <div className="lg:col-span-5 relative rounded-2xl overflow-hidden border-2 border-white/20 shadow-xl group">
               <img
                 src="/images/clingfilm_broilers_1790812565922.jpg"
-                alt="European supermarket retail chilled meat display with whole fresh raw broilers properly slaughtered, dressed, and wrapped in clear clingfilm on grocery trays"
+                alt="European supermarket retail chilled meat display on grocery trays"
                 className="w-full h-64 sm:h-80 lg:h-96 object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
@@ -261,7 +246,6 @@ export const FacilitiesSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Right Text & Evenly Spaced Specifications Grid */}
             <div className="lg:col-span-7 space-y-4">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-[#C5A059] bg-[#C5A059]/15 px-3 py-1 rounded-full border border-[#C5A059]/30">
@@ -281,9 +265,7 @@ export const FacilitiesSection: React.FC = () => {
                 {t.facShowcaseDesc || 'Every broiler flock raised across our certified European production hubs is underwritten by legally binding forward off-take agreements with leading retail grocery networks before chick placement. Birds are grown under strict EU veterinary biosafety standards, cleanly dressed, and sealed in clear protective clingfilm on food-grade retail trays ready for consumer refrigeration shelves in Rewe, Carrefour, Edeka, and Albert Heijn.'}
               </p>
 
-              {/* Evenly Spaced 4-Card Specifications Grid (Matching heights) */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                
                 <div className="h-full min-h-[96px] flex flex-col justify-between p-3.5 bg-white/5 rounded-xl border border-white/10 hover:border-[#C5A059]/40 transition-colors">
                   <div className="text-[10px] text-[#A7B6AB] uppercase font-mono font-semibold">Packaging Format</div>
                   <div className="font-extrabold text-white text-xs sm:text-sm leading-tight">Clingfilm Trays</div>
@@ -307,10 +289,8 @@ export const FacilitiesSection: React.FC = () => {
                   <div className="font-extrabold text-white text-xs sm:text-sm leading-tight">Zero Open Risk</div>
                   <div className="text-[10px] text-emerald-400 font-medium">Guaranteed Forward Floor</div>
                 </div>
-
               </div>
 
-              {/* Action Button to Filter to Broiler Hubs */}
               <div className="pt-2">
                 <button
                   type="button"
@@ -334,9 +314,7 @@ export const FacilitiesSection: React.FC = () => {
           </div>
         </div>
 
-        {/* ========================================================= */}
-        {/* 3. FOUR FEATURED FLAGSHIP HUBS SPOTLIGHT (Evenly Spaced)   */}
-        {/* ========================================================= */}
+        {/* 3. Featured Flagship Hubs Spotlight */}
         <div className="mb-14">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
             <div>
@@ -348,7 +326,7 @@ export const FacilitiesSection: React.FC = () => {
               </h3>
             </div>
             <p className="text-xs text-[#5C6572] max-w-md">
-              High-efficiency bio-secure centers equipped with solar arrays, subterranean geo-thermal heating, and contractual supermarket links.
+              High-efficiency bio-secure centers equipped with subterranean geothermal heating (Tier 1), stable 3-phase grid power (Tier 2), summer peak-shaving solar (Tier 3), and failover gensets (Tier 4).
             </p>
           </div>
 
@@ -358,7 +336,6 @@ export const FacilitiesSection: React.FC = () => {
                 key={hub.id}
                 className="h-full flex flex-col bg-[#F7F6F2] rounded-2xl border-2 border-[#E5E3D8] hover:border-[#1B3B2B] transition-all overflow-hidden shadow-xs hover:shadow-md group"
               >
-                {/* Photo Header */}
                 <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
                   <img
                     src={hub.image}
@@ -368,25 +345,24 @@ export const FacilitiesSection: React.FC = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                   
-                  {/* Country Flag & Stage */}
                   <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
                     <span className="px-2 py-0.5 rounded-lg bg-black/75 backdrop-blur-md text-white text-[11px] font-bold">
                       {hub.countryFlag} {hub.country}
                     </span>
                   </div>
 
+                  {/* Energy Badge replacing naive solar badge */}
                   <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-white">
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${hub.stageBadgeClass}`}>
                       {hub.stage}
                     </span>
-                    <span className="text-[10px] font-mono text-[#C5A059] font-bold flex items-center gap-1 bg-black/60 px-1.5 py-0.5 rounded">
-                      <Sun className="w-3 h-3 text-[#C5A059]" />
-                      {hub.solar}
+                    <span className="text-[10px] font-mono text-[#C5A059] font-bold flex items-center gap-1 bg-black/70 backdrop-blur-xs px-2 py-0.5 rounded">
+                      <Flame className="w-3 h-3 text-amber-500" />
+                      {hub.energyBadge}
                     </span>
                   </div>
                 </div>
 
-                {/* Card Body */}
                 <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
                   <div>
                     <h4 className="font-extrabold text-sm sm:text-base text-[#1B3B2B] leading-snug group-hover:text-[#C5A059] transition-colors">
@@ -398,7 +374,6 @@ export const FacilitiesSection: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Uniform 2-Column Specs */}
                   <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[#E5E3D8] text-xs">
                     <div className="bg-white p-2 rounded-xl border border-[#E5E3D8]/80">
                       <div className="text-[9px] uppercase font-mono text-[#5C6572]">Flock Size</div>
@@ -421,12 +396,9 @@ export const FacilitiesSection: React.FC = () => {
           </div>
         </div>
 
-        {/* ========================================================= */}
-        {/* 4. PRODUCTION DIRECTORY CONTAINER (All 32 Facilities)      */}
-        {/* ========================================================= */}
+        {/* 4. Production Directory Container */}
         <div id="facility-list-anchor" className="rounded-3xl border-2 border-[#E5E3D8] bg-[#F7F6F2] p-5 sm:p-7 transition-all shadow-xs">
           
-          {/* Directory Collapsible Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-start sm:items-center gap-3.5">
               <div className="w-12 h-12 rounded-2xl bg-[#1B3B2B] text-white flex items-center justify-center shrink-0 shadow-xs">
@@ -459,62 +431,60 @@ export const FacilitiesSection: React.FC = () => {
             </button>
           </div>
 
-          {/* Expanded List View */}
           {isDropdownOpen && (
             <div className="mt-8 pt-6 border-t border-[#E5E3D8] space-y-6 animate-in fade-in duration-300">
               
-              {/* ALASKA COMMISSIONING FEATURE CARD */}
-              {alaskaFarm && (
+              {/* Portugal COMMISSIONING FEATURE CARD - Geothermal + Lifeline Generator */}
+              {PortugalFarm && (
                 <div className="rounded-2xl border-2 border-[#1B3B2B]/20 bg-white p-5 sm:p-6 relative overflow-hidden shadow-xs">
                   <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                     <div className="space-y-2.5 max-w-2xl">
                       <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#1B3B2B] text-white">
                         <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
-                        <span>{t.facAlaskaSubtitle || 'Strategic Expansion · New Farm Opening'}</span>
+                        <span>{t.facPortugalSubtitle || 'Strategic Expansion · New Farm Opening'}</span>
                       </div>
                       <div>
-                        <h3 className="text-xl sm:text-2xl font-extrabold text-[#1B3B2B]">{alaskaFarm.facility_name}</h3>
+                        <h3 className="text-xl sm:text-2xl font-extrabold text-[#1B3B2B]">{PortugalFarm.facility_name}</h3>
                         <div className="flex items-center gap-2 text-xs text-[#5C6572] mt-0.5">
                           <MapPin className="w-4 h-4 text-[#C5A059]" />
-                          <span>{alaskaFarm.facility_location}</span>
+                          <span>{PortugalFarm.facility_location}</span>
                           <span>·</span>
                           <span className="font-semibold text-emerald-700">Sub-Zero Arctic Geo-Thermal Hub</span>
                         </div>
                       </div>
                       <p className="text-xs text-[#4A5568] leading-relaxed">
-                        {t.facAlaskaDesc || 'Pioneering closed-loop bio-dome agriculture in sub-zero climate. Utilizing geothermal subterranean heating and closed-cycle solar microgrids, this flagship facility houses cold-hardy Icelandic and Bovans layer hens producing certified organic table eggs.'}
+                        {t.facPortugalDesc || 'Pioneering closed-loop bio-dome agriculture in sub-zero climate. Utilizing subterranean geothermal ground loops for 100% of base heating and on-site failover generators, this flagship facility houses cold-hardy Icelandic and Bovans layer hens producing certified organic table eggs.'}
                       </p>
                     </div>
 
-                    {/* Right Alaska Specs & Commissioning Progress */}
                     <div className="w-full lg:w-96 bg-[#FAF9F5] p-4 rounded-xl border border-[#E5E3D8] space-y-3 shrink-0">
                       <div className="flex justify-between items-center text-xs">
                         <span className="font-bold text-[#1B3B2B] uppercase">{t.facConstructionProgress || 'Commissioning Progress'}</span>
-                        <span className="font-mono font-extrabold text-sm text-[#1B3B2B]">{alaskaProgress}%</span>
+                        <span className="font-mono font-extrabold text-sm text-[#1B3B2B]">{PortugalProgress}%</span>
                       </div>
                       <div className="w-full h-2.5 bg-[#EAE8E0] rounded-full overflow-hidden">
                         <div
                           className="h-full rounded-full transition-all duration-700 bg-gradient-to-r from-[#1B3B2B] to-[#C5A059]"
-                          style={{ width: `${alaskaProgress}%` }}
+                          style={{ width: `${PortugalProgress}%` }}
                         />
                       </div>
                       <div className="grid grid-cols-2 gap-2 text-xs pt-1 border-t border-[#E5E3D8]">
                         <div>
                           <span className="text-[#5C6572] block text-[10px] uppercase">{t.facTotalBirds || 'Capacity'}</span>
-                          <span className="font-mono font-bold text-[#1B3B2B]">{alaskaFarm.total_birds.toLocaleString()} Birds</span>
+                          <span className="font-mono font-bold text-[#1B3B2B]">{PortugalFarm.total_birds.toLocaleString()} Birds</span>
                         </div>
                         <div>
                           <span className="text-[#5C6572] block text-[10px] uppercase">{t.facDailyEggs || 'Daily Egg Output'}</span>
                           <span className="font-mono font-bold text-amber-900">25,000 / Day</span>
                         </div>
                         <div>
-                          <span className="text-[#5C6572] block text-[10px] uppercase">{t.facSolarCapacity || 'Solar Array'}</span>
-                          <span className="font-mono font-bold text-[#1B3B2B]">{alaskaFarm.solar_power_kw} kW</span>
+                          <span className="text-[#5C6572] block text-[10px] uppercase">{t.facSummerShaving || 'Summer Peak Shaving'}</span>
+                          <span className="font-mono font-bold text-[#1B3B2B]">{PortugalFarm.solar_power_kw} kW</span>
                         </div>
                         <div>
-                          <span className="text-[#5C6572] block text-[10px] uppercase">Status</span>
+                          <span className="text-[#5C6572] block text-[10px] uppercase">Base Heating</span>
                           <span className="font-bold text-amber-800 uppercase text-[11px]">
-                            {alaskaProgress >= 100 ? 'Commissioned' : 'Under Construction'}
+                            Geothermal (COP 4.2)
                           </span>
                         </div>
                       </div>
@@ -523,10 +493,8 @@ export const FacilitiesSection: React.FC = () => {
                 </div>
               )}
 
-              {/* Filter Controls Row (Category Tabs + Search + Country Dropdown) */}
+              {/* Filter Controls */}
               <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
-                
-                {/* Category Tabs */}
                 <div className="flex items-center gap-1.5 p-1.5 bg-[#EAE8E0] rounded-2xl border border-[#DCDAD0] overflow-x-auto no-scrollbar">
                   <button
                     onClick={() => setCategoryFilter('all')}
@@ -591,21 +559,20 @@ export const FacilitiesSection: React.FC = () => {
                   </button>
 
                   <button
-                    onClick={() => setCategoryFilter('alaska')}
+                    onClick={() => setCategoryFilter('Portugal')}
                     className={`min-h-[40px] px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
-                      categoryFilter === 'alaska'
+                      categoryFilter === 'Portugal'
                         ? 'bg-[#B45309] text-white shadow-2xs'
                         : 'text-[#5C6572] hover:text-[#1B3B2B]'
                     }`}
                   >
-                    <span>❄️ {t.facFilterAlaska || 'Alaska Expansion'}</span>
-                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${categoryFilter === 'alaska' ? 'bg-[#92400E] text-white' : 'bg-[#E5E3D8] text-[#1B3B2B]'}`}>
+                    <span>❄️ {t.facFilterPortugal || 'Portugal Expansion'}</span>
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${categoryFilter === 'Portugal' ? 'bg-[#92400E] text-white' : 'bg-[#E5E3D8] text-[#1B3B2B]'}`}>
                       1
                     </span>
                   </button>
                 </div>
 
-                {/* Search & Country Filter */}
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 flex-1 max-w-lg">
                   <div className="relative flex-1">
                     <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5C6572]" />
@@ -627,18 +594,15 @@ export const FacilitiesSection: React.FC = () => {
                     <option value="all">All Countries ({countries.length})</option>
                     {countries.map((c) => (
                       <option key={c} value={c}>
-                        {c === 'USA' ? 'Alaska (USA)' : `${c} Region`}
+                        {c === 'USA' ? 'Portugal (USA)' : `${c} Region`}
                       </option>
                     ))}
                   </select>
                 </div>
-
               </div>
 
-              {/* FACILITIES TABLE & CARD LIST (Evenly Spaced Grid) */}
+              {/* Facilities Table */}
               <div className="bg-white rounded-2xl border border-[#E5E3D8] overflow-hidden shadow-xs">
-                
-                {/* Table Header */}
                 <div className="hidden lg:grid grid-cols-12 gap-4 px-6 py-3.5 bg-[#FAF9F5] border-b border-[#E5E3D8] text-[11px] font-bold text-[#5C6572] uppercase tracking-wider">
                   <div className="col-span-4">Facility & Location</div>
                   <div className="col-span-3">Category & Breed Genetics</div>
@@ -647,19 +611,17 @@ export const FacilitiesSection: React.FC = () => {
                   <div className="col-span-1 text-right">Stage</div>
                 </div>
 
-                {/* List Items */}
                 <div className="divide-y divide-[#F0EFEA]">
                   {filteredCycles.map((facility) => {
                     const isLayer = facility.category === 'layers_eggs';
                     const isCompleted = facility.current_stage === 'completed';
-                    const isAlaska = facility.id === 'cyc-alaska-01' || facility.facility_location.includes('Alaska');
+                    const isPortugal = facility.id === 'cyc-Portugal-01' || facility.facility_location.includes('Portugal');
 
                     return (
                       <div
                         key={facility.id}
                         className="p-4 sm:px-6 hover:bg-[#FAF9F5] transition-colors flex flex-col lg:grid lg:grid-cols-12 gap-3 lg:gap-4 lg:items-center text-xs"
                       >
-                        {/* Col 1: Facility & Location */}
                         <div className="lg:col-span-4 space-y-1">
                           <div className="flex items-center gap-2">
                             <span className="font-mono text-[11px] font-bold text-[#5C6572] bg-[#F7F6F2] px-2 py-0.5 rounded border border-[#E5E3D8]">
@@ -675,7 +637,6 @@ export const FacilitiesSection: React.FC = () => {
                           </div>
                         </div>
 
-                        {/* Col 2: Category & Breed Genetics */}
                         <div className="lg:col-span-3 space-y-1">
                           <div className="flex items-center gap-1.5 flex-wrap">
                             {facility.category === 'dual_layers_broilers' || (facility.has_layers && facility.has_broilers) ? (
@@ -707,7 +668,6 @@ export const FacilitiesSection: React.FC = () => {
                           )}
                         </div>
 
-                        {/* Col 3: Capacity of Birds */}
                         <div className="lg:col-span-2 lg:text-right flex items-center justify-between lg:justify-end gap-2">
                           <span className="lg:hidden text-[#5C6572] font-semibold text-[11px]">Capacity:</span>
                           <div className="inline-flex flex-col items-end gap-0.5 bg-[#F7F6F2] px-3 py-1.5 rounded-xl border border-[#E5E3D8]">
@@ -727,9 +687,9 @@ export const FacilitiesSection: React.FC = () => {
                           </div>
                         </div>
 
-                        {/* Col 4: Daily Egg / Output */}
+                        {/* Col 4: Daily Egg / Output - Refactored away from generic solar */}
                         <div className="lg:col-span-2 lg:text-right flex items-center justify-between lg:justify-end gap-2 text-[11px]">
-                          <span className="lg:hidden text-[#5C6572] font-semibold">Output:</span>
+                          <span className="lg:hidden text-[#5C6572] font-semibold">Output / Power:</span>
                           {facility.daily_egg_capacity ? (
                             <div className="font-mono font-bold text-amber-950">
                               {facility.daily_egg_capacity.toLocaleString()} <span className="text-[10px] font-normal text-[#5C6572]">eggs/day</span>
@@ -739,12 +699,11 @@ export const FacilitiesSection: React.FC = () => {
                             </div>
                           ) : (
                             <div className="text-[#5C6572] font-mono">
-                              {facility.solar_power_kw || 450} kWp Solar
+                              Geothermal Loop + {facility.solar_power_kw || 450} kW Summer Shave
                             </div>
                           )}
                         </div>
 
-                        {/* Col 5: Stage Badge */}
                         <div className="lg:col-span-1 lg:text-right flex items-center justify-between lg:justify-end">
                           <span className="lg:hidden text-[#5C6572] font-semibold">Stage:</span>
                           {isCompleted ? (
@@ -752,9 +711,9 @@ export const FacilitiesSection: React.FC = () => {
                               <CheckCircle2 className="w-3 h-3 text-emerald-700" />
                               <span>COMPLETED</span>
                             </span>
-                          ) : isAlaska && alaskaProgress < 100 ? (
+                          ) : isPortugal && PortugalProgress < 100 ? (
                             <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300">
-                              {alaskaProgress}% COMMS
+                              {PortugalProgress}% COMMS
                             </span>
                           ) : (
                             <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-800 border border-slate-200 uppercase">
@@ -774,7 +733,6 @@ export const FacilitiesSection: React.FC = () => {
                 )}
               </div>
 
-              {/* Bottom Collapse Button */}
               <div className="pt-2 text-center">
                 <button
                   type="button"

@@ -78,7 +78,7 @@ export const AdminDashboard: React.FC = () => {
     archivePlan,
     updateCycleStage,
     addNewFarm,
-    updateAlaskaProgress,
+    updatePortugalProgress,
     adjustUserBalance,
     updateUserDirectBalances,
     addFarmUpdate,
@@ -205,10 +205,10 @@ export const AdminDashboard: React.FC = () => {
   const [walletFeedback, setWalletFeedback] = useState<string | null>(null);
   const [isSubmittingAdjustment, setIsSubmittingAdjustment] = useState(false);
 
-  // Alaska progress state
-  const alaskaFarm = cycles.find((c) => c.id === 'cyc-alaska-01' || c.facility_location.includes('Alaska'));
-  const [alaskaProgressVal, setAlaskaProgressVal] = useState<number>(alaskaFarm?.construction_progress ?? 65);
-  const [alaskaSaveFeedback, setAlaskaSaveFeedback] = useState<string | null>(null);
+  // Portugal progress state
+  const PortugalFarm = cycles.find((c) => c.id === 'cyc-Portugal-01' || c.facility_location.includes('Portugal'));
+  const [PortugalProgressVal, setPortugalProgressVal] = useState<number>(PortugalFarm?.construction_progress ?? 65);
+  const [PortugalSaveFeedback, setPortugalSaveFeedback] = useState<string | null>(null);
 
   // Cycle filter state in cycles tab
   const [cycleCategoryFilter, setCycleCategoryFilter] = useState<'all' | 'layers_eggs' | 'broilers'>('all');
@@ -497,18 +497,18 @@ export const AdminDashboard: React.FC = () => {
     }
   };
 
-  const handleUpdateAlaska = (val: number) => {
+  const handleUpdatePortugal = (val: number) => {
     const clamped = Math.max(0, Math.min(100, Math.round(val)));
-    setAlaskaProgressVal(clamped);
-    updateAlaskaProgress(clamped);
-    setAlaskaSaveFeedback(
-      `Alaska Bio-Dome progress set to ${clamped}%. ${
+    setPortugalProgressVal(clamped);
+    updatePortugalProgress(clamped);
+    setPortugalSaveFeedback(
+      `Portugal Bio-Dome progress set to ${clamped}%. ${
         clamped >= 100
           ? '🎉 100% Commissioned! Imagery unblurred across entire platform.'
           : 'Public image remains blurred until 100% is reached.'
       }`
     );
-    setTimeout(() => setAlaskaSaveFeedback(null), 5000);
+    setTimeout(() => setPortugalSaveFeedback(null), 5000);
   };
 
   const handleSaveSettings = (e: React.FormEvent) => {
@@ -574,9 +574,7 @@ export const AdminDashboard: React.FC = () => {
     }, 1200);
   };
 
-  // =========================================================================
-  // WITHDRAWAL REVIEW & ACTIONS HANDLERS (DECLINE, PARTIAL, APPROVAL)
-  // =========================================================================
+  // WITHDRAWAL REVIEW & ACTIONS HANDLERS
   const handleInitiateDecline = (tx: any) => {
     setDeclineTargetTx(tx);
     setDeclineErrorMessage(
@@ -968,13 +966,9 @@ export const AdminDashboard: React.FC = () => {
           </button>
         </div>
 
-        {/* ================================================================ */}
-        {/* TAB 1: ADVANCED ANALYTICS & CAPITAL REPORTS (STRUCTURED DATA)    */}
-        {/* ================================================================ */}
+        {/* TAB 1: ADVANCED ANALYTICS */}
         {adminTab === 'analytics' && (
           <div className="space-y-8">
-            
-            {/* Top Stat Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="bg-white p-6 rounded-2xl border border-[#E5E3D8] shadow-xs">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#5C6572]">Total Capital (TVL)</span>
@@ -1009,10 +1003,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            {/* Grid 1: User Growth Trends & Investment Plan Performance (No Graphs) */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              
-              {/* Report 1: User Growth Trends Table */}
               <div className="bg-white p-6 rounded-2xl border border-[#E5E3D8] shadow-xs space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -1054,7 +1045,6 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Report 2: Investment Plan Performance (4 Tiers) */}
               <div className="bg-white p-6 rounded-2xl border border-[#E5E3D8] shadow-xs space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -1098,13 +1088,9 @@ export const AdminDashboard: React.FC = () => {
                   </table>
                 </div>
               </div>
-
             </div>
 
-            {/* Grid 2: Deposit vs Withdrawal Patterns & Regional Farm Cycle Profitability */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              
-              {/* Report 3: Deposit vs Withdrawal Cash Flow Patterns */}
               <div className="bg-white p-6 rounded-2xl border border-[#E5E3D8] shadow-xs space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -1146,7 +1132,6 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Report 4: Farm Cycle Profitability by Region */}
               <div className="bg-white p-6 rounded-2xl border border-[#E5E3D8] shadow-xs space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -1187,15 +1172,11 @@ export const AdminDashboard: React.FC = () => {
                   </table>
                 </div>
               </div>
-
             </div>
-
           </div>
         )}
 
-        {/* ================================================================ */}
-        {/* TAB 2: WITHDRAWAL REQUESTS & REAL-TIME NOTIFICATIONS              */}
-        {/* ================================================================ */}
+        {/* TAB 2: NOTIFICATIONS */}
         {adminTab === 'notifications' && (
           <div className="bg-white rounded-2xl border border-[#E5E3D8] shadow-xs overflow-hidden space-y-4 p-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#F0EFEA]">
@@ -1215,7 +1196,6 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            {/* List of Withdrawal Notifications */}
             <div className="space-y-3">
               {adminNotifications.length === 0 ? (
                 <div className="py-8 text-center text-xs text-[#5C6572]">
@@ -1227,7 +1207,6 @@ export const AdminDashboard: React.FC = () => {
                   const isDeposit = notif.type === 'deposit_confirmation_request';
                   const relatedTx = transactions.find((t) => t.id === notif.metadata?.txId);
 
-                  // Check if an action has been completed on withdrawal
                   const isWithdrawalCompleted =
                     isWithdrawal &&
                     (notif.metadata?.actionCompleted === true ||
@@ -1245,7 +1224,6 @@ export const AdminDashboard: React.FC = () => {
                           : 'approved')
                       : null;
 
-                  // Check if an action has been completed on deposit
                   const isDepositCompleted =
                     isDeposit &&
                     (notif.metadata?.actionCompleted === true ||
@@ -1257,7 +1235,6 @@ export const AdminDashboard: React.FC = () => {
                         (relatedTx?.status === 'successful' ? 'approved' : 'denied')
                       : null;
 
-                  // Dynamic card border & background highlight based on completed action
                   let cardStyle = 'bg-[#F7F6F2] border-[#E5E3D8]';
                   if (!notif.read && !isWithdrawalCompleted && !isDepositCompleted) {
                     cardStyle = 'bg-amber-50/60 border-amber-200 shadow-2xs';
@@ -1291,7 +1268,6 @@ export const AdminDashboard: React.FC = () => {
                             </span>
                           )}
 
-                          {/* Completed Action Highlight Badges */}
                           {isWithdrawalCompleted && (
                             <>
                               {withdrawalActionTaken === 'approved' && (
@@ -1339,9 +1315,7 @@ export const AdminDashboard: React.FC = () => {
                         </div>
                       </div>
 
-                      {/* Action buttons */}
                       <div className="flex items-center gap-2 shrink-0">
-                        {/* Deposit confirmation flow */}
                         {isDeposit && notif.metadata?.txId && (
                           <>
                             {isDepositCompleted ? (
@@ -1406,7 +1380,6 @@ export const AdminDashboard: React.FC = () => {
                           <div className="flex flex-col sm:flex-row items-end sm:items-center gap-2">
                             {isWithdrawalCompleted ? (
                               <div className="flex flex-wrap items-center gap-1.5 p-1 bg-white/90 rounded-xl border border-black/10 shadow-2xs">
-                                {/* Disabled button group showing the selected action highlighted & locked */}
                                 <button
                                   type="button"
                                   disabled
@@ -1415,12 +1388,10 @@ export const AdminDashboard: React.FC = () => {
                                       ? 'bg-emerald-600 text-white shadow-xs ring-2 ring-emerald-600/40 opacity-100 font-extrabold'
                                       : 'bg-gray-100 text-gray-400 opacity-30'
                                   }`}
-                                  title={withdrawalActionTaken === 'approved' ? 'Action completed: Full Payout Approved' : 'Action locked'}
                                 >
                                   <CheckCircle2 className="w-3.5 h-3.5" />
                                   <span>{withdrawalActionTaken === 'approved' ? '✓ Approved Full' : 'Approve Full'}</span>
                                 </button>
-
                                 <button
                                   type="button"
                                   disabled
@@ -1429,12 +1400,10 @@ export const AdminDashboard: React.FC = () => {
                                       ? 'bg-[#C5A059] text-[#11271D] shadow-xs ring-2 ring-[#C5A059]/40 opacity-100 font-extrabold'
                                       : 'bg-gray-100 text-gray-400 opacity-30'
                                   }`}
-                                  title={withdrawalActionTaken === 'partial' ? 'Action completed: Partial Payout Dispatched' : 'Action locked'}
                                 >
                                   <Sparkles className="w-3.5 h-3.5" />
                                   <span>{withdrawalActionTaken === 'partial' ? '✓ Partial Payout' : 'Partial Payout'}</span>
                                 </button>
-
                                 <button
                                   type="button"
                                   disabled
@@ -1443,12 +1412,10 @@ export const AdminDashboard: React.FC = () => {
                                       ? 'bg-red-600 text-white shadow-xs ring-2 ring-red-600/40 opacity-100 font-extrabold'
                                       : 'bg-gray-100 text-gray-400 opacity-30'
                                   }`}
-                                  title={withdrawalActionTaken === 'declined' ? 'Action completed: Transfer Declined & Error Sent' : 'Action locked'}
                                 >
                                   <X className="w-3.5 h-3.5" />
                                   <span>{withdrawalActionTaken === 'declined' ? '✓ Declined' : 'Decline'}</span>
                                 </button>
-
                                 <span className="text-[10px] font-mono font-bold text-[#1B3B2B] bg-[#FAF9F5] px-2 py-1 rounded-md border border-[#E5E3D8] whitespace-nowrap flex items-center gap-1">
                                   <span>🔒 Locked · Settled</span>
                                 </span>
@@ -1470,7 +1437,6 @@ export const AdminDashboard: React.FC = () => {
                                       <button
                                         onClick={() => handleInitiateApprove(targetTx)}
                                         className="px-3 py-1.5 bg-[#16A34A] hover:bg-[#15803D] text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer shadow-xs active:scale-98"
-                                        title="Approve full payout and deposit protocol fee into Fee Purse"
                                       >
                                         <CheckCircle2 className="w-3.5 h-3.5" />
                                         <span>Approve Full</span>
@@ -1478,7 +1444,6 @@ export const AdminDashboard: React.FC = () => {
                                       <button
                                         onClick={() => handleInitiatePartial(targetTx)}
                                         className="px-3 py-1.5 bg-[#C5A059] hover:bg-[#b08d47] text-[#11271D] rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer shadow-xs active:scale-98"
-                                        title="Execute partial payout tranche and explain pairing with farm expenses"
                                       >
                                         <Sparkles className="w-3.5 h-3.5" />
                                         <span>Partial Payout</span>
@@ -1486,7 +1451,6 @@ export const AdminDashboard: React.FC = () => {
                                       <button
                                         onClick={() => handleInitiateDecline(targetTx)}
                                         className="px-3 py-1.5 bg-white border border-red-300 text-red-700 hover:bg-red-50 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer"
-                                        title="Decline transfer with custom error message and specific issues checklist"
                                       >
                                         <X className="w-3.5 h-3.5" />
                                         <span>Decline &amp; Issues</span>
@@ -1497,57 +1461,6 @@ export const AdminDashboard: React.FC = () => {
                               </div>
                             )}
                           </div>
-                        )}
-                        {/* Review submission moderation flow in notification */}
-                        {notif.type === 'review_submission' && notif.metadata?.reviewId && (
-                          <>
-                            <button
-                              onClick={() => {
-                                approveReview(notif.metadata!.reviewId!);
-                                markNotificationRead(notif.id);
-                              }}
-                              className="px-3 py-1.5 bg-[#16A34A] hover:bg-[#15803D] text-white rounded-lg text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer shadow-xs whitespace-nowrap"
-                            >
-                              <CheckCircle2 className="w-3.5 h-3.5" />
-                              <span>Approve & Show on Home</span>
-                            </button>
-                            <button
-                              onClick={() => {
-                                rejectReview(notif.metadata!.reviewId!);
-                                markNotificationRead(notif.id);
-                              }}
-                              className="px-3 py-1.5 bg-white border border-red-300 text-red-700 hover:bg-red-50 rounded-lg text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap"
-                            >
-                              Reject Review
-                            </button>
-                          </>
-                        )}
-
-                        {/* Bug report triage flow in notification */}
-                        {notif.type === 'bug_report' && notif.metadata?.ticketId && (
-                          <>
-                            <button
-                              onClick={() => {
-                                updateBugReportStatus(notif.metadata!.ticketId!, 'resolved', 'Verified and fixed by administrator.');
-                                markNotificationRead(notif.id);
-                                alert(`Incident ${notif.metadata!.ticketId} marked as Resolved.`);
-                              }}
-                              className="px-3 py-1.5 bg-[#16A34A] hover:bg-[#15803D] text-white rounded-lg text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer shadow-xs whitespace-nowrap"
-                            >
-                              <CheckCircle2 className="w-3.5 h-3.5" />
-                              <span>Mark Resolved & Deployed</span>
-                            </button>
-                            <button
-                              onClick={() => {
-                                updateBugReportStatus(notif.metadata!.ticketId!, 'investigating', 'Engineering team actively triaging.');
-                                markNotificationRead(notif.id);
-                                alert(`Incident ${notif.metadata!.ticketId} status changed to Investigating.`);
-                              }}
-                              className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap"
-                            >
-                              Investigate
-                            </button>
-                          </>
                         )}
 
                         {!notif.read && (
@@ -1568,12 +1481,9 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* ================================================================ */}
-        {/* TAB: SEPARATE WITHDRAWAL FEE PURSE & CORPORATE TREASURY ESCROW   */}
-        {/* ================================================================ */}
+        {/* TAB: FEE PURSE */}
         {adminTab === 'fee_purse' && (
           <div className="space-y-6">
-            {/* Header & Controls */}
             <div className="bg-white rounded-2xl border border-[#E5E3D8] shadow-xs p-6 space-y-4">
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#E5E3D8] pb-5">
                 <div className="space-y-1">
@@ -1593,7 +1503,6 @@ export const AdminDashboard: React.FC = () => {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3">
-                  {/* Edit deduction rate */}
                   {isEditingFeeRate ? (
                     <div className="flex items-center gap-2 bg-[#F7F6F2] p-1.5 rounded-xl border border-[#DCDAD0]">
                       <span className="text-xs font-bold text-[#1B3B2B] pl-2">Rate:</span>
@@ -1634,7 +1543,6 @@ export const AdminDashboard: React.FC = () => {
                     </button>
                   )}
 
-                  {/* Sweep Purse Button */}
                   <button
                     onClick={handleOpenSweepModal}
                     disabled={adminFeePurse.totalAccumulatedBalance <= 0}
@@ -1646,7 +1554,6 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Feedback Alert */}
               {feePurseFeedback && (
                 <div
                   className={`p-3 rounded-xl text-xs font-semibold flex items-center gap-2 ${
@@ -1664,7 +1571,6 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               )}
 
-              {/* 4 Metric Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="bg-[#FAF9F5] p-5 rounded-2xl border border-[#E5E3D8] shadow-2xs space-y-2">
                   <div className="flex items-center justify-between text-[#5C6572]">
@@ -1726,7 +1632,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            {/* Capital Pairing Context Information Banner */}
+            {/* Farm Capital Pairing Banner - Refactored away from solar */}
             <div className="bg-gradient-to-r from-[#1B3B2B] to-[#11271D] text-white p-6 rounded-2xl border border-[#C5A059]/30 shadow-xs space-y-3">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
@@ -1774,7 +1680,7 @@ export const AdminDashboard: React.FC = () => {
                     <span>20% Facility Building</span>
                   </div>
                   <p className="text-[11px] text-white/80 leading-relaxed">
-                    Sub-zero thermal bio-domes, automated aviary conveyors, 350-850 kW rooftop solar microgrid installation.
+                    Sub-zero thermal bio-domes, automated aviary conveyors, geothermal loops & summer peak-shaving solar.
                   </p>
                 </div>
 
@@ -1790,7 +1696,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            {/* Dedicated Fee Deduction Ledger */}
+            {/* Fee Deductions Ledger */}
             <div className="bg-white rounded-2xl border border-[#E5E3D8] shadow-xs overflow-hidden space-y-4 p-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#F0EFEA]">
                 <div>
@@ -1812,9 +1718,6 @@ export const AdminDashboard: React.FC = () => {
                 <div className="py-12 text-center text-xs text-[#5C6572] bg-[#FAF9F5] rounded-xl border border-[#E5E3D8] space-y-2">
                   <Coins className="w-8 h-8 text-[#C5A059] mx-auto opacity-50" />
                   <p className="font-bold text-[#1B3B2B]">No Fee Deductions Recorded Yet</p>
-                  <p className="max-w-md mx-auto">
-                    When you approve or partially pay out a withdrawal request from the Withdrawal Requests tab or Ledger, the protocol fee (e.g. {settings.platformFeePercentage || 1.5}%) will automatically be deducted and tracked here.
-                  </p>
                 </div>
               ) : (
                 <div className="overflow-x-auto">
@@ -1893,9 +1796,7 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* ================================================================ */}
-        {/* TAB: INVESTOR REVIEWS MODERATION & HOMEPAGE APPROVAL             */}
-        {/* ================================================================ */}
+        {/* TAB: REVIEWS */}
         {adminTab === 'reviews' && (
           <div className="bg-white rounded-2xl border border-[#E5E3D8] shadow-xs p-6 space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E5E3D8] pb-5">
@@ -1905,11 +1806,10 @@ export const AdminDashboard: React.FC = () => {
                   <span>Investor Reviews & Testimonials Moderation</span>
                 </h3>
                 <p className="text-xs text-[#5C6572] mt-0.5">
-                  Approve or decline submitted investor reviews before they appear on the homepage. Only approved reviews display on the home screen.
+                  Approve or decline submitted investor reviews before they appear on the homepage.
                 </p>
               </div>
 
-              {/* Status Filters */}
               <div className="flex flex-wrap items-center gap-2">
                 {(['all', 'pending', 'approved', 'rejected'] as const).map((filter) => (
                   <button
@@ -1930,13 +1830,11 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            {/* Reviews List */}
             <div className="space-y-4">
               {filteredReviews.length === 0 ? (
                 <div className="p-12 text-center bg-[#F7F6F2] rounded-xl border border-[#E5E3D8] text-xs text-[#5C6572] space-y-2">
                   <Award className="w-8 h-8 text-[#5C6572] mx-auto opacity-40" />
                   <p className="font-semibold">No reviews found matching the "{reviewFilter}" filter.</p>
-                  <p className="text-[11px]">When an investor submits a review, it will appear here for your verification and approval.</p>
                 </div>
               ) : (
                 filteredReviews.map((rev) => {
@@ -1967,7 +1865,6 @@ export const AdminDashboard: React.FC = () => {
                               <span>{rev.city}</span>
                             </span>
                             
-                            {/* Status Badge */}
                             {isPending && (
                               <span className="px-2.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300 flex items-center gap-1">
                                 <Clock className="w-3 h-3 text-amber-700" />
@@ -1988,7 +1885,6 @@ export const AdminDashboard: React.FC = () => {
                             )}
                           </div>
 
-                          {/* Star Rating and Plan */}
                           <div className="flex flex-wrap items-center gap-3 text-xs">
                             <div className="flex items-center text-[#C5A059]">
                               {[...Array(rev.rating || 5)].map((_, i) => (
@@ -2006,13 +1902,11 @@ export const AdminDashboard: React.FC = () => {
                             </span>
                           </div>
 
-                          {/* Quote */}
                           <p className="text-xs sm:text-sm text-[#2D3748] italic bg-white p-3.5 rounded-xl border border-[#E5E3D8] leading-relaxed">
                             "{rev.quote}"
                           </p>
                         </div>
 
-                        {/* Actions */}
                         <div className="flex md:flex-col items-center gap-2 shrink-0 self-end md:self-start">
                           {!isApproved && (
                             <button
@@ -2058,9 +1952,7 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* ================================================================ */}
-        {/* TAB: AUTOMATED EMAIL DISPATCHES & PROFESSIONAL USER NOTIFICATIONS */}
-        {/* ================================================================ */}
+        {/* TAB: EMAILS */}
         {adminTab === 'emails' && (
           <div className="bg-white rounded-2xl border border-[#E5E3D8] shadow-xs p-6 space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E5E3D8] pb-5">
@@ -2074,7 +1966,6 @@ export const AdminDashboard: React.FC = () => {
                 </p>
               </div>
 
-              {/* Status Filter */}
               <div className="flex flex-wrap items-center gap-2">
                 <button
                   onClick={() => setEmailFilter('all')}
@@ -2109,7 +2000,6 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            {/* Email Dispatch Cards */}
             <div className="space-y-3">
               {emailDispatches
                 .filter((item) => (emailFilter === 'all' ? true : item.type === emailFilter))
@@ -2187,9 +2077,7 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* ================================================================ */}
-        {/* TAB: INVESTOR WALLETS & BALANCE ADJUSTMENT (ADD / REMOVE MONEY)   */}
-        {/* ================================================================ */}
+        {/* TAB: WALLETS */}
         {adminTab === 'wallets' && (
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -2234,7 +2122,6 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            {/* Quick Metrics */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="bg-white p-5 rounded-2xl border border-[#E5E3D8] shadow-2xs">
                 <span className="text-[11px] font-semibold text-[#5C6572] uppercase">Total Active Investors</span>
@@ -2254,7 +2141,6 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            {/* User Accounts Table */}
             <div className="bg-white rounded-2xl border border-[#E5E3D8] overflow-hidden shadow-xs">
               <div className="p-4 bg-[#F7F6F2] border-b border-[#E5E3D8] flex items-center justify-between">
                 <span className="text-xs font-bold text-[#1B3B2B] uppercase tracking-wider">
@@ -2312,7 +2198,6 @@ export const AdminDashboard: React.FC = () => {
                               <button
                                 onClick={() => openBalanceModalForUser(user, 'direct_override')}
                                 className="px-2.5 py-1 bg-[#1B3B2B] hover:bg-[#11271D] text-white rounded text-xs font-semibold cursor-pointer shadow-2xs flex items-center gap-1"
-                                title="Directly set main_balance and earnings_balance upon off-platform payment confirmation"
                               >
                                 <Coins className="w-3 h-3 text-[#C5A059]" />
                                 <span>Direct Set</span>
@@ -2349,7 +2234,6 @@ export const AdminDashboard: React.FC = () => {
                                     ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                                     : 'bg-red-700 hover:bg-red-800 text-white cursor-pointer'
                                 }`}
-                                title={user.user_id === 'usr-admin-01' ? 'Super admin cannot be deleted' : 'Delete user profile and wallet'}
                               >
                                 <Trash2 className="w-3 h-3" />
                                 <span>Delete</span>
@@ -2366,12 +2250,9 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* ================================================================ */}
-        {/* TAB: LIVE HUMAN SUPPORT INQUIRIES & TICKETS                       */}
-        {/* ================================================================ */}
+        {/* TAB: INQUIRIES */}
         {adminTab === 'inquiries' && (
           <div className="space-y-6">
-            {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2">
@@ -2405,7 +2286,6 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            {/* Email dispatch active banner */}
             <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 text-xs text-emerald-900 flex items-start gap-3">
               <Mail className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
               <div className="space-y-1">
@@ -2416,13 +2296,11 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            {/* Inquiries Feed */}
             <div className="space-y-4">
               {filteredInquiries.length === 0 ? (
                 <div className="bg-white rounded-2xl border border-[#E5E3D8] p-12 text-center text-xs text-[#5C6572] space-y-2">
                   <Headphones className="w-8 h-8 text-[#5C6572]/40 mx-auto" />
                   <p className="font-semibold text-sm text-[#1B3B2B]">No inquiries matching "{inquiryFilter}" filter</p>
-                  <p>Inquiries submitted via the Human Support bubble appear here in real time.</p>
                 </div>
               ) : (
                 filteredInquiries.map((inq) => (
@@ -2450,7 +2328,6 @@ export const AdminDashboard: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Sender & Body */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div className="p-3 bg-[#F7F6F2] rounded-xl border border-[#E5E3D8] space-y-1.5 text-xs">
                         <span className="text-[10px] font-semibold text-[#5C6572] uppercase">Sender Contact</span>
@@ -2481,7 +2358,6 @@ export const AdminDashboard: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Existing Reply if Resolved */}
                     {inq.reply && (
                       <div className="p-3.5 bg-emerald-50/70 border border-emerald-200 rounded-xl space-y-1 text-xs">
                         <div className="flex items-center justify-between text-emerald-900 font-bold">
@@ -2492,7 +2368,6 @@ export const AdminDashboard: React.FC = () => {
                       </div>
                     )}
 
-                    {/* Reply Form */}
                     {inq.status === 'pending' && (
                       <div>
                         {replyingInquiryId === inq.id ? (
@@ -2548,9 +2423,7 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* ================================================================ */}
-        {/* TAB 3: KYC COMPLIANCE CENTER                                      */}
-        {/* ================================================================ */}
+        {/* TAB 3: KYC */}
         {adminTab === 'kyc' && (
           <div className="bg-white rounded-2xl border border-[#E5E3D8] shadow-xs overflow-hidden">
             <div className="p-5 border-b border-[#E5E3D8]">
@@ -2637,9 +2510,7 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* ================================================================ */}
-        {/* TAB 4: LEDGER & SETTLEMENT MANAGEMENT                             */}
-        {/* ================================================================ */}
+        {/* TAB 4: LEDGER */}
         {adminTab === 'ledger' && (
           <div className="bg-white rounded-2xl border border-[#E5E3D8] shadow-xs overflow-hidden">
             <div className="p-5 border-b border-[#E5E3D8]">
@@ -2716,7 +2587,6 @@ export const AdminDashboard: React.FC = () => {
                                 <button
                                   onClick={() => handleInitiateApprove(tx)}
                                   className="px-2.5 py-1 bg-[#16A34A] hover:bg-[#15803D] text-white rounded text-[11px] font-bold cursor-pointer shadow-2xs flex items-center gap-1"
-                                  title="Approve full payout and deposit protocol fee into Fee Purse"
                                 >
                                   <CheckCircle2 className="w-3 h-3" />
                                   <span>Approve</span>
@@ -2724,7 +2594,6 @@ export const AdminDashboard: React.FC = () => {
                                 <button
                                   onClick={() => handleInitiatePartial(tx)}
                                   className="px-2.5 py-1 bg-[#C5A059] hover:bg-[#b08d47] text-[#11271D] rounded text-[11px] font-bold cursor-pointer shadow-2xs flex items-center gap-1"
-                                  title="Partial payout with custom expense pairing message"
                                 >
                                   <Sparkles className="w-3 h-3" />
                                   <span>Partial</span>
@@ -2732,7 +2601,6 @@ export const AdminDashboard: React.FC = () => {
                                 <button
                                   onClick={() => handleInitiateDecline(tx)}
                                   className="px-2.5 py-1 bg-white border border-red-300 text-red-700 hover:bg-red-50 rounded text-[11px] font-semibold cursor-pointer flex items-center gap-1"
-                                  title="Decline and dispatch error message with issues checklist"
                                 >
                                   <X className="w-3 h-3" />
                                   <span>Decline</span>
@@ -2785,9 +2653,7 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* ================================================================ */}
-        {/* TAB 5: PLAN CREATOR (4 PRODUCTION TIERS)                          */}
-        {/* ================================================================ */}
+        {/* TAB 5: PLANS */}
         {adminTab === 'plans' && (
           <div className="space-y-6">
             <div className="flex justify-between items-center">
@@ -2872,18 +2738,16 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* ================================================================ */}
-        {/* TAB 6: CYCLE OPERATIONS & HARVEST MATURITY                        */}
-        {/* ================================================================ */}
+        {/* TAB 6: CYCLES */}
         {adminTab === 'cycles' && (
           <div className="space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <h3 className="text-lg font-bold text-[#1B3B2B]">
-                  Production Hubs Network ({cycles.length} Farms) & Alaska Expansion
+                  Production Hubs Network ({cycles.length} Farms) & Portugal Expansion
                 </h3>
                 <p className="text-xs text-[#5C6572]">
-                  Manage 30+ European & Arctic facilities (65% Layers & Egg hubs). Update growth stages, telemetry, and Alaska commissioning progress.
+                  Manage 30+ European & Arctic facilities (65% Layers & Egg hubs). Update growth stages, telemetry, and Portugal commissioning progress.
                 </p>
               </div>
               <div className="flex items-center gap-2 flex-wrap self-start sm:self-auto">
@@ -2898,7 +2762,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            {/* ALASKA COMMISSIONING CONTROLLER WIDGET */}
+            {/* Portugal Controller */}
             <div className="bg-[#F7F6F2] p-6 rounded-2xl border-2 border-[#1B3B2B]/25 shadow-xs space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
@@ -2907,7 +2771,7 @@ export const AdminDashboard: React.FC = () => {
                     <span>Admin Control · New Farm Opening</span>
                   </div>
                   <h4 className="text-lg font-bold text-[#1B3B2B] mt-1">
-                    Alaska Sub-Zero Arctic Bio-Dome Progress Controller
+                    Portugal Smart Agro Farm Progress Controller
                   </h4>
                   <p className="text-xs text-[#5C6572]">
                     Manually update the construction & commissioning progress (0%–100%). The public image is blurred until 100% is reached!
@@ -2917,47 +2781,45 @@ export const AdminDashboard: React.FC = () => {
                 <div className="text-right">
                   <div className="text-xs text-[#5C6572] uppercase font-semibold">Current Progress</div>
                   <div className="text-3xl font-extrabold text-[#1B3B2B] font-mono tabular-nums">
-                    {alaskaProgressVal}%
+                    {PortugalProgressVal}%
                   </div>
                 </div>
               </div>
 
-              {alaskaSaveFeedback && (
+              {PortugalSaveFeedback && (
                 <div className="p-3 bg-emerald-100 text-emerald-800 rounded-xl text-xs font-semibold border border-emerald-300 flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-                  <span>{alaskaSaveFeedback}</span>
+                  <span>{PortugalSaveFeedback}</span>
                 </div>
               )}
 
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center bg-white p-5 rounded-xl border border-[#E5E3D8]">
-                {/* Controls */}
                 <div className="lg:col-span-8 space-y-4">
                   <div>
                     <div className="flex justify-between text-xs font-semibold text-[#1B3B2B] mb-2">
                       <span>Drag Progress Slider:</span>
-                      <span className="font-mono text-emerald-700 font-bold">{alaskaProgressVal}%</span>
+                      <span className="font-mono text-emerald-700 font-bold">{PortugalProgressVal}%</span>
                     </div>
                     <input
                       type="range"
                       min={0}
                       max={100}
                       step={1}
-                      value={alaskaProgressVal}
-                      onChange={(e) => handleUpdateAlaska(Number(e.target.value))}
+                      value={PortugalProgressVal}
+                      onChange={(e) => handleUpdatePortugal(Number(e.target.value))}
                       className="w-full h-2.5 bg-[#EAE8E0] rounded-lg appearance-none cursor-pointer accent-[#1B3B2B]"
                     />
                   </div>
 
-                  {/* Preset quick buttons */}
                   <div className="flex flex-wrap items-center gap-2 text-xs">
                     <span className="text-[#5C6572] font-medium text-[11px]">Quick Presets:</span>
                     {[25, 50, 65, 80, 95].map((pct) => (
                       <button
                         key={pct}
                         type="button"
-                        onClick={() => handleUpdateAlaska(pct)}
+                        onClick={() => handleUpdatePortugal(pct)}
                         className={`px-3 py-1 rounded-lg font-mono font-semibold transition-all cursor-pointer ${
-                          alaskaProgressVal === pct
+                          PortugalProgressVal === pct
                             ? 'bg-[#1B3B2B] text-white shadow-2xs'
                             : 'bg-[#F0EFEA] hover:bg-[#E5E3D8] text-[#1B3B2B]'
                         }`}
@@ -2967,9 +2829,9 @@ export const AdminDashboard: React.FC = () => {
                     ))}
                     <button
                       type="button"
-                      onClick={() => handleUpdateAlaska(100)}
+                      onClick={() => handleUpdatePortugal(100)}
                       className={`px-3 py-1 rounded-lg font-mono font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-                        alaskaProgressVal === 100
+                        PortugalProgressVal === 100
                           ? 'bg-emerald-600 text-white shadow-xs'
                           : 'bg-emerald-100 hover:bg-emerald-200 text-emerald-900 border border-emerald-300'
                       }`}
@@ -2980,28 +2842,27 @@ export const AdminDashboard: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Live Real-Time Blur Preview */}
                 <div className="lg:col-span-4 relative h-36 rounded-xl overflow-hidden border border-[#E5E3D8] bg-black">
                   <img
-                    src={alaskaFarm?.image_url}
-                    alt="Alaska preview"
+                    src={PortugalFarm?.image_url}
+                    alt="Portugal preview"
                     referrerPolicy="no-referrer"
                     style={{
-                      filter: alaskaProgressVal >= 100 ? 'none' : 'blur(14px)',
-                      transform: alaskaProgressVal >= 100 ? 'none' : 'scale(1.08)',
+                      filter: PortugalProgressVal >= 100 ? 'none' : 'blur(14px)',
+                      transform: PortugalProgressVal >= 100 ? 'none' : 'scale(1.08)',
                       transition: 'filter 0.5s ease',
                     }}
                     className="w-full h-full object-cover select-none pointer-events-none"
                   />
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center p-3 text-center">
-                    {alaskaProgressVal >= 100 ? (
+                    {PortugalProgressVal >= 100 ? (
                       <span className="px-2.5 py-1 rounded bg-emerald-600 text-white text-xs font-bold shadow-md">
                         🎉 Unlocked & Clear (100%)
                       </span>
                     ) : (
                       <span className="px-2.5 py-1 rounded bg-[#B45309] text-white text-xs font-bold shadow-md flex items-center gap-1">
                         <Lock className="w-3 h-3" />
-                        <span>Blurred ({alaskaProgressVal}%)</span>
+                        <span>Blurred ({PortugalProgressVal}%)</span>
                       </span>
                     )}
                   </div>
@@ -3009,7 +2870,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            {/* Farm Cycles Category Filter Tabs */}
+            {/* Farm Cycles Filter */}
             <div className="flex items-center gap-2 p-1 bg-[#F0EFEA] rounded-xl border border-[#E5E3D8] self-start w-fit">
               <button
                 type="button"
@@ -3066,8 +2927,8 @@ export const AdminDashboard: React.FC = () => {
                     'construction',
                   ];
                   const isLayer = cyc.category === 'layers_eggs';
-                  const isAlaska = cyc.id === 'cyc-alaska-01' || cyc.facility_location.includes('Alaska');
-                  const isBlurred = isAlaska && alaskaProgressVal < 100;
+                  const isPortugal = cyc.id === 'cyc-Portugal-01' || cyc.facility_location.includes('Portugal');
+                  const isBlurred = isPortugal && PortugalProgressVal < 100;
 
                   return (
                     <div key={cyc.id} className="bg-white p-6 rounded-2xl border border-[#E5E3D8] shadow-xs space-y-4">
@@ -3093,7 +2954,6 @@ export const AdminDashboard: React.FC = () => {
                         </span>
                       </div>
 
-                      {/* Layer egg capacity */}
                       {isLayer && cyc.daily_egg_capacity && (
                         <div className="bg-amber-50 p-2 rounded-lg border border-amber-200 text-xs flex justify-between">
                           <span className="text-amber-900 font-semibold">Egg Capacity:</span>
@@ -3103,15 +2963,14 @@ export const AdminDashboard: React.FC = () => {
                         </div>
                       )}
 
-                      {/* Alaska blur indicator */}
-                      {isAlaska && (
+                      {isPortugal && (
                         <div className="p-2 rounded-lg bg-slate-100 border border-slate-300 text-xs flex justify-between items-center">
                           <span className="text-slate-700 font-semibold flex items-center gap-1">
                             {isBlurred ? <Lock className="w-3 h-3 text-amber-700" /> : <CheckCircle2 className="w-3 h-3 text-emerald-600" />}
                             <span>Image Blur Status:</span>
                           </span>
                           <span className={`font-mono font-bold ${isBlurred ? 'text-amber-800' : 'text-emerald-700'}`}>
-                            {isBlurred ? `Blurred (${alaskaProgressVal}%)` : '100% Unlocked'}
+                            {isBlurred ? `Blurred (${PortugalProgressVal}%)` : '100% Unlocked'}
                           </span>
                         </div>
                       )}
@@ -3130,7 +2989,6 @@ export const AdminDashboard: React.FC = () => {
                           ))}
                         </select>
 
-                        {/* Quick Action: Complete Farm */}
                         {cyc.current_stage !== 'completed' ? (
                           <button
                             type="button"
@@ -3210,9 +3068,7 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* ================================================================ */}
-        {/* TAB 7: CRYPTO RAILS & WEBHOOK SETTINGS                           */}
-        {/* ================================================================ */}
+        {/* TAB 7: SETTINGS */}
         {adminTab === 'settings' && (
           <div className="bg-white rounded-2xl border border-[#E5E3D8] p-6 sm:p-8 shadow-xs space-y-6 max-w-2xl">
             {/* Special Admin Credentials Card */}
@@ -3327,7 +3183,6 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               <form onSubmit={handleSaveSettings} className="space-y-4">
-                {/* Admin Contact Email */}
                 <div className="p-4 bg-[#F7F6F2] rounded-xl border border-[#E5E3D8] space-y-2">
                   <div className="flex items-center justify-between">
                     <label className="text-xs font-bold text-[#1B3B2B] flex items-center gap-1.5">
@@ -3350,7 +3205,6 @@ export const AdminDashboard: React.FC = () => {
                   </p>
                 </div>
 
-                {/* Editable Receiving Crypto Addresses */}
                 <div className="p-4 bg-[#F7F6F2] rounded-xl border border-[#E5E3D8] space-y-3">
                   <div>
                     <h4 className="text-xs font-bold text-[#1B3B2B]">Deposit Payment Receiving Addresses</h4>
@@ -3463,9 +3317,7 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* ================================================================ */}
-        {/* TAB 12: REFERRALS & MILESTONE SYSTEM AUDIT                       */}
-        {/* ================================================================ */}
+        {/* TAB 12: REFERRALS */}
         {adminTab === 'referrals' && <AdminReferralSection />}
 
       </div>
@@ -3935,8 +3787,9 @@ export const AdminDashboard: React.FC = () => {
                   </select>
                 </div>
 
+                {/* Summer Peak Shaving Solar Input */}
                 <div>
-                  <label className="font-semibold block mb-1">Solar Microgrid (kWp)</label>
+                  <label className="font-semibold block mb-1">Summer Peak Shaving Solar (kWp)</label>
                   <input
                     type="number"
                     value={newFarmSolarKw}
@@ -3970,8 +3823,6 @@ export const AdminDashboard: React.FC = () => {
       {showWalletModal && selectedAdjustUser && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
           <div className="bg-white rounded-2xl max-w-lg w-full border border-[#E5E3D8] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-            
-            {/* Header */}
             <div className="p-5 bg-[#F7F6F2] border-b border-[#E5E3D8] flex items-center justify-between">
               <div>
                 <div className="flex items-center gap-2">
@@ -4015,7 +3866,6 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               )}
 
-              {/* User Selection */}
               <div>
                 <label className="font-semibold text-[#1B3B2B] block mb-1">Target Investor Profile</label>
                 <select
@@ -4040,7 +3890,6 @@ export const AdminDashboard: React.FC = () => {
                 </select>
               </div>
 
-              {/* Current Balances preview card */}
               <div className="bg-[#FAF9F5] p-3 rounded-xl border border-[#E5E3D8] grid grid-cols-2 gap-3">
                 <div className="p-2 bg-white rounded-lg border border-[#E5E3D8]">
                   <span className="text-[#5C6572] text-[11px] block">Current Main Balance:</span>
@@ -4056,7 +3905,6 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Tool Mode Tabs */}
               <div className="flex rounded-xl bg-[#EAE8E0] p-1 border border-[#DCDAD0] gap-1">
                 <button
                   type="button"
@@ -4084,7 +3932,6 @@ export const AdminDashboard: React.FC = () => {
                 </button>
               </div>
 
-              {/* MODE A: DIRECT OVERRIDE */}
               {adjustmentMode === 'direct_override' && (
                 <div className="space-y-3 bg-[#F7F6F2] p-3.5 rounded-xl border border-[#E5E3D8]">
                   <div className="text-[11px] text-[#5C6572] font-medium leading-relaxed">
@@ -4103,21 +3950,6 @@ export const AdminDashboard: React.FC = () => {
                           inputMode="numeric"
                           placeholder="Blank (keep current)"
                           value={directMainBalance}
-                          onKeyDown={(e) => {
-                            if (['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter', 'Home', 'End'].includes(e.key)) {
-                              return;
-                            }
-                            if (e.ctrlKey || e.metaKey) return;
-                            if (!/^[0-9]$/.test(e.key)) {
-                              e.preventDefault();
-                              return;
-                            }
-                            const input = e.currentTarget;
-                            const isReplacingAll = input.selectionStart === 0 && input.selectionEnd === input.value.length;
-                            if ((input.value === '' || input.value === '0' || isReplacingAll) && e.key === '0') {
-                              e.preventDefault();
-                            }
-                          }}
                           onChange={(e) => {
                             const clean = e.target.value.replace(/\D/g, '').replace(/^0+/, '');
                             if (clean === '') {
@@ -4132,9 +3964,6 @@ export const AdminDashboard: React.FC = () => {
                           className="w-full pl-7 pr-3 py-2 bg-white border border-[#DCDAD0] rounded-lg font-mono font-bold text-sm text-[#1B3B2B] focus:outline-none focus:border-[#1B3B2B]"
                         />
                       </div>
-                      <span className="text-[10px] text-[#5C6572] mt-0.5 block">
-                        Capital for allocating into farm cycles (min. {currencySymbol}1)
-                      </span>
                     </div>
 
                     <div>
@@ -4148,21 +3977,6 @@ export const AdminDashboard: React.FC = () => {
                           inputMode="numeric"
                           placeholder="Blank (keep current)"
                           value={directEarningsBalance}
-                          onKeyDown={(e) => {
-                            if (['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter', 'Home', 'End'].includes(e.key)) {
-                              return;
-                            }
-                            if (e.ctrlKey || e.metaKey) return;
-                            if (!/^[0-9]$/.test(e.key)) {
-                              e.preventDefault();
-                              return;
-                            }
-                            const input = e.currentTarget;
-                            const isReplacingAll = input.selectionStart === 0 && input.selectionEnd === input.value.length;
-                            if ((input.value === '' || input.value === '0' || isReplacingAll) && e.key === '0') {
-                              e.preventDefault();
-                            }
-                          }}
                           onChange={(e) => {
                             const clean = e.target.value.replace(/\D/g, '').replace(/^0+/, '');
                             if (clean === '') {
@@ -4177,15 +3991,11 @@ export const AdminDashboard: React.FC = () => {
                           className="w-full pl-7 pr-3 py-2 bg-white border border-[#DCDAD0] rounded-lg font-mono font-bold text-sm text-emerald-800 focus:outline-none focus:border-[#1B3B2B]"
                         />
                       </div>
-                      <span className="text-[10px] text-[#5C6572] mt-0.5 block">
-                        Harvest yield profit balance (min. {currencySymbol}1)
-                      </span>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* MODE B: DELTA CREDIT / DEBIT */}
               {adjustmentMode === 'delta_adjust' && (
                 <div className="space-y-3">
                   <div className="grid grid-cols-2 gap-3">
@@ -4215,10 +4025,7 @@ export const AdminDashboard: React.FC = () => {
                   </div>
 
                   <div>
-                    <div className="flex justify-between items-center mb-1">
-                      <label className="font-semibold text-[#1B3B2B] block">Payment Amount ({currencySymbol})</label>
-                      <span className="text-[10px] text-[#5C6572] font-mono">Any whole number from {currencySymbol}1 upward</span>
-                    </div>
+                    <label className="font-semibold text-[#1B3B2B] block mb-1">Payment Amount ({currencySymbol})</label>
                     <div className="relative">
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 font-bold text-[#5C6572]">{currencySymbol}</span>
                       <input
@@ -4239,25 +4046,10 @@ export const AdminDashboard: React.FC = () => {
                         className="w-full pl-7 pr-3 py-2 bg-[#F7F6F2] border border-[#DCDAD0] rounded-lg font-mono font-bold text-base text-[#1B3B2B]"
                       />
                     </div>
-
-                    <div className="flex flex-wrap items-center gap-1.5 mt-2">
-                      <span className="text-[#5C6572] text-[11px]">Quick:</span>
-                      {[1, 10, 50, 250, 500, 1000, 5000].map((amt) => (
-                        <button
-                          key={amt}
-                          type="button"
-                          onClick={() => setAdjAmount(amt)}
-                          className="px-2 py-0.5 rounded bg-[#F0EFEA] hover:bg-[#E5E3D8] text-[11px] font-mono font-medium cursor-pointer"
-                        >
-                          +{currencySymbol}{amt}
-                        </button>
-                      ))}
-                    </div>
                   </div>
                 </div>
               )}
 
-              {/* Off-platform payment reference / reason */}
               <div>
                 <label className="font-semibold text-[#1B3B2B] block mb-1">
                   Off-Platform Payment Confirmation Reference / Note
@@ -4267,12 +4059,11 @@ export const AdminDashboard: React.FC = () => {
                   required
                   value={adjReason}
                   onChange={(e) => setAdjReason(e.target.value)}
-                  placeholder="e.g. Bitcoin deposit confirmed on blockchain TXID: 0x8f2... or Wire Ref: DE89201"
+                  placeholder="e.g. Bitcoin deposit confirmed on blockchain TXID: 0x8f2..."
                   className="w-full px-3 py-2 bg-[#F7F6F2] border border-[#DCDAD0] rounded-lg text-xs"
                 />
               </div>
 
-              {/* Modal Buttons */}
               <div className="flex justify-end gap-2 pt-2 border-t border-[#F0EFEA]">
                 <button
                   type="button"
@@ -4421,24 +4212,6 @@ export const AdminDashboard: React.FC = () => {
                     pattern="[0-9]*"
                     value={newUserInitialBalance === 0 ? '' : newUserInitialBalance}
                     placeholder={`0 (min. ${currencySymbol}1 to fund)`}
-                    onKeyDown={(e) => {
-                      if (['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter', 'Home', 'End'].includes(e.key)) return;
-                      if (e.ctrlKey || e.metaKey) return;
-                      if (!/^[0-9]$/.test(e.key)) {
-                        e.preventDefault();
-                        return;
-                      }
-                      const input = e.currentTarget;
-                      const isReplacingAll = input.selectionStart === 0 && input.selectionEnd === input.value.length;
-                      if ((input.value === '' || input.value === '0' || isReplacingAll) && e.key === '0') {
-                        e.preventDefault();
-                      }
-                    }}
-                    onPaste={(e) => {
-                      const pasteData = e.clipboardData.getData('text');
-                      const digits = pasteData.replace(/\D/g, '').replace(/^0+/, '');
-                      if (!digits || parseInt(digits, 10) < 1) e.preventDefault();
-                    }}
                     onChange={(e) => {
                       const raw = e.target.value.replace(/\D/g, '');
                       const stripped = raw.replace(/^0+/, '');
@@ -4492,9 +4265,6 @@ export const AdminDashboard: React.FC = () => {
               <p className="text-xs text-[#5C6572] leading-relaxed">
                 Are you sure you want to permanently delete <strong>{deleteConfirmUser.full_name}</strong> ({deleteConfirmUser.email})?
               </p>
-              <p className="text-[11px] text-red-600 font-semibold">
-                This will remove their profile, wallet ledger balances, and active records.
-              </p>
             </div>
 
             <div className="flex justify-center gap-3 pt-2">
@@ -4519,8 +4289,6 @@ export const AdminDashboard: React.FC = () => {
       {selectedEmailPreview && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
           <div className="bg-white rounded-2xl max-w-2xl w-full border border-[#E5E3D8] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
-            
-            {/* Modal Top Bar */}
             <div className="p-4 bg-[#F7F6F2] border-b border-[#E5E3D8] flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-lg bg-[#1B3B2B] text-[#C5A059] flex items-center justify-center">
@@ -4543,7 +4311,6 @@ export const AdminDashboard: React.FC = () => {
               </button>
             </div>
 
-            {/* Email Meta bar */}
             <div className="px-5 py-2.5 bg-[#FAF9F5] border-b border-[#E5E3D8] flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
                 <span className="text-[#5C6572]">Status:</span>
@@ -4557,7 +4324,6 @@ export const AdminDashboard: React.FC = () => {
               </span>
             </div>
 
-            {/* Rendered HTML Body */}
             <div className="flex-1 overflow-y-auto p-4 bg-[#F7F6F2]">
               <div
                 className="bg-white rounded-xl shadow-xs border border-[#E5E3D8] overflow-hidden"
@@ -4565,7 +4331,6 @@ export const AdminDashboard: React.FC = () => {
               />
             </div>
 
-            {/* Footer */}
             <div className="p-4 bg-white border-t border-[#E5E3D8] flex justify-end">
               <button
                 onClick={() => setSelectedEmailPreview(null)}
@@ -4578,13 +4343,10 @@ export const AdminDashboard: React.FC = () => {
         </div>
       )}
 
-      {/* ========================================================================= */}
-      {/* MODAL 1: DECLINE WITHDRAWAL WITH ERROR MESSAGE & SPECIFIC ISSUES FORM    */}
-      {/* ========================================================================= */}
+      {/* Decline Withdrawal Modal */}
       {declineTargetTx && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
           <div className="bg-white rounded-2xl max-w-xl w-full border border-red-200 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 max-h-[92vh] flex flex-col">
-            {/* Header */}
             <div className="p-5 bg-gradient-to-r from-red-900 to-red-800 text-white flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-white/15 text-red-200 flex items-center justify-center font-bold">
@@ -4607,9 +4369,7 @@ export const AdminDashboard: React.FC = () => {
               </button>
             </div>
 
-            {/* Form */}
             <form onSubmit={handleSubmitDecline} className="p-6 space-y-4 overflow-y-auto text-xs">
-              {/* Target Tx Snapshot */}
               <div className="bg-[#FAF9F5] p-3.5 rounded-xl border border-[#E5E3D8] grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
                 <div>
                   <span className="text-[#5C6572] block text-[10px] uppercase font-semibold">Transaction Ref</span>
@@ -4633,7 +4393,6 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Destination Address Preview */}
               <div className="p-3 bg-[#F7F6F2] rounded-xl border border-[#DCDAD0] text-xs">
                 <span className="text-[#5C6572] font-semibold block mb-0.5">Target Destination Provided:</span>
                 <span className="font-mono text-[11px] text-[#1B3B2B] break-all font-bold">
@@ -4644,7 +4403,6 @@ export const AdminDashboard: React.FC = () => {
                 </span>
               </div>
 
-              {/* Primary Error Message Input */}
               <div className="space-y-1.5">
                 <label className="font-bold text-[#1B3B2B] block">
                   Primary Error Message * <span className="text-[#5C6572] font-normal">(Sent in investor notice and email)</span>
@@ -4659,7 +4417,6 @@ export const AdminDashboard: React.FC = () => {
                 />
               </div>
 
-              {/* Specific Issues Checklist Form */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <label className="font-bold text-[#1B3B2B] block">
@@ -4668,7 +4425,6 @@ export const AdminDashboard: React.FC = () => {
                   <span className="text-[10px] text-[#5C6572]">Itemized compliance & operational flags</span>
                 </div>
 
-                {/* Chips of added issues */}
                 <div className="space-y-1.5 max-h-36 overflow-y-auto pr-1">
                   {declineIssues.length === 0 ? (
                     <div className="text-[11px] text-[#5C6572] italic p-2 bg-[#FAF9F5] rounded-lg border border-[#E5E3D8]">
@@ -4697,7 +4453,6 @@ export const AdminDashboard: React.FC = () => {
                   )}
                 </div>
 
-                {/* Add Custom Issue Input */}
                 <div className="flex gap-2 pt-1">
                   <input
                     type="text"
@@ -4722,7 +4477,6 @@ export const AdminDashboard: React.FC = () => {
                   </button>
                 </div>
 
-                {/* Quick Add Issue Templates */}
                 <div className="pt-1.5 space-y-1">
                   <span className="text-[10px] text-[#5C6572] font-semibold uppercase tracking-wider block">
                     Quick Suggestion Issues:
@@ -4752,7 +4506,6 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Wallet Refund Toggle */}
               <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 flex items-center justify-between">
                 <div className="space-y-0.5">
                   <span className="font-bold text-emerald-950 block text-xs">
@@ -4773,7 +4526,6 @@ export const AdminDashboard: React.FC = () => {
                 </label>
               </div>
 
-              {/* Actions */}
               <div className="flex justify-end gap-2.5 pt-3 border-t border-[#E5E3D8]">
                 <button
                   type="button"
@@ -4796,13 +4548,10 @@ export const AdminDashboard: React.FC = () => {
         </div>
       )}
 
-      {/* ========================================================================= */}
-      {/* MODAL 2: PARTIAL PAYOUT WITH CUSTOM EXPLANATION & CAPITAL PAIRING        */}
-      {/* ========================================================================= */}
+      {/* Partial Payout Modal */}
       {partialTargetTx && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
           <div className="bg-white rounded-2xl max-w-xl w-full border border-amber-300 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 max-h-[92vh] flex flex-col">
-            {/* Header */}
             <div className="p-5 bg-gradient-to-r from-[#1B3B2B] to-[#11271D] text-white flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-[#C5A059] text-[#11271D] flex items-center justify-center font-bold">
@@ -4825,9 +4574,7 @@ export const AdminDashboard: React.FC = () => {
               </button>
             </div>
 
-            {/* Form */}
             <form onSubmit={handleSubmitPartial} className="p-6 space-y-4 overflow-y-auto text-xs">
-              {/* Snapshot of Original Request */}
               <div className="bg-[#FAF9F5] p-3.5 rounded-xl border border-[#E5E3D8] grid grid-cols-3 gap-3 text-xs">
                 <div>
                   <span className="text-[#5C6572] block text-[10px] uppercase font-semibold">Total Requested</span>
@@ -4849,7 +4596,6 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Partial Amount Input & Quick Presets */}
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
                   <label className="font-bold text-[#1B3B2B] block">
@@ -4878,7 +4624,6 @@ export const AdminDashboard: React.FC = () => {
                   />
                 </div>
 
-                {/* Quick percentage buttons */}
                 <div className="flex items-center gap-2 pt-1">
                   <span className="text-[10px] text-[#5C6572] font-semibold">Quick Tranche:</span>
                   {[0.25, 0.5, 0.75].map((pct) => {
@@ -4897,7 +4642,6 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Real-time Calculation Breakdown Box */}
               {typeof partialPayoutAmount === 'number' && partialPayoutAmount > 0 && (
                 <div className="bg-[#FAF9F5] p-3.5 rounded-xl border border-amber-300 space-y-2 text-xs">
                   <div className="text-[11px] font-bold uppercase tracking-wider text-[#8F702B] flex items-center justify-between">
@@ -4929,7 +4673,7 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               )}
 
-              {/* Capital Pairing Category Selector */}
+              {/* Capital Pairing Category Selector - Refactored away from solar */}
               <div className="space-y-1.5">
                 <label className="font-bold text-[#1B3B2B] block">
                   Capital Pairing Farm Expense Center *
@@ -4941,7 +4685,7 @@ export const AdminDashboard: React.FC = () => {
                 >
                   <option value="production">1. Biological Flock Production (Day-old chick placement, brooding, veterinary care)</option>
                   <option value="feed_production">2. Feed Production & Precision Milling (Grain silos, nutritional batching, 1.54 FCR)</option>
-                  <option value="facility_building">3. Bio-Dome Facility Building (Sub-zero climate structures & 450 kW solar microgrid)</option>
+                  <option value="facility_building">3. Bio-Dome Facility Building (Geothermal loops & summer peak-shaving solar)</option>
                   <option value="operational_expenses">4. Farm Operating Logistics (Refrigerated transit & European supermarket delivery)</option>
                 </select>
                 <p className="text-[10px] text-[#5C6572]">
@@ -4979,7 +4723,7 @@ export const AdminDashboard: React.FC = () => {
                 />
               </div>
 
-              {/* Quick Template Chips for Partial Message */}
+              {/* Quick Template Chips for Partial Message - Refactored away from solar */}
               <div className="space-y-1">
                 <span className="text-[10px] text-[#5C6572] font-semibold uppercase tracking-wider block">
                   Quick Explanation Templates:
@@ -4996,7 +4740,7 @@ export const AdminDashboard: React.FC = () => {
                     },
                     {
                       label: 'Bio-Dome Facility Construction',
-                      text: `Disbursing partial tranche. Remaining capital is paired with structural thermal bio-dome commissioning and solar microgrid installation at our Bavaria and Alaska facilities.`,
+                      text: `Disbursing partial tranche. Remaining capital is paired with structural thermal bio-dome commissioning, geothermal heating loops, and emergency failover generator installation at our Bavaria and Portugal facilities.`,
                     },
                   ].map((tpl) => (
                     <button
@@ -5011,7 +4755,6 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Refund Remainder Toggle */}
               <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 flex items-center justify-between">
                 <div className="space-y-0.5">
                   <span className="font-bold text-emerald-950 block text-xs">
@@ -5032,7 +4775,6 @@ export const AdminDashboard: React.FC = () => {
                 </label>
               </div>
 
-              {/* Actions */}
               <div className="flex justify-end gap-2.5 pt-3 border-t border-[#E5E3D8]">
                 <button
                   type="button"
@@ -5055,9 +4797,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
       )}
 
-      {/* ========================================================================= */}
-      {/* MODAL 3: FULL WITHDRAWAL APPROVAL (FEE CREDITED TO ADMIN FEE PURSE)       */}
-      {/* ========================================================================= */}
+      {/* Full Withdrawal Approval Modal */}
       {approveConfirmTx && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
           <div className="bg-white rounded-2xl max-w-md w-full border border-emerald-300 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
@@ -5121,6 +4861,7 @@ export const AdminDashboard: React.FC = () => {
                 </span>
               </div>
 
+              {/* Capital Pairing Classification - Refactored away from solar */}
               <div className="space-y-1">
                 <label className="font-bold text-[#1B3B2B] block">Capital Pairing Classification</label>
                 <select
@@ -5130,7 +4871,7 @@ export const AdminDashboard: React.FC = () => {
                 >
                   <option value="production">Biological Flock Production & Brooding</option>
                   <option value="feed_production">Feed Production & Grain Milling</option>
-                  <option value="facility_building">Facility Building & Bio-Dome Solar</option>
+                  <option value="facility_building">Facility Building & Geothermal Resilience</option>
                   <option value="operational_expenses">Farm Operations & Supermarket Distribution</option>
                 </select>
               </div>
@@ -5158,9 +4899,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
       )}
 
-      {/* ========================================================================= */}
-      {/* MODAL 4: SWEEP FEE PURSE TO CORPORATE TREASURY / COLD STORAGE            */}
-      {/* ========================================================================= */}
+      {/* Sweep Fee Purse Modal */}
       {showSweepModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
           <div className="bg-white rounded-2xl max-w-md w-full border border-[#C5A059] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">

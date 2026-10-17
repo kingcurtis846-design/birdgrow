@@ -345,7 +345,7 @@ export const YieldCalculator: React.FC<YieldCalculatorProps> = ({
                   </label>
                   <span className="text-xs font-mono text-[#5C6572]">
                     {t.calcValidRangeLabel}: <strong className="text-[#1B3B2B]">{formatRawCurrency(minQualifyingInActive, currency, false, language)} – {formatRawCurrency(maxQualifyingInActive, currency, false, language)}</strong>
-                    {currency !== 'GBP' && <span className="text-[11px] text-[#8C827A] ml-1">(£500 – £1,000,000 equivalent)</span>}
+                    {currency !== 'GBP' && <span className="text-[11px] text-[#8C827A] ml-1"></span>}
                   </span>
                 </div>
 

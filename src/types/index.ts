@@ -106,7 +106,7 @@ export interface PoultryCycle {
   solar_power_kw?: number;
   egg_type?: string;
   is_opening_soon?: boolean;
-  construction_progress?: number; // 0 to 100 for Alaska
+  construction_progress?: number; // 0 to 100 for Portugal
   layers_count?: number;
   broilers_count?: number;
   layer_breed?: string;

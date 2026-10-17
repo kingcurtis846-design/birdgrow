@@ -208,7 +208,7 @@ interface PlatformContextType {
   archivePlan: (planId: string) => void;
   updateCycleStage: (cycleId: string, stage: CycleStage, currentWeight?: number, mortality?: number) => void;
   addNewFarm: (farmData: Partial<PoultryCycle>) => void;
-  updateAlaskaProgress: (progress: number) => void;
+  updatePortugalProgress: (progress: number) => void;
   adjustUserBalance: (
     userId: string,
     amount: number,
@@ -2516,11 +2516,11 @@ export const PlatformProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setAdminNotifications((prev) => [newNotice, ...prev]);
   };
 
-  const updateAlaskaProgress = (progress: number) => {
+  const updatePortugalProgress = (progress: number) => {
     const clamped = Math.max(0, Math.min(100, Math.round(progress)));
     setCycles((prev) =>
       prev.map((c) => {
-        if (c.id === 'cyc-alaska-01' || c.facility_location.toLowerCase().includes('alaska')) {
+        if (c.id === 'cyc-Portugal-01' || c.facility_location.toLowerCase().includes('Portugal')) {
           return {
             ...c,
             construction_progress: clamped,
@@ -2847,7 +2847,7 @@ export const PlatformProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       lower.includes('@agribot') ||
       lower.includes('bot') ||
       lower.includes('?') ||
-      lower.includes('alaska') ||
+      lower.includes('Portugal') ||
       lower.includes('tier') ||
       lower.includes('roi') ||
       lower.includes('minimum');
@@ -3113,7 +3113,7 @@ export const PlatformProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         archivePlan,
         updateCycleStage,
         addNewFarm,
-        updateAlaskaProgress,
+        updatePortugalProgress,
         adjustUserBalance,
         updateUserDirectBalances,
         addFarmUpdate,
