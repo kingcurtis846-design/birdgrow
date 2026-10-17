@@ -44,7 +44,7 @@ export const AdminReferralSection: React.FC = () => {
   // Search & filter states
   const [searchTerm, setSearchTerm] = useState('');
   const [subTab, setSubTab] = useState<'leaderboard' | 'trees' | 'investments' | 'rewards'>('leaderboard');
-  const [statusFilter, setStatusFilter] = useState<'all' | 'qualified' | 'pending_verification' | 'reversed'>('all');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'qualified' | 'pending' | 'reversed'>('all');
   const [rewardStatusFilter, setRewardStatusFilter] = useState<'all' | 'unlocked' | 'paid' | 'reversed'>('all');
 
   // Manual link form
@@ -57,26 +57,32 @@ export const AdminReferralSection: React.FC = () => {
   const stats = useMemo(() => {
     const totalVolume = qualifiedInvestments
       .filter((q) => q.qualificationStatus === 'qualified')
-      .reduce((sum, q) => sum + q.amount, 0);
+      .reduce((sum, q) => sum + (q.amount || 0), 0);
 
     const totalEarned = milestoneRewards
       .filter((r) => r.status !== 'reversed')
-      .reduce((sum, r) => sum + r.rewardAmount, 0);
+      .reduce((sum, r) => sum + (r.rewardAmount || 0), 0);
 
     const totalPaid = milestoneRewards
       .filter((r) => r.status === 'paid')
-      .reduce((sum, r) => sum + r.rewardAmount, 0);
+      .reduce((sum, r) => sum + (r.rewardAmount || 0), 0);
 
     const totalPending = milestoneRewards
       .filter((r) => r.status === 'unlocked' || r.status === 'pending')
-      .reduce((sum, r) => sum + r.rewardAmount, 0);
+      .reduce((sum, r) => sum + (r.rewardAmount || 0), 0);
 
     const totalReversed = milestoneRewards
       .filter((r) => r.status === 'reversed')
-      .reduce((sum, r) => sum + r.rewardAmount, 0);
+      .reduce((sum, r) => sum + (r.rewardAmount || 0), 0);
 
-    // Count distinct referrers
-    const distinctReferrerIds = Array.from(new Set(referralRelationships.map((r) => r.referrerUserId)));
+    // Count distinct referrers safely filtered of undefined/empty values
+    const distinctReferrerIds = Array.from(
+      new Set(
+        referralRelationships
+          .map((r) => r.referrerUserId)
+          .filter((id): id is string => Boolean(id))
+      )
+    );
     let investorReferrers = 0;
     let basicReferrers = 0;
 
@@ -114,33 +120,42 @@ export const AdminReferralSection: React.FC = () => {
     }>();
 
     referralRelationships.forEach((rel) => {
-      if (!map.has(rel.referrerUserId)) {
-        const prof = profiles.find((p) => p.user_id === rel.referrerUserId);
-        map.set(rel.referrerUserId, {
-          userId: rel.referrerUserId,
+      if (!rel.referrerUserId) return;
+      const refId = rel.referrerUserId;
+
+      if (!map.has(refId)) {
+        const prof = profiles.find((p) => p.user_id === refId);
+        map.set(refId, {
+          userId: refId,
           profile: prof,
           totalVolume: 0,
           referredCount: 0,
           investorCount: 0,
-          isInvestor: isUserInvestorReferrer(rel.referrerUserId, investments),
+          isInvestor: isUserInvestorReferrer(refId, investments),
           rewardsEarned: 0,
         });
       }
-      const entry = map.get(rel.referrerUserId)!;
-      entry.referredCount++;
+      const entry = map.get(refId);
+      if (entry) {
+        entry.referredCount++;
+      }
     });
 
     qualifiedInvestments.forEach((qi) => {
-      if (qi.qualificationStatus === 'qualified' && map.has(qi.referrerUserId)) {
-        const entry = map.get(qi.referrerUserId)!;
-        entry.totalVolume += qi.amount;
+      if (qi.qualificationStatus === 'qualified' && qi.referrerUserId && map.has(qi.referrerUserId)) {
+        const entry = map.get(qi.referrerUserId);
+        if (entry) {
+          entry.totalVolume += qi.amount || 0;
+        }
       }
     });
 
     milestoneRewards.forEach((r) => {
-      if (r.status !== 'reversed' && map.has(r.userId)) {
-        const entry = map.get(r.userId)!;
-        entry.rewardsEarned += r.rewardAmount;
+      if (r.status !== 'reversed' && r.userId && map.has(r.userId)) {
+        const entry = map.get(r.userId);
+        if (entry) {
+          entry.rewardsEarned += r.rewardAmount || 0;
+        }
       }
     });
 
@@ -152,10 +167,13 @@ export const AdminReferralSection: React.FC = () => {
     return qualifiedInvestments.filter((qi) => {
       const q = searchTerm.toLowerCase();
       const matchesSearch =
-        qi.referredUserName.toLowerCase().includes(q) ||
-        qi.investmentId.toLowerCase().includes(q) ||
-        qi.referrerUserId.toLowerCase().includes(q);
-      const matchesStatus = statusFilter === 'all' || qi.qualificationStatus === statusFilter;
+        (qi.referredUserName || '').toLowerCase().includes(q) ||
+        (qi.investmentId || '').toLowerCase().includes(q) ||
+        (qi.referrerUserId || '').toLowerCase().includes(q);
+      const matchesStatus =
+        statusFilter === 'all' ||
+        qi.qualificationStatus === statusFilter ||
+        (statusFilter === 'pending' && (qi.qualificationStatus as string) === 'pending_verification');
       return matchesSearch && matchesStatus;
     });
   }, [qualifiedInvestments, searchTerm, statusFilter]);
@@ -165,9 +183,9 @@ export const AdminReferralSection: React.FC = () => {
     return milestoneRewards.filter((r) => {
       const q = searchTerm.toLowerCase();
       const matchesSearch =
-        r.referenceId.toLowerCase().includes(q) ||
-        r.userId.toLowerCase().includes(q) ||
-        r.milestoneId.toLowerCase().includes(q);
+        (r.referenceId || '').toLowerCase().includes(q) ||
+        (r.userId || '').toLowerCase().includes(q) ||
+        (r.milestoneId || '').toLowerCase().includes(q);
       const matchesStatus = rewardStatusFilter === 'all' || r.status === rewardStatusFilter;
       return matchesSearch && matchesStatus;
     });
@@ -178,10 +196,10 @@ export const AdminReferralSection: React.FC = () => {
     return referralRelationships.filter((rel) => {
       const q = searchTerm.toLowerCase();
       return (
-        rel.referredUserName.toLowerCase().includes(q) ||
-        rel.referredUserEmail.toLowerCase().includes(q) ||
-        rel.referrerCode.toLowerCase().includes(q) ||
-        rel.referrerUserId.toLowerCase().includes(q)
+        (rel.referredUserName || '').toLowerCase().includes(q) ||
+        (rel.referredUserEmail || '').toLowerCase().includes(q) ||
+        (rel.referrerCode || '').toLowerCase().includes(q) ||
+        (rel.referrerUserId || '').toLowerCase().includes(q)
       );
     });
   }, [referralRelationships, searchTerm]);
@@ -190,8 +208,8 @@ export const AdminReferralSection: React.FC = () => {
     e.preventDefault();
     if (!manualReferrerCode || !manualReferredUserId) return;
     const res = addReferralRelationship(manualReferrerCode, manualReferredUserId);
-    setManualFeedback(res.message);
-    if (res.success) {
+    setManualFeedback(res?.message || 'Referral linked successfully');
+    if (res?.success) {
       setManualReferrerCode('');
       setManualReferredUserId('');
       setTimeout(() => {
@@ -239,7 +257,7 @@ export const AdminReferralSection: React.FC = () => {
         </div>
 
         <div className="bg-white p-5 rounded-2xl border border-[#E5E3D8] shadow-xs space-y-1">
-          <span className="text-xs font-semibold uppercase tracking-wider text-[#5C6572]">Reversals & Fraud Safeguards</span>
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#5C6572]">Reversals &amp; Fraud Safeguards</span>
           <div className="text-2xl font-black font-mono text-amber-700">
             {formatNaira(stats.totalReversed)}
           </div>
@@ -381,7 +399,7 @@ export const AdminReferralSection: React.FC = () => {
             >
               <option value="all">All Qualifications</option>
               <option value="qualified">Qualified</option>
-              <option value="pending_verification">Pending Verification</option>
+              <option value="pending">Pending Verification</option>
               <option value="reversed">Reversed</option>
             </select>
           )}
@@ -394,7 +412,7 @@ export const AdminReferralSection: React.FC = () => {
             >
               <option value="all">All Reward Statuses</option>
               <option value="unlocked">Available / Unlocked</option>
-              <option value="paid">Paid & Settled</option>
+              <option value="paid">Paid &amp; Settled</option>
               <option value="reversed">Reversed</option>
             </select>
           )}
@@ -499,27 +517,27 @@ export const AdminReferralSection: React.FC = () => {
                   filteredInvestments.map((qi) => (
                     <tr key={qi.id} className="hover:bg-[#FAF9F5] transition-colors">
                       <td className="py-3.5 px-5">
-                        <div className="font-bold text-[#1B3B2B]">{qi.referredUserName}</div>
-                        <div className="text-[11px] text-[#5C6572] font-mono">{qi.investmentId}</div>
+                        <div className="font-bold text-[#1B3B2B]">{qi.referredUserName || 'Member'}</div>
+                        <div className="text-[11px] text-[#5C6572] font-mono">{qi.investmentId || '—'}</div>
                       </td>
                       <td className="py-3.5 px-5 font-mono text-[#5C6572]">
-                        {qi.referrerUserId}
+                        {qi.referrerUserId || '—'}
                       </td>
                       <td className="py-3.5 px-5 font-mono font-black text-[#1B3B2B] text-sm">
-                        {formatNaira(qi.amount)}
+                        {formatNaira(qi.amount || 0)}
                       </td>
                       <td className="py-3.5 px-5 font-mono text-[#5C6572]">
-                        {qi.investmentDate}
+                        {qi.investmentDate || '—'}
                       </td>
                       <td className="py-3.5 px-5">
                         <span className={`px-2 py-0.5 rounded text-[11px] font-semibold ${
                           qi.qualificationStatus === 'qualified'
                             ? 'bg-emerald-100 text-emerald-800'
-                            : qi.qualificationStatus === 'pending_verification'
+                            : (qi.qualificationStatus === 'pending' || (qi.qualificationStatus as string) === 'pending_verification')
                             ? 'bg-amber-100 text-amber-800'
                             : 'bg-red-100 text-red-800'
                         }`}>
-                          {qi.qualificationStatus.replace('_', ' ').toUpperCase()}
+                          {(qi.qualificationStatus || 'pending').replace('_', ' ').toUpperCase()}
                         </span>
                       </td>
                       <td className="py-3.5 px-5 text-right space-x-2">
@@ -575,19 +593,19 @@ export const AdminReferralSection: React.FC = () => {
                   filteredRewards.map((r) => (
                     <tr key={r.id} className="hover:bg-[#FAF9F5] transition-colors">
                       <td className="py-3.5 px-5">
-                        <div className="font-mono font-bold text-[#1B3B2B]">{r.referenceId}</div>
-                        <div className="text-[11px] text-[#5C6572] font-mono">{r.userId}</div>
+                        <div className="font-mono font-bold text-[#1B3B2B]">{r.referenceId || '—'}</div>
+                        <div className="text-[11px] text-[#5C6572] font-mono">{r.userId || '—'}</div>
                       </td>
                       <td className="py-3.5 px-5">
                         <div className="font-bold text-[#1B3B2B] text-xs">
                           {REFERRAL_MILESTONES.find((m) => m.volumeThreshold === r.volumeThreshold)?.name || 'Milestone Tier'}
                         </div>
                         <div className="font-mono text-[11px] text-[#5C6572]">
-                          {formatNaira(r.volumeThreshold)} Threshold
+                          {formatNaira(r.volumeThreshold || 0)} Threshold
                         </div>
                       </td>
                       <td className="py-3.5 px-5 font-mono font-black text-emerald-700 text-sm">
-                        {formatNaira(r.rewardAmount)}
+                        {formatNaira(r.rewardAmount || 0)}
                       </td>
                       <td className="py-3.5 px-5 capitalize font-semibold text-[#5C6572]">
                         {r.referrerTypeAtAward} Referrer
@@ -600,7 +618,7 @@ export const AdminReferralSection: React.FC = () => {
                             ? 'bg-blue-100 text-blue-800'
                             : 'bg-red-100 text-red-800'
                         }`}>
-                          {r.status.toUpperCase()}
+                          {(r.status || 'pending').toUpperCase()}
                         </span>
                       </td>
                       <td className="py-3.5 px-5 text-right space-x-2">
@@ -647,19 +665,19 @@ export const AdminReferralSection: React.FC = () => {
                 {filteredTrees.map((rel) => (
                   <tr key={rel.id} className="hover:bg-[#FAF9F5] transition-colors">
                     <td className="py-3.5 px-5">
-                      <div className="font-bold text-[#1B3B2B]">{rel.referredUserName}</div>
-                      <div className="text-[11px] text-[#5C6572]">{rel.referredUserEmail}</div>
+                      <div className="font-bold text-[#1B3B2B]">{rel.referredUserName || 'Member'}</div>
+                      <div className="text-[11px] text-[#5C6572]">{rel.referredUserEmail || '—'}</div>
                     </td>
                     <td className="py-3.5 px-5">
-                      <div className="font-mono font-bold text-[#C5A059]">{rel.referrerCode}</div>
-                      <div className="text-[11px] text-[#5C6572] font-mono">{rel.referrerUserId}</div>
+                      <div className="font-mono font-bold text-[#C5A059]">{rel.referrerCode || '—'}</div>
+                      <div className="text-[11px] text-[#5C6572] font-mono">{rel.referrerUserId || '—'}</div>
                     </td>
                     <td className="py-3.5 px-5 font-mono text-[#5C6572]">
-                      {rel.registrationDate}
+                      {rel.registrationDate || '—'}
                     </td>
                     <td className="py-3.5 px-5">
                       <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-semibold text-[11px] border border-emerald-200">
-                        {rel.status.toUpperCase()}
+                        {(rel.status || 'active').toUpperCase()}
                       </span>
                     </td>
                   </tr>
