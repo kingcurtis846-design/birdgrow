@@ -1141,14 +1141,14 @@ export const translations: Record<string, any> = {
     // Referral Program
     refTitle: 'Europäisches Partnerprogramm & Meilenstein-Prämien',
     refSubtitle: 'Gemeinschafts-Bonus',
-    refDesc: 'Verdienen Sie bis zu £245.050 an kumulierten Empfehlungsprämien. Teilen Sie Ihren Partner-Link und profitieren Sie von jedem qualifizierten Zyklus.',
+    refDesc: 'Verdienen Sie bis zu £124.300 an kumulierten Empfehlungsprämien. Teilen Sie Ihren Partner-Link und profitieren Sie von jedem qualifizierten Zyklus.',
     refCopyLink: 'Partner-Link kopieren',
     refCopied: 'In Zwischenablage kopiert!',
     refJoinProgram: 'Partnerprogramm beitreten',
     refDashboardCta: 'Partner-Dashboard öffnen',
     refYourLink: 'Ihr persönlicher Einladungslink',
     refEarnMilestones: 'Meilenstein-Boni freischalten',
-    refMaxReward: 'Bis zu £245.050 Maximalprämie',
+    refMaxReward: 'Bis zu £124.300 Maximalprämie',
     refCumulativeBadge: 'Kumulatives Meilenstein-Partnerprogramm',
     refHeroHeadline: 'Partner empfehlen & bis zu',
     refHeroInACycle: 'pro Zyklus verdienen',
@@ -2056,14 +2056,14 @@ export const translations: Record<string, any> = {
     // Referral Program
     refTitle: 'Programa Europeo de Afiliados y Bonos por Hitos',
     refSubtitle: 'Recompensas por Volumen de Comunidad',
-    refDesc: 'Gane hasta £245.050 en bonificaciones acumulativas por recomendación. Comparta su enlace exclusivo y obtenga comisiones en cada ciclo.',
+    refDesc: 'Gane hasta £124.300 en bonificaciones acumulativas por recomendación. Comparta su enlace exclusivo y obtenga comisiones en cada ciclo.',
     refCopyLink: 'Copiar Enlace de Afiliado',
     refCopied: '¡Copiado al portapapeles!',
     refJoinProgram: 'Unirse al Programa',
     refDashboardCta: 'Abrir Panel de Afiliados',
     refYourLink: 'Su Enlace de Invitación Exclusivo',
     refEarnMilestones: 'Desbloquear Bonos por Niveles',
-    refMaxReward: 'Hasta £245.050 Pago Máximo',
+    refMaxReward: 'Hasta £124.300 Pago Máximo',
     refCumulativeBadge: 'Programa de Afiliados con Bonos por Hitos Acumulativos',
     refHeroHeadline: 'Recomiende Socios y Gane hasta',
     refHeroInACycle: 'en un Ciclo',
@@ -2521,14 +2521,14 @@ export const translations: Record<string, any> = {
   // Referral Program
   refTitle: '欧州パートナー＆リファラル・マイルストーンエンジン',
   refSubtitle: 'コミュニティ・ボリューム報酬',
-  refDesc: '累計最大 £245,050（または £85,050）の紹介ボーナスを獲得。あなたの専用リンクを投資家仲間に共有し、成立サイクルごとに高額リターンを得られます。',
+  refDesc: '累計最大 £124,300（または £85,050）の紹介ボーナスを獲得。あなたの専用リンクを投資家仲間に共有し、成立サイクルごとに高額リターンを得られます。',
   refCopyLink: '招待リンクをコピー',
   refCopied: 'クリップボードにコピーしました！',
   refJoinProgram: 'パートナープログラムに参加',
   refDashboardCta: '紹介ダッシュボードを見る',
   refYourLink: 'あなたの専用招待リンク',
   refEarnMilestones: 'ティア別マイルストーンボーナスを獲得',
-  refMaxReward: '最大 £245,050 払戻枠',
+  refMaxReward: '最大 £124,300 払戻枠',
   refCumulativeBadge: '累計ボリューム達成型リファラル制度',
   refHeroHeadline: 'パートナーを紹介して1サイクルあたり最大',
   refHeroInACycle: 'を獲得',
@@ -2767,5 +2767,5 @@ export const translations: Record<string, any> = {
     cancel: 'キャンセル',
   },
   }
-  
+
 };  

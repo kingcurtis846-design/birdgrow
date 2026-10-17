@@ -130,7 +130,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection, onOpenAuth, o
                   onClick={(e) => handleSectionClick('referrals', e)}
                   className="text-xs text-emerald-400 hover:text-white font-semibold transition-colors flex items-center gap-1 cursor-pointer py-1"
                 >
-                  <span>{t.navReferrals || 'Refer & Earn'} (Up to {formatCurrentCurrency(245050, false)} / Cycle)</span>
+                  <span>{t.navReferrals || 'Refer & Earn'} (Up to {formatCurrentCurrency(124300, false)} / Cycle)</span>
                   <ArrowRight className="w-3 h-3" />
                 </button>
               </li>

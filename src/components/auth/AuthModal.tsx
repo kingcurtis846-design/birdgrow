@@ -1,3 +1,4 @@
+import { sendWelcomeEmail } from '../../lib/emailService';
 import React, { useState, useEffect } from 'react';
 import { X, Mail, Lock, User, ArrowRight, ArrowLeft, ShieldCheck, KeyRound, Eye, EyeOff, CheckCircle2, RotateCw, Shield, Globe } from 'lucide-react';
 import { usePlatform } from '../../context/PlatformContext';
@@ -186,6 +187,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       setSentOtp(generatedOtp);
 
       await sendAuthEmail(email, { otp: generatedOtp, type: 'register', name: fullName.trim() });
+      const firstName = fullName.trim().split(' ')[0] || 'Investor';
+      await sendWelcomeEmail(email, firstName);
       setResendCooldown(45);
       setSuccessMessage(`A verification code was sent to ${email}`);
       setAuthStep('verify-register-otp');

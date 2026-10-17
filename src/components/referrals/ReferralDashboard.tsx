@@ -192,7 +192,7 @@ export const ReferralDashboard: React.FC<ReferralDashboardProps> = ({
                   Upgrade to Investor Referrer Status
                 </strong>
                 <span className="text-white/80">
-                  You are currently earning standard Basic Referrer milestone payouts. Make any platform investment to instantly upgrade your status to Investor Referrer and unlock up to {formatCurrentCurrency(150000, false)} per milestone and <strong>{formatCurrentCurrency(245050, false)}</strong> maximum potential payout in this cycle!
+                  You are currently earning standard Basic Referrer milestone payouts. Make any platform investment to instantly upgrade your status to Investor Referrer and unlock up to {formatCurrentCurrency(150000, false)} per milestone and <strong>{formatCurrentCurrency(124300, false)}</strong> maximum potential payout in this cycle!
                 </span>
               </div>
             </div>

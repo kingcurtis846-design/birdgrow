@@ -240,7 +240,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <Award className="w-3.5 h-3.5" />
             <span>{t.navReferrals}</span>
             <span className="text-[10px] bg-[#C5A059] text-[#11271D] font-black px-1.5 py-0.2 rounded">
-              +{formatCurrentCurrencyCompact(245050)}
+              +{formatCurrentCurrencyCompact(124300)}
             </span>
           </a>
         </nav>
@@ -249,7 +249,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
           
           {/* CURRENCY SELECTOR DROPDOWN */}
-          <div className="relative" ref={currencyRef}>
+          <div className="hidden md:block relative" ref={currencyRef}>
             <button
               onClick={() => {
                 setIsCurrencyMenuOpen(!isCurrencyMenuOpen);
@@ -301,7 +301,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* LANGUAGE SELECTOR DROPDOWN */}
-          <div className="relative" ref={langRef}>
+          <div className="hidden md:block relative" ref={langRef}>
             <button
               onClick={() => {
                 setIsLangMenuOpen(!isLangMenuOpen);
@@ -563,6 +563,28 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* MOBILE COLLAPSIBLE MENU */}
       {isMobileMenuOpen && (
         <div className="lg:hidden border-t border-[#E5E3D8] bg-[#F7F6F2] px-4 pt-3 pb-5 space-y-3 animate-in slide-in-from-top-2 duration-150 shadow-md">
+          {/* Mobile Currency & Language Selector Row */}
+          <div className="flex items-center justify-between gap-2 pt-1 pb-2 border-b border-[#E5E3D8]">
+            <button
+              onClick={() => {
+                setIsCurrencyMenuOpen(!isCurrencyMenuOpen);
+                setIsLangMenuOpen(false);
+              }}
+              className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-white border border-[#DCDAD0] text-xs font-bold text-[#1B3B2B]"
+            >
+              <span>Currency: {currency}</span>
+            </button>
+            <button
+              onClick={() => {
+                setIsLangMenuOpen(!isLangMenuOpen);
+                setIsCurrencyMenuOpen(false);
+              }}
+              className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-white border border-[#DCDAD0] text-xs font-bold text-[#1B3B2B]"
+            >
+              <span>Language</span>
+            </button>
+          </div>
+
           {isAuthenticated && (
             <div className="p-3 bg-white rounded-xl border border-[#DCDAD0] space-y-2">
               <div className="flex items-center justify-between text-xs font-bold text-[#1B3B2B]">

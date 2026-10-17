@@ -204,10 +204,10 @@ export const Hero: React.FC<HeroProps> = ({ onExplorePlans, onOpenCalculator, on
                   }
                 }}
                 className="min-h-[44px] px-5 py-3.5 bg-gradient-to-r from-[#C5A059] to-[#DFBA73] hover:from-[#B38F48] hover:to-[#C5A059] text-[#11271D] font-bold rounded-xl text-sm transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer group active:scale-98"
-                title={`${t.navUpTo} ${formatCurrentCurrency(245050, false)}`}
+                title={`${t.navUpTo} ${formatCurrentCurrency(124300, false)}`}
               >
                 <Award className="w-4 h-4 text-[#11271D]" />
-                <span>{t.navReferrals} ({t.navUpTo} {formatCurrentCurrencyCompact(245050)})</span>
+                <span>{t.navReferrals} ({t.navUpTo} {formatCurrentCurrencyCompact(124300)})</span>
               </button>
             </div>
 

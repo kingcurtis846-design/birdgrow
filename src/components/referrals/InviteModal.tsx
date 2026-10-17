@@ -61,7 +61,7 @@ export const InviteModal: React.FC<InviteModalProps> = ({
               Invite Partners &amp; Earn Milestones
             </h3>
             <p className="text-[11px] sm:text-xs text-[#A7B6AB] mt-0.5 line-clamp-1">
-              Cumulative milestone rewards up to {formatCurrentCurrency(245050, false)} potential max payout in a cycle
+              Cumulative milestone rewards up to {formatCurrentCurrency(124300, false)} potential max payout in a cycle
             </p>
           </div>
           <button

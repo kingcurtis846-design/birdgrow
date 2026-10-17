@@ -33,7 +33,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       : 'If you did not request a password reset, please ignore this email or contact support immediately if you suspect unauthorized access.';
 
     const { data, error } = await resend.emails.send({
-      from: 'BirdGrow <onboarding@resend.dev>', // Update to 'BirdGrow <no-reply@birdgrow.net>' after domain verification
+      from: 'BirdGrow <no-reply@birdgrow.net>', // Update to 'BirdGrow <no-reply@birdgrow.net>' after domain verification
       to: email,
       subject: subject,
       html: `

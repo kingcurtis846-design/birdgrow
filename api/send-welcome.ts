@@ -13,15 +13,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { email, userName } = req.body || {};
+  const { email, firstName } = req.body || {};
 
   if (!email) {
     return res.status(400).json({ success: false, error: 'Email is required' });
   }
 
   try {
+    const greetingName = firstName ? `, ${firstName}` : '';
+
     const { data, error } = await resend.emails.send({
-      from: 'BirdGrow <onboarding@resend.dev>', // Update to 'BirdGrow <welcome@birdgrow.net>' once domain is verified
+      from: 'BirdGrow <onboarding@resend.dev>',
       to: email,
       subject: 'Welcome to BirdGrow! Account Confirmed',
       html: `
@@ -50,7 +52,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                 <p>Sustainable Poultry Investment</p>
               </div>
               <div class="content">
-                <h2>Welcome to BirdGrow${userName ? `, ${userName}` : ''}! 🎉</h2>
+                <h2>Welcome to BirdGrow${greetingName}! 🎉</h2>
                 <p>Your registration is now complete and your account is active.</p>
                 <p>You can now log in to explore investment cycles, track portfolio growth, and manage your poultry farming investments securely.</p>
                 
